@@ -14,20 +14,20 @@ int main()
 	sf::Vector2f spawnPoint = { 1080 / 2,0.f };
 	shape.setPosition(spawnPoint);
 
-	sf::RectangleShape collision(sf::Vector2f(50.f, 30.f));
-	collision.setFillColor(sf::Color::White);
+	sf::RectangleShape white(sf::Vector2f(50.f, 30.f));
+	white.setFillColor(sf::Color::White);
 
-	sf::RectangleShape collision2(sf::Vector2f(50.f, 30.f));
-	collision2.setFillColor(sf::Color::Green);
+	sf::RectangleShape green(sf::Vector2f(50.f, 30.f));
+	green.setFillColor(sf::Color::Green);
 
-	sf::RectangleShape collision3(sf::Vector2f(150.f, 30.f));
-	collision3.setFillColor(sf::Color::Red);
+	sf::RectangleShape red(sf::Vector2f(150.f, 30.f));
+	red.setFillColor(sf::Color::Red);
 
-	sf::RectangleShape collision4(sf::Vector2f(70.f, 50.f));
-	collision4.setFillColor(sf::Color::Yellow);
+	sf::RectangleShape yellow(sf::Vector2f(70.f, 50.f));
+	yellow.setFillColor(sf::Color::Yellow);
 
-	sf::RectangleShape collision5(sf::Vector2f(50.f, 30.f));
-	collision5.setFillColor(sf::Color::Blue);
+	sf::RectangleShape blue(sf::Vector2f(50.f, 30.f));
+	blue.setFillColor(sf::Color::Blue);
 	
 	
 	srand(time(NULL));
@@ -37,20 +37,33 @@ int main()
 
 	window.setFramerateLimit(60);
 	
-	int spawn=0;
 
-	
-	collision2.setPosition(0, rand() % 720);
-	collision3.setPosition(0, rand() % 720);
-	collision4.setPosition(0, rand() % 720);
-	collision5.setPosition(1080, rand() % 720);
+
 	float speed = 2;
 	int frame = 1;
 
 	bool checksidexci=rand()%2;
 	float xci = 0;
 	float yci=rand()%720;
-	collision.setPosition(xci, yci);
+	white.setPosition(xci, yci);
+
+	bool checksidexci2 = rand() % 2;
+	float xci2 = 0;
+	float yci2 = rand() % 720;
+	green.setPosition(xci2, yci2);
+
+	bool checksidexci3 = rand() % 2;
+	float xci3 = 0;
+	float yci3 = rand() % 720;
+	red.setPosition(xci3, yci3);
+
+	bool checksidexci4 = rand() % 2;
+	float xci4 = 0;
+	float yci4 = rand() % 720;
+	yellow.setPosition(xci4, yci4);
+
+
+
 	
 	while (window.isOpen())
 	{
@@ -59,77 +72,105 @@ int main()
 		float y = rand() % 720;
 	
 		sf::Vector2f movement(0.f, 0.f);
-		
+		//white
 		if ( checksidexci==0)
 		{
 			xci = -50;
-			collision.move(10.0f, 0.0f);
+			white.move(25.0f, 0.0f);
 			//printf("%.2f \n", collision.getPosition().x);
-			if (collision.getPosition().x >= 1150)
+			if (white.getPosition().x >= 1150)
 			{
 				checksidexci = rand() % 2;
 				yci = rand() % 720;
-				collision.setPosition(xci, yci);
-				
-				
+				white.setPosition(xci, yci);
 			}
 		}
 		else if(checksidexci==1){
 			xci = 1150;
-			collision.move(-10.0f, 0.0f);
+			white.move(-25.0f, 0.0f);
 			//printf("%.2f \n", collision.getPosition().x);
-			if (collision.getPosition().x < -50)
+			if (white.getPosition().x < -50)
 			{
 				checksidexci = rand() % 2;
 				yci = rand() % 720;
-				collision.setPosition(xci, yci);
-				
-
+				white.setPosition(xci, yci);
 			}
-
+		}
+		//green
+		if (checksidexci2 == 0)
+		{
+			xci2 = -50;
+			green.move(30.0f, 0.0f);
+			//printf("%.2f \n", collision.getPosition().x);
+			if (green.getPosition().x >= 1150)
+			{
+				checksidexci2 = rand() % 2;
+				yci2 = rand() % 720;
+				green.setPosition(xci2, yci2);
+			}
+		}
+		else if (checksidexci2 == 1) {
+			xci2 = 1150;
+			green.move(-30.0f, 0.0f);
+			//printf("%.2f \n", collision.getPosition().x);
+			if (green.getPosition().x < -50)
+			{
+				checksidexci2 = rand() % 2;
+				yci2 = rand() % 720;
+				green.setPosition(xci2, yci2);
+			}
 		}
 		
-		
-		if (collision2.getPosition().x <= 1130 )
+		//red
+		if (checksidexci3 == 0)
 		{
-			if (x == 1)
+			xci3 = -150;
+			red.move(40.0f, 0.0f);
+			//printf("%.2f \n", collision.getPosition().x);
+			if (red.getPosition().x >= 1150)
 			{
-				x = 0;
-			}
-			collision2.move(30.f, 0.f);
-			//printf("checj %.2f \n", collision2.getPosition().x);
-			if (collision2.getPosition().x == 1140)
-			{
-				collision2.setPosition(x, rand()%720);
+				checksidexci3 = rand() % 2;
+				yci3 = rand() % 720;
+				red.setPosition(xci3, yci3);
 			}
 		}
-		if (collision3.getPosition().x <= 1130)
-		{
-			if (x == 1)
-			{
-				x = 0;
-			}
-			collision3.move(20.f, 0.f);
+		else if (checksidexci3 == 1) {
+			xci3 = 1140;
+			red.move(-40.0f, 0.0f);
 			//printf("%.2f \n", collision.getPosition().x);
-			if (collision3.getPosition().x == 1140)
+			if (red.getPosition().x < -50)
 			{
-				collision3.setPosition(x, rand() % 720);
-			}
-		}
-		if (collision4.getPosition().x <= 1130)
-		{
-			if (x == 1)
-			{
-				x = 0;
-			}
-			collision4.move(40.f, 0.f);
-			//printf("%.2f \n", collision.getPosition().x);
-			if (collision4.getPosition().x == 1160)
-			{
-				collision4.setPosition(x, rand() % 720);
+				checksidexci3 = rand() % 2;
+				yci3 = rand() % 720;
+				red.setPosition(xci3, yci3);
 			}
 		}
 
+
+		if (checksidexci4 == 0)
+		{
+			xci4 = -150;
+			yellow.move(40.0f, 0.0f);
+			//printf("%.2f \n", collision.getPosition().x);
+			if (yellow.getPosition().x >= 1150)
+			{
+				checksidexci4 = rand() % 2;
+				yci4 = rand() % 720;
+				yellow.setPosition(xci4, yci4);
+			}
+		}
+		else if (checksidexci4 == 1) {
+			xci4 = 1140;
+			yellow.move(-40.0f, 0.0f);
+			//printf("%.2f \n", collision.getPosition().x);
+			if (yellow.getPosition().x < -50)
+			{
+				checksidexci4 = rand() % 2;
+				yci4 = rand() % 720;
+				yellow.setPosition(xci4, yci4);
+			}
+		}
+		
 		
 		
 		
@@ -177,24 +218,21 @@ int main()
 			window.close();
 		}
 	
-		
-			
-		
-		if (collision.getGlobalBounds().intersects(shape.getGlobalBounds())) {
+		if (white.getGlobalBounds().intersects(shape.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
 		}
 
-		if (collision2.getGlobalBounds().intersects(shape.getGlobalBounds())) {
+		if (green.getGlobalBounds().intersects(shape.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
 		}
-		if (collision3.getGlobalBounds().intersects(shape.getGlobalBounds())) {
+		if (red.getGlobalBounds().intersects(shape.getGlobalBounds())) {
 			shape.setPosition(spawnPoint);
 			//speed -= 0.1;
 		}
-		if (collision4.getGlobalBounds().intersects(shape.getGlobalBounds())) {
-			shape.setPosition(spawnPoint);
+		if (yellow.getGlobalBounds().intersects(shape.getGlobalBounds())) {
+			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
 		}
 		
@@ -213,13 +251,12 @@ int main()
 		
 
 		
-		window.draw(collision);
+		window.draw(white);
 	
-		window.draw(collision2);
-		window.draw(collision3);
-		window.draw(collision4);
+		window.draw(green);
+		window.draw(red);
+		window.draw(yellow);
 		
-		window.draw(collision5);
 		
 		
 		
