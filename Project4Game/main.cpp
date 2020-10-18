@@ -3,11 +3,19 @@
 #include<iostream>
 #include<time.h>
 
+static const float screenheight = 720.0f;
 
+void ResizeView(const sf::RenderWindow& window, sf::View& view)
+{
+	float aspectRatio = float(window.getSize().x / float(window.getSize().y));
+	view.setSize(screenheight * aspectRatio, screenheight);
+
+}
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1080, 720), "GAME!");
+	sf::Vector2i screen(1080, 720);
+	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "GAME!",sf::Style::Close|sf::Style::Resize);
 	sf::RectangleShape shape(sf::Vector2f(20.f,20.f));
 	shape.setFillColor(sf::Color::Green);
 	
@@ -29,6 +37,12 @@ int main()
 	sf::RectangleShape blue(sf::Vector2f(50.f, 30.f));
 	blue.setFillColor(sf::Color::Blue);
 	
+	sf::View view;
+	view.reset(sf::FloatRect(0,0,screen.x,screen.y));
+	view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
+	sf::Vector2f position(0, 0);
+
+	
 	
 	srand(time(NULL));
 	
@@ -44,22 +58,22 @@ int main()
 
 	bool checksidexci=rand()%2;
 	float xci = 0;
-	float yci=rand()%720;
+	float yci=rand()%2000;
 	white.setPosition(xci, yci);
 
 	bool checksidexci2 = rand() % 2;
 	float xci2 = 0;
-	float yci2 = rand() % 720;
+	float yci2 = rand() % 2000;
 	green.setPosition(xci2, yci2);
 
 	bool checksidexci3 = rand() % 2;
 	float xci3 = 0;
-	float yci3 = rand() % 720;
+	float yci3 = rand() % 2000;
 	red.setPosition(xci3, yci3);
 
 	bool checksidexci4 = rand() % 2;
 	float xci4 = 0;
-	float yci4 = rand() % 720;
+	float yci4 = rand() % 2000;
 	yellow.setPosition(xci4, yci4);
 
 
@@ -81,7 +95,7 @@ int main()
 			if (white.getPosition().x >= 1150)
 			{
 				checksidexci = rand() % 2;
-				yci = rand() % 720;
+				yci = rand() % 2000;
 				white.setPosition(xci, yci);
 			}
 		}
@@ -92,7 +106,7 @@ int main()
 			if (white.getPosition().x < -50)
 			{
 				checksidexci = rand() % 2;
-				yci = rand() % 720;
+				yci = rand() % 2000;
 				white.setPosition(xci, yci);
 			}
 		}
@@ -105,7 +119,7 @@ int main()
 			if (green.getPosition().x >= 1150)
 			{
 				checksidexci2 = rand() % 2;
-				yci2 = rand() % 720;
+				yci2 = rand() % 2000;
 				green.setPosition(xci2, yci2);
 			}
 		}
@@ -116,7 +130,7 @@ int main()
 			if (green.getPosition().x < -50)
 			{
 				checksidexci2 = rand() % 2;
-				yci2 = rand() % 720;
+				yci2 = rand() % 2000;
 				green.setPosition(xci2, yci2);
 			}
 		}
@@ -130,7 +144,7 @@ int main()
 			if (red.getPosition().x >= 1150)
 			{
 				checksidexci3 = rand() % 2;
-				yci3 = rand() % 720;
+				yci3 = rand() % 2000;
 				red.setPosition(xci3, yci3);
 			}
 		}
@@ -141,7 +155,7 @@ int main()
 			if (red.getPosition().x < -50)
 			{
 				checksidexci3 = rand() % 2;
-				yci3 = rand() % 720;
+				yci3 = rand() % 2000;
 				red.setPosition(xci3, yci3);
 			}
 		}
@@ -155,7 +169,7 @@ int main()
 			if (yellow.getPosition().x >= 1150)
 			{
 				checksidexci4 = rand() % 2;
-				yci4 = rand() % 720;
+				yci4 = rand() % 2000;
 				yellow.setPosition(xci4, yci4);
 			}
 		}
@@ -166,7 +180,7 @@ int main()
 			if (yellow.getPosition().x < -50)
 			{
 				checksidexci4 = rand() % 2;
-				yci4 = rand() % 720;
+				yci4 = rand() % 2000;
 				yellow.setPosition(xci4, yci4);
 			}
 		}
@@ -177,8 +191,15 @@ int main()
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			switch (event.type)	
+			{
+			case sf::Event::Closed:
 				window.close();
+				break;
+			case sf::Event::Resized:
+				ResizeView(window, view);
+				break;
+			}
 		}
 
 	
@@ -222,7 +243,6 @@ int main()
 			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
 		}
-
 		if (green.getGlobalBounds().intersects(shape.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
@@ -237,7 +257,7 @@ int main()
 		}
 		
 		
-		printf("x%0.2f  y%0.2f speed %0.2f\n", shape.getPosition().x, shape.getPosition().y,speed);
+		//printf("x%0.2f  y%0.2f speed %0.2f\n", shape.getPosition().x, shape.getPosition().y,speed);
 		
 		
 		//time = clock.getElapsedTime();
@@ -247,6 +267,19 @@ int main()
 		//shape.move(movement);
 		
 		
+		
+		position.y = shape.getPosition().y+10   - (screen.y / 2);
+		position.x = 0;
+		if (position.y < 0)
+		{
+			position.y = 0;
+		}
+		view.reset(sf::FloatRect(position.x, position.y, screen.x, screen.y));
+		printf("%f\n%f", position.x, position.y);
+		
+		window.setView(view);
+	
+
 		window.draw(shape);
 		
 
