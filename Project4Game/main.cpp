@@ -2,6 +2,8 @@
 #include<stdio.h>
 #include<iostream>
 #include<time.h>
+//MAP  WEIGHT =1080   HEIGHT=5000;
+
 
 static const float screenheight = 720.0f;
 
@@ -16,11 +18,11 @@ int main()
 {
 	sf::Vector2i screen(1080, 720);
 	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "GAME!",sf::Style::Close|sf::Style::Resize);
-	sf::RectangleShape shape(sf::Vector2f(20.f,20.f));
-	shape.setFillColor(sf::Color::Green);
+	sf::RectangleShape player(sf::Vector2f(20.f,20.f));
+	player.setFillColor(sf::Color::Green);
 	
 	sf::Vector2f spawnPoint = { 1080 / 2,0.f };
-	shape.setPosition(spawnPoint);
+	player.setPosition(spawnPoint);
 
 	sf::RectangleShape white(sf::Vector2f(50.f, 30.f));
 	white.setFillColor(sf::Color::White);
@@ -40,7 +42,7 @@ int main()
 	sf::View view;
 	view.reset(sf::FloatRect(0,0,screen.x,screen.y));
 	view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
-	sf::Vector2f position(0, 0);
+	sf::Vector2f positionview(0, 0);
 
 	
 	
@@ -58,22 +60,22 @@ int main()
 
 	bool checksidexci=rand()%2;
 	float xci = 0;
-	float yci=rand()%2000;
+	float yci=rand()%4801;
 	white.setPosition(xci, yci);
 
 	bool checksidexci2 = rand() % 2;
 	float xci2 = 0;
-	float yci2 = rand() % 2000;
+	float yci2 = rand() % 4801;
 	green.setPosition(xci2, yci2);
 
 	bool checksidexci3 = rand() % 2;
 	float xci3 = 0;
-	float yci3 = rand() % 2000;
+	float yci3 = rand() % 4801;
 	red.setPosition(xci3, yci3);
 
 	bool checksidexci4 = rand() % 2;
 	float xci4 = 0;
-	float yci4 = rand() % 2000;
+	float yci4 = rand() % 4801;
 	yellow.setPosition(xci4, yci4);
 
 
@@ -95,7 +97,7 @@ int main()
 			if (white.getPosition().x >= 1150)
 			{
 				checksidexci = rand() % 2;
-				yci = rand() % 2000;
+				yci = rand() % 4801;
 				white.setPosition(xci, yci);
 			}
 		}
@@ -106,7 +108,7 @@ int main()
 			if (white.getPosition().x < -50)
 			{
 				checksidexci = rand() % 2;
-				yci = rand() % 2000;
+				yci = rand() % 4801;
 				white.setPosition(xci, yci);
 			}
 		}
@@ -119,7 +121,7 @@ int main()
 			if (green.getPosition().x >= 1150)
 			{
 				checksidexci2 = rand() % 2;
-				yci2 = rand() % 2000;
+				yci2 = rand() % 4801;
 				green.setPosition(xci2, yci2);
 			}
 		}
@@ -130,7 +132,7 @@ int main()
 			if (green.getPosition().x < -50)
 			{
 				checksidexci2 = rand() % 2;
-				yci2 = rand() % 2000;
+				yci2 = rand() % 4801;
 				green.setPosition(xci2, yci2);
 			}
 		}
@@ -144,7 +146,7 @@ int main()
 			if (red.getPosition().x >= 1150)
 			{
 				checksidexci3 = rand() % 2;
-				yci3 = rand() % 2000;
+				yci3 = rand() % 4801;
 				red.setPosition(xci3, yci3);
 			}
 		}
@@ -155,7 +157,7 @@ int main()
 			if (red.getPosition().x < -50)
 			{
 				checksidexci3 = rand() % 2;
-				yci3 = rand() % 2000;
+				yci3 = rand() % 4801;
 				red.setPosition(xci3, yci3);
 			}
 		}
@@ -169,7 +171,7 @@ int main()
 			if (yellow.getPosition().x >= 1150)
 			{
 				checksidexci4 = rand() % 2;
-				yci4 = rand() % 2000;
+				yci4 = rand() % 4801;
 				yellow.setPosition(xci4, yci4);
 			}
 		}
@@ -180,7 +182,7 @@ int main()
 			if (yellow.getPosition().x < -50)
 			{
 				checksidexci4 = rand() % 2;
-				yci4 = rand() % 2000;
+				yci4 = rand() % 4801;
 				yellow.setPosition(xci4, yci4);
 			}
 		}
@@ -207,19 +209,19 @@ int main()
 		{
 			//movement.y = -0.2f;
 			//movement.x = 0.f;
-			shape.move(0.f * speed, -5.0f*speed);
+			player.move(0.f * speed, -5.0f*speed);
 			
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
 			//movement.y = 0.2f;
 			//movement.x = 0.f;
-			shape.move(0.f * speed, 5.0f * speed);
+			player.move(0.f * speed, 5.0f * speed);
 			
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
-			shape.move(-5.0f * speed, 0.0f * speed);
+			player.move(-5.0f * speed, 0.0f * speed);
 			//movement.x=-0.2f;
 			//movement.y = 0.f;
 		}
@@ -227,7 +229,7 @@ int main()
 		{
 			//movement.x = 0.2f;
 			//movement.y = 0.f;
-			shape.move(5.0f * speed, 0.f * speed);
+			player.move(5.0f * speed, 0.f * speed);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
@@ -239,7 +241,13 @@ int main()
 			window.close();
 		}
 	
-		if (white.getGlobalBounds().intersects(shape.getGlobalBounds())) {
+		if(sf::)
+
+
+
+
+
+		/*if (white.getGlobalBounds().intersects(shape.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
 		}
@@ -254,7 +262,9 @@ int main()
 		if (yellow.getGlobalBounds().intersects(shape.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
-		}
+		}*/
+
+
 		
 		
 		//printf("x%0.2f  y%0.2f speed %0.2f\n", shape.getPosition().x, shape.getPosition().y,speed);
@@ -265,22 +275,44 @@ int main()
 		//clock.restart();
 
 		//shape.move(movement);
-		
-		
-		
-		position.y = shape.getPosition().y+10   - (screen.y / 2);
-		position.x = 0;
-		if (position.y < 0)
-		{
-			position.y = 0;
+		if (player.getPosition().x < 0) {
+			player.setPosition(0, player.getPosition().y);
 		}
-		view.reset(sf::FloatRect(position.x, position.y, screen.x, screen.y));
-		printf("%f\n%f", position.x, position.y);
+		if (player.getPosition().x > 1060) {
+			player.setPosition(1060, player.getPosition().y);
+		}
+		if (player.getPosition().y < 0) {
+			player.setPosition(player.getPosition().x, 0);
+		}
+		if (player.getPosition().y < 0) {
+			player.setPosition(player.getPosition().x, 0);
+		}
+		if (player.getPosition().y > 5000) {
+			player.setPosition(player.getPosition().x, 5000);
+		}
+
+
+		
+		
+		
+		positionview.y = player.getPosition().y+10   - (screen.y / 2);
+		positionview.x = 0;
+		if (positionview.y < 0)
+		{
+			positionview.y = 0;
+		}
+		else if (player.getPosition().y >= 4650)
+		{
+			positionview.y = 4300;
+		}
+		view.reset(sf::FloatRect(positionview.x, positionview.y, screen.x, screen.y));
+		
+		printf("%f\n", player.getPosition().y);
 		
 		window.setView(view);
 	
 
-		window.draw(shape);
+		window.draw(player);
 		
 
 		
