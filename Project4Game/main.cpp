@@ -5,6 +5,9 @@
 //MAP  WEIGHT =1080   HEIGHT=5000;
 int j = 0;
 int i = 1;
+float speed = 2;
+int frame = 1;
+int checkcollin = 0;
 
 
 static const float screenheight = 720.0f;
@@ -18,6 +21,8 @@ void ResizeView(const sf::RenderWindow& window, sf::View& view)
 
 int main()
 {
+	srand(time(NULL));
+
 	sf::Vector2i screen(1080, 720);
 	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "GAME!", sf::Style::Close | sf::Style::Resize);
 	sf::RectangleShape player(sf::Vector2f(20.f, 20.f));
@@ -47,24 +52,15 @@ int main()
 	sf::RectangleShape purple2(sf::Vector2f(10.f, 10.f));
 	purple2.setFillColor(sf::Color::Magenta);
 
+	sf::RectangleShape box(sf::Vector2f(300.f, 100.f));
+	box.setFillColor(sf::Color::Cyan);
+
 	sf::View view;
 	view.reset(sf::FloatRect(0, 0, screen.x, screen.y));
 	view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
 	sf::Vector2f positionview(0, 0);
 
-
-
-	srand(time(NULL));
-
-	sf::Clock clock;
-
-
 	window.setFramerateLimit(60);
-
-
-
-	float speed = 2;
-	int frame = 1;
 
 	bool checksidexci = rand() % 2;
 	float xci = 0;
@@ -87,12 +83,14 @@ int main()
 	yellow.setPosition(xci4, yci4);
 
 
-
+	box.setPosition(rand()%1080, 720 / 2);
 
 	while (window.isOpen())
 	{
 		window.clear();
-
+		
+		
+		
 		positionview.y = player.getPosition().y + 10 - (screen.y / 2);
 		positionview.x = 0;
 		if (positionview.y < 0)
@@ -105,7 +103,9 @@ int main()
 		}
 		view.reset(sf::FloatRect(positionview.x, positionview.y, screen.x, screen.y));
 
-		printf("view %f\n view2 %f", positionview.y, positionview.y + 710);
+		//printf("view %f\n view2 %f", positionview.y, positionview.y + 710);
+		printf("size y %f\n", box.getSize().y);
+		printf("pos y %f\n", box.getPosition().y);
 
 		purple.setPosition(0, positionview.y);
 		purple2.setPosition(0, positionview.y + 710);
@@ -118,7 +118,8 @@ int main()
 			xci = -50;
 			white.move(25.0f, 0.0f);
 			//printf("%.2f \n", collision.getPosition().x);
-			if (white.getPosition().x >= 1150)
+			
+			if (white.getPosition().x >= 1150 && checkcollin !=1)
 			{
 				checksidexci = rand() % 2;
 				yci = rand() % 4801;
@@ -136,8 +137,6 @@ int main()
 						j++;
 					}
 				}
-
-
 			}
 		}
 		else if (checksidexci == 1) {
@@ -169,6 +168,7 @@ int main()
 		{
 			xci2 = -50;
 			green.move(30.0f, 0.0f);
+
 			//printf("%.2f \n", collision.getPosition().x);
 			if (green.getPosition().x >= 1150)
 			{
@@ -214,7 +214,6 @@ int main()
 				}
 			}
 		}
-
 		//red
 		if (checksidexci3 == 0)
 		{
@@ -265,8 +264,7 @@ int main()
 				}
 			}
 		}
-
-
+		//yellow
 		if (checksidexci4 == 0)
 		{
 			xci4 = -150;
@@ -317,9 +315,6 @@ int main()
 			}
 		}
 
-
-
-
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -334,36 +329,42 @@ int main()
 			}
 		}
 
-
+		//player move  //+ Collinsions *************************************************************
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 		{
-			//movement.y = -0.2f;
-			//movement.x = 0.f;
 			player.move(0.f * speed, -5.0f * speed);
-
+			if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
+			{
+				player.move(0.f * speed, +5.0f * speed);
+			}
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
-			//movement.y = 0.2f;
-			//movement.x = 0.f;
 			player.move(0.f * speed, 5.0f * speed);
+			if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
+			{
+				player.move(0.f * speed, -5.0f * speed);
+			}
 
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
 			player.move(-5.0f * speed, 0.0f * speed);
-			//movement.x=-0.2f;
-			//movement.y = 0.f;
+			if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
+			{
+				player.move(+5.0f * speed, 0.0f * speed);
+			}
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
-			//movement.x = 0.2f;
-			//movement.y = 0.f;
 			player.move(5.0f * speed, 0.f * speed);
+			if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
+			{
+				player.move(-5.0f * speed, 0.0f * speed);
+			}
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
-
 			speed = 2;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
@@ -371,39 +372,25 @@ int main()
 			window.close();
 		}
 
-
-
-
-
-
-		/*if (white.getGlobalBounds().intersects(shape.getGlobalBounds())) {
+		//Collinsions
+		/*if (white.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
 		}
-		if (green.getGlobalBounds().intersects(shape.getGlobalBounds())) {
+		if (green.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
 		}
-		if (red.getGlobalBounds().intersects(shape.getGlobalBounds())) {
-			shape.setPosition(spawnPoint);
+		if (red.getGlobalBounds().intersects(player.getGlobalBounds())) {
+			player.setPosition(spawnPoint);
 			//speed -= 0.1;
 		}
-		if (yellow.getGlobalBounds().intersects(shape.getGlobalBounds())) {
+		if (yellow.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
 			speed -= 0.1;
 		}*/
 
-
-
-
-		//printf("x%0.2f  y%0.2f speed %0.2f\n", shape.getPosition().x, shape.getPosition().y,speed);
-
-
-		//time = clock.getElapsedTime();
-		//std::cout << time.asSeconds() << std::endl;
-		//clock.restart();
-
-		//shape.move(movement);
+		//check in window
 		if (player.getPosition().x < 0) {
 			player.setPosition(0, player.getPosition().y);
 		}
@@ -421,30 +408,20 @@ int main()
 		}
 
 
-
-
-
+		
 		window.setView(view);
-
-
+		
 		window.draw(player);
-
-
-
 		window.draw(white);
 		window.draw(purple);
 		window.draw(purple2);
 		window.draw(green);
 		window.draw(red);
 		window.draw(yellow);
-
-
-
-
-
+		window.draw(box);
+		
 
 		window.display();
-
 
 	}
 	return 0;
