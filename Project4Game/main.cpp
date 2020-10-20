@@ -3,6 +3,8 @@
 #include<iostream>
 #include<time.h>
 //MAP  WEIGHT =1080   HEIGHT=5000;
+int j = 0;
+int i = 1;
 
 
 static const float screenheight = 720.0f;
@@ -17,10 +19,10 @@ void ResizeView(const sf::RenderWindow& window, sf::View& view)
 int main()
 {
 	sf::Vector2i screen(1080, 720);
-	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "GAME!",sf::Style::Close|sf::Style::Resize);
-	sf::RectangleShape player(sf::Vector2f(20.f,20.f));
+	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "GAME!", sf::Style::Close | sf::Style::Resize);
+	sf::RectangleShape player(sf::Vector2f(20.f, 20.f));
 	player.setFillColor(sf::Color::Green);
-	
+
 	sf::Vector2f spawnPoint = { 1080 / 2,0.f };
 	player.setPosition(spawnPoint);
 
@@ -38,29 +40,35 @@ int main()
 
 	sf::RectangleShape blue(sf::Vector2f(50.f, 30.f));
 	blue.setFillColor(sf::Color::Blue);
-	
+
+	sf::RectangleShape purple(sf::Vector2f(10.f, 10.f));
+	purple.setFillColor(sf::Color::Magenta);
+
+	sf::RectangleShape purple2(sf::Vector2f(10.f, 10.f));
+	purple2.setFillColor(sf::Color::Magenta);
+
 	sf::View view;
-	view.reset(sf::FloatRect(0,0,screen.x,screen.y));
+	view.reset(sf::FloatRect(0, 0, screen.x, screen.y));
 	view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
 	sf::Vector2f positionview(0, 0);
 
-	
-	
+
+
 	srand(time(NULL));
-	
+
 	sf::Clock clock;
-	
+
 
 	window.setFramerateLimit(60);
-	
+
 
 
 	float speed = 2;
 	int frame = 1;
 
-	bool checksidexci=rand()%2;
+	bool checksidexci = rand() % 2;
 	float xci = 0;
-	float yci=rand()%4801;
+	float yci = rand() % 4801;
 	white.setPosition(xci, yci);
 
 	bool checksidexci2 = rand() % 2;
@@ -80,16 +88,32 @@ int main()
 
 
 
-	
+
 	while (window.isOpen())
 	{
 		window.clear();
-		float x = rand() % 2;
-		float y = rand() % 720;
-	
+
+		positionview.y = player.getPosition().y + 10 - (screen.y / 2);
+		positionview.x = 0;
+		if (positionview.y < 0)
+		{
+			positionview.y = 0;
+		}
+		else if (player.getPosition().y >= 4650)
+		{
+			positionview.y = 4300;
+		}
+		view.reset(sf::FloatRect(positionview.x, positionview.y, screen.x, screen.y));
+
+		printf("view %f\n view2 %f", positionview.y, positionview.y + 710);
+
+		purple.setPosition(0, positionview.y);
+		purple2.setPosition(0, positionview.y + 710);
+
+
 		sf::Vector2f movement(0.f, 0.f);
 		//white
-		if ( checksidexci==0)
+		if (checksidexci == 0)
 		{
 			xci = -50;
 			white.move(25.0f, 0.0f);
@@ -98,10 +122,25 @@ int main()
 			{
 				checksidexci = rand() % 2;
 				yci = rand() % 4801;
-				white.setPosition(xci, yci);
+				for (j = 0; j != i; )
+				{
+					if ((yci >= positionview.y) && (yci <= (positionview.y + 710)))
+					{
+						white.setPosition(xci, yci);
+						break;
+					}
+					else
+					{
+						yci = rand() % 4801;
+						i++;
+						j++;
+					}
+				}
+
+
 			}
 		}
-		else if(checksidexci==1){
+		else if (checksidexci == 1) {
 			xci = 1150;
 			white.move(-25.0f, 0.0f);
 			//printf("%.2f \n", collision.getPosition().x);
@@ -109,7 +148,20 @@ int main()
 			{
 				checksidexci = rand() % 2;
 				yci = rand() % 4801;
-				white.setPosition(xci, yci);
+				for (j = 0; j != i; )
+				{
+					if ((yci >= positionview.y) && (yci <= (positionview.y + 710)))
+					{
+						white.setPosition(xci, yci);
+						break;
+					}
+					else
+					{
+						yci = rand() % 4801;
+						i++;
+						j++;
+					}
+				}
 			}
 		}
 		//green
@@ -122,7 +174,20 @@ int main()
 			{
 				checksidexci2 = rand() % 2;
 				yci2 = rand() % 4801;
-				green.setPosition(xci2, yci2);
+				for (j = 0; j != i; )
+				{
+					if ((yci2 >= positionview.y) && (yci2 <= (positionview.y + 710)))
+					{
+						green.setPosition(xci2, yci2);
+						break;
+					}
+					else
+					{
+						yci2 = rand() % 4801;
+						i++;
+						j++;
+					}
+				}
 			}
 		}
 		else if (checksidexci2 == 1) {
@@ -133,10 +198,23 @@ int main()
 			{
 				checksidexci2 = rand() % 2;
 				yci2 = rand() % 4801;
-				green.setPosition(xci2, yci2);
+				for (j = 0; j != i; )
+				{
+					if ((yci2 >= positionview.y) && (yci2 <= (positionview.y + 710)))
+					{
+						green.setPosition(xci2, yci2);
+						break;
+					}
+					else
+					{
+						yci2 = rand() % 4801;
+						i++;
+						j++;
+					}
+				}
 			}
 		}
-		
+
 		//red
 		if (checksidexci3 == 0)
 		{
@@ -147,7 +225,20 @@ int main()
 			{
 				checksidexci3 = rand() % 2;
 				yci3 = rand() % 4801;
-				red.setPosition(xci3, yci3);
+				for (j = 0; j != i; )
+				{
+					if ((yci3 >= positionview.y) && (yci3 <= (positionview.y + 710)))
+					{
+						red.setPosition(xci3, yci3);
+						break;
+					}
+					else
+					{
+						yci3 = rand() % 4801;
+						i++;
+						j++;
+					}
+				}
 			}
 		}
 		else if (checksidexci3 == 1) {
@@ -158,7 +249,20 @@ int main()
 			{
 				checksidexci3 = rand() % 2;
 				yci3 = rand() % 4801;
-				red.setPosition(xci3, yci3);
+				for (j = 0; j != i; )
+				{
+					if ((yci3 >= positionview.y) && (yci3 <= (positionview.y + 710)))
+					{
+						red.setPosition(xci3, yci3);
+						break;
+					}
+					else
+					{
+						yci3 = rand() % 4801;
+						i++;
+						j++;
+					}
+				}
 			}
 		}
 
@@ -172,7 +276,20 @@ int main()
 			{
 				checksidexci4 = rand() % 2;
 				yci4 = rand() % 4801;
-				yellow.setPosition(xci4, yci4);
+				for (j = 0; j != i; )
+				{
+					if ((yci4 >= positionview.y) && (yci4 <= (positionview.y + 710)))
+					{
+						yellow.setPosition(xci4, yci4);
+						break;
+					}
+					else
+					{
+						yci4 = rand() % 4801;
+						i++;
+						j++;
+					}
+				}
 			}
 		}
 		else if (checksidexci4 == 1) {
@@ -183,17 +300,30 @@ int main()
 			{
 				checksidexci4 = rand() % 2;
 				yci4 = rand() % 4801;
-				yellow.setPosition(xci4, yci4);
+				for (j = 0; j != i; )
+				{
+					if ((yci4 >= positionview.y) && (yci4 <= (positionview.y + 710)))
+					{
+						yellow.setPosition(xci4, yci4);
+						break;
+					}
+					else
+					{
+						yci4 = rand() % 4801;
+						i++;
+						j++;
+					}
+				}
 			}
 		}
-		
-		
-		
-		
+
+
+
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			switch (event.type)	
+			switch (event.type)
 			{
 			case sf::Event::Closed:
 				window.close();
@@ -204,20 +334,20 @@ int main()
 			}
 		}
 
-	
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 		{
 			//movement.y = -0.2f;
 			//movement.x = 0.f;
-			player.move(0.f * speed, -5.0f*speed);
-			
+			player.move(0.f * speed, -5.0f * speed);
+
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
 			//movement.y = 0.2f;
 			//movement.x = 0.f;
 			player.move(0.f * speed, 5.0f * speed);
-			
+
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
@@ -233,15 +363,14 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
-			
+
 			speed = 2;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 		{
 			window.close();
 		}
-	
-		if(sf::)
+
 
 
 
@@ -265,11 +394,11 @@ int main()
 		}*/
 
 
-		
-		
+
+
 		//printf("x%0.2f  y%0.2f speed %0.2f\n", shape.getPosition().x, shape.getPosition().y,speed);
-		
-		
+
+
 		//time = clock.getElapsedTime();
 		//std::cout << time.asSeconds() << std::endl;
 		//clock.restart();
@@ -292,44 +421,32 @@ int main()
 		}
 
 
-		
-		
-		
-		positionview.y = player.getPosition().y+10   - (screen.y / 2);
-		positionview.x = 0;
-		if (positionview.y < 0)
-		{
-			positionview.y = 0;
-		}
-		else if (player.getPosition().y >= 4650)
-		{
-			positionview.y = 4300;
-		}
-		view.reset(sf::FloatRect(positionview.x, positionview.y, screen.x, screen.y));
-		
-		printf("%f\n", player.getPosition().y);
-		
+
+
+
 		window.setView(view);
-	
+
 
 		window.draw(player);
-		
 
-		
+
+
 		window.draw(white);
-	
+		window.draw(purple);
+		window.draw(purple2);
 		window.draw(green);
 		window.draw(red);
 		window.draw(yellow);
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		window.display();
-		
-		
+
+
 	}
 	return 0;
 }
+
