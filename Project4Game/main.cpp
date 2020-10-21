@@ -25,6 +25,7 @@ int main()
 
 	sf::Vector2i screen(1080, 720);
 	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "GAME!", sf::Style::Close | sf::Style::Resize);
+	
 	sf::RectangleShape player(sf::Vector2f(20.f, 20.f));
 	player.setFillColor(sf::Color::Green);
 
@@ -52,8 +53,33 @@ int main()
 	sf::RectangleShape purple2(sf::Vector2f(10.f, 10.f));
 	purple2.setFillColor(sf::Color::Magenta);
 
-	sf::RectangleShape box(sf::Vector2f(300.f, 100.f));
+	sf::RectangleShape box(sf::Vector2f(1080.f, 250.f));
 	box.setFillColor(sf::Color::Cyan);
+	box.setPosition(0, 720 / 2);
+
+	sf::RectangleShape boat1(sf::Vector2f(200.f, 62.5f));
+	boat1.setFillColor(sf::Color::Red);
+	boat1.setPosition(0, 360.0f);
+	float xboat1 = 0;
+	float yboat1 = rand() % 548;
+
+	sf::RectangleShape boat2(sf::Vector2f(220.f, 62.5f));
+	boat2.setFillColor(sf::Color::Blue);
+	boat2.setPosition(0, 422.5f);
+	float xboat2 = 0;
+	float yboat2 = rand() % 548;
+
+	sf::RectangleShape boat3(sf::Vector2f(230.f, 62.5f));
+	boat3.setFillColor(sf::Color::Black);
+	boat3.setPosition(0, 485.0f);
+	float xboat3 = 0;
+	float yboat3 = rand() % 548;
+
+	sf::RectangleShape boat4(sf::Vector2f(225.f, 62.5f));
+	boat4.setFillColor(sf::Color::White);
+	boat4.setPosition(0, 547.5f);
+	float xboat4 = 0;
+	float yboat4 = rand() % 548;
 
 	sf::View view;
 	view.reset(sf::FloatRect(0, 0, screen.x, screen.y));
@@ -83,7 +109,7 @@ int main()
 	yellow.setPosition(xci4, yci4);
 
 
-	box.setPosition(rand()%1080, 720 / 2);
+	
 
 	while (window.isOpen())
 	{
@@ -103,9 +129,7 @@ int main()
 		}
 		view.reset(sf::FloatRect(positionview.x, positionview.y, screen.x, screen.y));
 
-		//printf("view %f\n view2 %f", positionview.y, positionview.y + 710);
-		printf("size y %f\n", box.getSize().y);
-		printf("pos y %f\n", box.getPosition().y);
+		
 
 		purple.setPosition(0, positionview.y);
 		purple2.setPosition(0, positionview.y + 710);
@@ -329,39 +353,65 @@ int main()
 			}
 		}
 
+
+		//boat
+		//boat1****************************************************
+			xboat1 = -80;
+			boat1.move(2.2f, 0.0f);
+			if (boat1.getPosition().x >= 1150 && checkcollin != 1)
+			{
+				yboat1 = rand() % 548;
+				for (j = 0; j != i; )
+				{
+					if (yboat1 == 360.0f /*|| yboat1==422.5f || yboat1==485.0f || yboat1==547.5*/)
+					{
+						boat1.setPosition(xboat1, yboat1);
+						break;
+					}
+					else {
+						yboat1 = rand() % 548;
+							i++;
+							j++;
+					}
+				}
+			}
+			
+		
+		
+
+
 		//player move  //+ Collinsions *************************************************************
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 		{
 			player.move(0.f * speed, -5.0f * speed);
-			if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
+			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(0.f * speed, +5.0f * speed);
-			}
+			}*/
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
 			player.move(0.f * speed, 5.0f * speed);
-			if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
+			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(0.f * speed, -5.0f * speed);
-			}
-
+			}*/
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
 			player.move(-5.0f * speed, 0.0f * speed);
-			if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
+			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(+5.0f * speed, 0.0f * speed);
-			}
+			}*/
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
 			player.move(5.0f * speed, 0.f * speed);
-			if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
+			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(-5.0f * speed, 0.0f * speed);
-			}
+			}*/
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
@@ -390,6 +440,31 @@ int main()
 			speed -= 0.1;
 		}*/
 
+		//Colin Boat
+		if (player.getGlobalBounds().intersects(box.getGlobalBounds()) && !(player.getGlobalBounds().intersects(boat1.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat2.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat3.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat4.getGlobalBounds())))
+		{
+
+			player.setPosition(spawnPoint);
+
+
+		}
+		/*if (player.getGlobalBounds().intersects(boat1.getGlobalBounds()) && player.getGlobalBounds().intersects(box.getGlobalBounds()))
+		{
+			float dtback1 =(player.getPosition().x + player.getSize().x )-( boat1.getPosition().x + boat1.getSize().x);
+			if (boat1.getPosition().x - player.getPosition().x >17.5f || dtback1>17.5f )
+			{
+				printf("x%f\n ", player.getPosition().x);
+				printf("boat%f ", boat1.getPosition().x);
+				player.setPosition(spawnPoint);
+
+				
+			}
+			
+		}*/
+		
+
+
+
 		//check in window
 		if (player.getPosition().x < 0) {
 			player.setPosition(0, player.getPosition().y);
@@ -411,7 +486,7 @@ int main()
 		
 		window.setView(view);
 		
-		window.draw(player);
+		
 		window.draw(white);
 		window.draw(purple);
 		window.draw(purple2);
@@ -419,8 +494,12 @@ int main()
 		window.draw(red);
 		window.draw(yellow);
 		window.draw(box);
+		window.draw(boat1);
+		window.draw(boat2);
+		window.draw(boat3);
+		window.draw(boat4);
 		
-
+		window.draw(player);
 		window.display();
 
 	}
