@@ -7,6 +7,7 @@ int j = 0;
 int i = 1;
 float speed = 1;
 float slowtime = 1;
+int stackshoes = 0;
 bool checkslowtime = 0;
 int frame = 1;
 int checkcollin = 0;
@@ -87,8 +88,16 @@ int main()
 	textureclock.loadFromFile("clock.png");
 	itemclock.setTexture(&textureclock);
 	textureclock.setSmooth(true);
-	itemclock.setPosition(20.0f, 20.0f);
+	itemclock.setPosition(rand()%1050, rand()%700);
 	itemclock.setScale(sf::Vector2f(1.0f, 1.0f));
+
+	sf::RectangleShape itemboots(sf::Vector2f(40.f, 40.f));
+	sf::Texture textureboots;
+	textureboots.loadFromFile("boots.png");
+	itemboots.setTexture(&textureboots);
+	textureboots.setSmooth(true);
+	itemboots.setPosition(50, rand() % 700);
+	itemboots.setScale(sf::Vector2f(1.1f, 1.1f));
 
 
 	sf::View view;
@@ -372,6 +381,7 @@ int main()
 		{
 			speed = 1;
 			slowtime = 1;
+			stackshoes = 0;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 		{
@@ -379,7 +389,7 @@ int main()
 		}
 
 		//Collinsions
-		if (white.getGlobalBounds().intersects(player.getGlobalBounds())) {
+		/*if (white.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
 			speed -= 0.005;
 		}
@@ -395,12 +405,12 @@ int main()
 			//shape.setPosition(spawnPoint);
 			speed -= 0.005;
 		}
-
-		//Colin player no boat
-		if (player.getGlobalBounds().intersects(box.getGlobalBounds()) && !(player.getGlobalBounds().intersects(boat1.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat2.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat3.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat4.getGlobalBounds())))
+		*/
+		//Water DAMMMM
+		/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()) && !(player.getGlobalBounds().intersects(boat1.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat2.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat3.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat4.getGlobalBounds())))
 		{
 			player.setPosition(spawnPoint);
-		}
+		}*/
 		
 		//itemclock
 		if(player.getGlobalBounds().intersects(itemclock.getGlobalBounds()))
@@ -408,19 +418,35 @@ int main()
 			slowtime = 0.1;
 			checkslowtime = 1;
 			clock.restart();
-			itemclock.setPosition(rand()%1000, rand()%700);
+			itemclock.setPosition(rand()%1050, rand()%700);
 		}
 		if (checkslowtime == 1)
 		{
 			durationslow = clock.getElapsedTime();
-			printf("%f\n", durationslow.asSeconds());
+			//printf("%f\n", durationslow.asSeconds());
 			if (durationslow.asSeconds() > 2.36363)
 			{
 				slowtime = 1;
 				checkslowtime = 0;
 			}
 		}
+		
+		//itemboots
+		if (player.getGlobalBounds().intersects(itemboots.getGlobalBounds()))
+		{
+			if (stackshoes >= 6)
+			{
+				speed += 0;
+			}
+			else
+			{
+				stackshoes += 1;
+				speed += 0.12;
+			}
+			itemboots.setPosition(rand() % 1050, rand() % 700);
+		}
 
+		printf("%f\n", speed);
 		//boat****************************************************
 		//boat1
 		xboat1 = -80;
@@ -532,6 +558,7 @@ int main()
 		window.draw(boat3);
 		window.draw(boat4);
 		window.draw(itemclock);
+		window.draw(itemboots);
 		window.draw(player);
 		window.display();
 
