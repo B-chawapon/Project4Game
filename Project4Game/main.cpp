@@ -90,13 +90,6 @@ int main()
 	itemclock.setScale(sf::Vector2f(0.1f,0.1f));
 
 
-	
-
-	
-
-
-
-
 
 	sf::View view;
 	view.reset(sf::FloatRect(0, 0, screen.x, screen.y));
@@ -494,7 +487,7 @@ int main()
 			player.setPosition(player.getPosition().x, 5000);
 		}
 
-		
+		//printf("%f\n", speed);
 
 		window.clear();
 
@@ -513,7 +506,7 @@ int main()
 		window.draw(boat2);
 		window.draw(boat3);
 		window.draw(boat4);
-		window.draw(itemclock);
+		//window.draw(itemclock);
 		window.draw(player);
 		window.display();
 
