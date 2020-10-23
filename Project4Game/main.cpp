@@ -5,7 +5,9 @@
 //MAP  WEIGHT =1080   HEIGHT=5000;
 int j = 0;
 int i = 1;
-float speed = 2;
+float speed = 1;
+float slowtime = 1;
+bool checkslowtime = 0;
 int frame = 1;
 int checkcollin = 0;
 
@@ -80,15 +82,13 @@ int main()
 	float xboat4 = 0;
 	float yboat4 = rand() % 548;
 
+	sf::RectangleShape itemclock(sf::Vector2f(40.f, 40.f));
 	sf::Texture textureclock;
 	textureclock.loadFromFile("clock.png");
+	itemclock.setTexture(&textureclock);
 	textureclock.setSmooth(true);
-
-	sf::Sprite itemclock(textureclock,sf::IntRect(0,0,400,400));
-	itemclock.setTexture(textureclock);
-	itemclock.setPosition(20.0f,20.0f);
-	itemclock.setScale(sf::Vector2f(0.1f,0.1f));
-
+	itemclock.setPosition(20.0f, 20.0f);
+	itemclock.setScale(sf::Vector2f(1.0f, 1.0f));
 
 
 	sf::View view;
@@ -118,6 +118,9 @@ int main()
 	float yci4 = rand() % 4801;
 	yellow.setPosition(xci4, yci4);
 
+	sf::Clock clock;
+	sf::Time durationslow;
+
 
 	while (window.isOpen())
 	{
@@ -134,8 +137,10 @@ int main()
 				break;
 			}
 		}
-
-
+		
+		
+		
+		
 		positionview.y = player.getPosition().y + 10 - (screen.y / 2);
 		positionview.x = 0;
 		if (positionview.y < 0)
@@ -157,14 +162,14 @@ int main()
 		if (checksidexci == 0)
 		{
 			xci = -50;
-			white.move(10.0f, 0.0f);
+			white.move(10.0f*slowtime, 0.0f );
 			if (white.getPosition().x >= 1150 && checkcollin != 1)
 			{
 				checksidexci = rand() % 2;
 				yci = rand() % 4801;
 				for (j = 0; j != i; )
 				{
-					if ((yci >= positionview.y) && (yci <= (positionview.y + 710)) && !(yci>=310 && yci<=610) && yci>30 )
+					if ((yci >= positionview.y) && (yci <= (positionview.y + 710)) && !(yci >= 310 && yci <= 610) && yci > 30)
 					{
 						white.setPosition(xci, yci);
 						break;
@@ -178,7 +183,7 @@ int main()
 		}
 		else if (checksidexci == 1) {
 			xci = 1150;
-			white.move(-10.0f, 0.0f);
+			white.move(-10.0f * slowtime, 0.0f);
 			if (white.getPosition().x < -50)
 			{
 				checksidexci = rand() % 2;
@@ -201,7 +206,7 @@ int main()
 		if (checksidexci2 == 0)
 		{
 			xci2 = -50;
-			green.move(18.0f, 0.0f);
+			green.move(18.0f * slowtime, 0.0f );
 			if (green.getPosition().x >= 1150)
 			{
 				checksidexci2 = rand() % 2;
@@ -222,7 +227,7 @@ int main()
 		}
 		else if (checksidexci2 == 1) {
 			xci2 = 1150;
-			green.move(-18.0f, 0.0f);
+			green.move(-18.0f * slowtime, 0.0f);
 			if (green.getPosition().x < -50)
 			{
 				checksidexci2 = rand() % 2;
@@ -244,9 +249,9 @@ int main()
 		//red
 		if (checksidexci3 == 0)
 		{
-			xci3 = -150;
-			red.move(15.0f, 0.0f);
-			if (red.getPosition().x >= 1150)
+			xci3 = -200;
+			red.move(15.0f * slowtime, 0.0f);
+			if (red.getPosition().x >= 1300)
 			{
 				checksidexci3 = rand() % 2;
 				yci3 = rand() % 4801;
@@ -266,8 +271,8 @@ int main()
 		}
 		else if (checksidexci3 == 1) {
 			xci3 = 1140;
-			red.move(-15.0f, 0.0f);
-			if (red.getPosition().x < -50)
+			red.move(-15.0f * slowtime, 0.0f);
+			if (red.getPosition().x < -200)
 			{
 				checksidexci3 = rand() % 2;
 				yci3 = rand() % 4801;
@@ -289,7 +294,7 @@ int main()
 		if (checksidexci4 == 0)
 		{
 			xci4 = -150;
-			yellow.move(13.0f, 0.0f);
+			yellow.move(13.0f * slowtime, 0.0f);
 			if (yellow.getPosition().x >= 1150)
 			{
 				checksidexci4 = rand() % 2;
@@ -310,7 +315,7 @@ int main()
 		}
 		else if (checksidexci4 == 1) {
 			xci4 = 1140;
-			yellow.move(-13.0f, 0.0f);
+			yellow.move(-13.0f * slowtime, 0.0f);
 			if (yellow.getPosition().x < -50)
 			{
 				checksidexci4 = rand() % 2;
@@ -333,7 +338,7 @@ int main()
 		//player move  //+ Collinsions *************************************************************
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 		{
-			player.move(0.f * speed, -3.0f * speed);
+			player.move(0.f * speed, -5.0f * speed);
 			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(0.f * speed, +5.0f * speed);
@@ -341,7 +346,7 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
-			player.move(0.f * speed, 3.0f * speed);
+			player.move(0.f * speed, 5.0f * speed);
 			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(0.f * speed, -5.0f * speed);
@@ -349,7 +354,7 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
-			player.move(-3.0f * speed, 0.0f * speed);
+			player.move(-5.0f * speed, 0.0f * speed);
 			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(+5.0f * speed, 0.0f * speed);
@@ -357,15 +362,16 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
-			player.move(3.0f * speed, 0.f * speed);
+			player.move(5.0f * speed, 0.f * speed);
 			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(-5.0f * speed, 0.0f * speed);
 			}*/
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 		{
-			speed = 2;
+			speed = 1;
+			slowtime = 1;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 		{
@@ -375,11 +381,11 @@ int main()
 		//Collinsions
 		if (white.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
-			speed -= 0.1;
+			speed -= 0.005;
 		}
 		if (green.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
-			speed -= 0.1;
+			speed -= 0.005;
 		}
 		if (red.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			player.setPosition(spawnPoint);
@@ -387,13 +393,32 @@ int main()
 		}
 		if (yellow.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
-			speed -= 0.1;
+			speed -= 0.005;
 		}
 
 		//Colin player no boat
 		if (player.getGlobalBounds().intersects(box.getGlobalBounds()) && !(player.getGlobalBounds().intersects(boat1.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat2.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat3.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat4.getGlobalBounds())))
 		{
 			player.setPosition(spawnPoint);
+		}
+		
+		//itemclock
+		if(player.getGlobalBounds().intersects(itemclock.getGlobalBounds()))
+		{
+			slowtime = 0.1;
+			checkslowtime = 1;
+			clock.restart();
+			itemclock.setPosition(rand()%1000, rand()%700);
+		}
+		if (checkslowtime == 1)
+		{
+			durationslow = clock.getElapsedTime();
+			printf("%f\n", durationslow.asSeconds());
+			if (durationslow.asSeconds() > 2.36363)
+			{
+				slowtime = 1;
+				checkslowtime = 0;
+			}
 		}
 
 		//boat****************************************************
@@ -506,11 +531,10 @@ int main()
 		window.draw(boat2);
 		window.draw(boat3);
 		window.draw(boat4);
-		//window.draw(itemclock);
+		window.draw(itemclock);
 		window.draw(player);
 		window.display();
 
 	}
 	return 0;
 }
-
