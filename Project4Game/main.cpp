@@ -9,7 +9,7 @@ float speed = 1;
 float slowtime = 1;
 int stackshoes = 0;
 bool checkslowtime = 0;
-int frame = 1;
+int frame = 0;
 int checkcollin = 0;
 
 
@@ -96,8 +96,18 @@ int main()
 	textureboots.loadFromFile("boots.png");
 	itemboots.setTexture(&textureboots);
 	textureboots.setSmooth(true);
+	sf::Sprite itemclocksprite;
 	itemboots.setPosition(50, rand() % 700);
 	itemboots.setScale(sf::Vector2f(1.1f, 1.1f));
+
+	sf::Sprite itemcoins;
+	sf::Texture texturecoins;
+	texturecoins.loadFromFile("coinscut.png");
+	texturecoins.setSmooth(true);
+	itemcoins.setTexture(texturecoins);
+	itemcoins.setTextureRect(sf::IntRect(0, 0, 128.f, 129));
+	itemcoins.setPosition(50, rand() % 700);
+	itemcoins.setScale(sf::Vector2f(0.275f, 0.295f));
 
 
 	sf::View view;
@@ -129,6 +139,7 @@ int main()
 
 	sf::Clock clock;
 	sf::Time durationslow;
+	sf::Clock animationcoin;
 
 
 	while (window.isOpen())
@@ -146,7 +157,21 @@ int main()
 				break;
 			}
 		}
-		
+
+		//animation coins
+		if (animationcoin.getElapsedTime().asSeconds() > 0.2f)
+		{
+			if (frame <= 5)
+			{
+				itemcoins.setTextureRect(sf::IntRect(frame * 128.f, 0, 128.f, 129));
+				frame++;
+				if (frame == 6)
+				{
+					frame = 0;
+				}
+			}
+			animationcoin.restart();
+		}
 		
 		
 		
@@ -446,7 +471,6 @@ int main()
 			itemboots.setPosition(rand() % 1050, rand() % 700);
 		}
 
-		printf("%f\n", speed);
 		//boat****************************************************
 		//boat1
 		xboat1 = -80;
@@ -559,6 +583,7 @@ int main()
 		window.draw(boat4);
 		window.draw(itemclock);
 		window.draw(itemboots);
+		window.draw(itemcoins);
 		window.draw(player);
 		window.display();
 
