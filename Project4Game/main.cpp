@@ -5,10 +5,14 @@
 //MAP  WEIGHT =1080   HEIGHT=5000;
 int j = 0;
 int i = 1;
+
 float speed = 1;
 float slowtime = 1;
-int stackshoes = 0;
 bool checkslowtime = 0;
+
+int stackshoes = 0;
+
+int scorecoins = 0;
 int frame = 0;
 int checkcollin = 0;
 
@@ -83,6 +87,7 @@ int main()
 	float xboat4 = 0;
 	float yboat4 = rand() % 548;
 
+
 	sf::RectangleShape itemclock(sf::Vector2f(40.f, 40.f));
 	sf::Texture textureclock;
 	textureclock.loadFromFile("clock.png");
@@ -97,8 +102,18 @@ int main()
 	itemboots.setTexture(&textureboots);
 	textureboots.setSmooth(true);
 	sf::Sprite itemclocksprite;
-	itemboots.setPosition(50, rand() % 700);
+	
+	sf::Vector2f posboots[10];
+	//itemboots.setPosition(50, rand() % 700);
+	for (i = 0; i < 10; i++)
+	{
+		posboots[i].x = rand() % 1000;
+		posboots[i].y = rand() % 700;
+	}
+
 	itemboots.setScale(sf::Vector2f(1.1f, 1.1f));
+
+
 
 	sf::Sprite itemcoins;
 	sf::Texture texturecoins;
@@ -157,7 +172,7 @@ int main()
 				break;
 			}
 		}
-
+		
 		//animation coins
 		if (animationcoin.getElapsedTime().asSeconds() > 0.2f)
 		{
@@ -172,9 +187,7 @@ int main()
 			}
 			animationcoin.restart();
 		}
-		
-		
-		
+
 		positionview.y = player.getPosition().y + 10 - (screen.y / 2);
 		positionview.x = 0;
 		if (positionview.y < 0)
@@ -408,6 +421,10 @@ int main()
 			slowtime = 1;
 			stackshoes = 0;
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
+		{
+			speed = 2;
+		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 		{
 			window.close();
@@ -469,6 +486,13 @@ int main()
 				speed += 0.12;
 			}
 			itemboots.setPosition(rand() % 1050, rand() % 700);
+		}
+
+		//itemcoins
+		if (player.getGlobalBounds().intersects(itemcoins.getGlobalBounds()))
+		{
+			scorecoins += 1;
+			itemcoins.setPosition(rand() % 1050, rand() % 700);
 		}
 
 		//boat****************************************************
@@ -571,8 +595,8 @@ int main()
 
 
 		window.draw(white);
-		/*window.draw(purple);
-		window.draw(purple2);*/
+		window.draw(purple);
+		window.draw(purple2);
 		window.draw(green);
 		window.draw(red);
 		window.draw(yellow);
@@ -582,7 +606,12 @@ int main()
 		window.draw(boat3);
 		window.draw(boat4);
 		window.draw(itemclock);
-		window.draw(itemboots);
+		for (i = 0; i < 10; i++)
+		{
+			itemboots.setPosition(posboots[i].x, posboots[i].y);
+			window.draw(itemboots);
+		}
+
 		window.draw(itemcoins);
 		window.draw(player);
 		window.display();
