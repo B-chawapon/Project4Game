@@ -94,11 +94,11 @@ int main()
 	itemclock.setPosition(rand() % 1050, rand() % 700);
 	itemclock.setScale(sf::Vector2f(1.0f, 1.0f));
 
-	sf::Vector2f posclock[5];
-	for (i = 0; i <= 4; i++)
+	sf::Vector2f posclock[3];
+	for (i = 0; i <= 2; i++)
 	{
 		posclock[i].x = rand() % 1000;
-		posclock[i].y = rand() % 700;
+		posclock[i].y = rand() % 4900;
 	}
 
 	sf::RectangleShape itemboots(sf::Vector2f(40.f, 40.f));
@@ -113,9 +113,8 @@ int main()
 	for (i = 0; i <= 1; i++)
 	{
 		posboots[i].x = rand() % 1000;
-		posboots[i].y = rand() % 700;
+		posboots[i].y = rand() % 4900;
 	}
-
 	itemboots.setScale(sf::Vector2f(1.1f, 1.1f));
 
 	sf::Sprite itemcoins;
@@ -126,6 +125,13 @@ int main()
 	itemcoins.setTextureRect(sf::IntRect(0, 0, 128.f, 129));
 	itemcoins.setPosition(50, rand() % 700);
 	itemcoins.setScale(sf::Vector2f(0.275f, 0.295f));
+
+	sf::Vector2f poscoins[25];
+	for (i = 0; i <= 24; i++)
+	{
+		poscoins[i].x = rand() % 1000;
+		poscoins[i].y = rand() % 4900;
+	}
 
 	sf::View view;
 	view.reset(sf::FloatRect(0, 0, screen.x, screen.y));
@@ -456,7 +462,7 @@ int main()
 		}*/
 
 		//itemclock
-		for (i = 0; i <= 4; i++)
+		for (i = 0; i <= 2; i++)
 		{
 			if ((player.getPosition().x + player.getSize().x > posclock[i].x) && (player.getPosition().x < posclock[i].x + itemclock.getSize().x)        // player's horizontal range can touch the platform
 				&& (player.getPosition().y + player.getSize().y > posclock[i].y) && (player.getPosition().y < posclock[i].y + itemclock.getSize().y))// player's vertical   range can touch the platform
@@ -464,15 +470,14 @@ int main()
 				slowtime = 0.1;
 				checkslowtime = 1;
 				clock.restart();
-				posclock[i].x = rand() % 1050;
-				posclock[i].y = rand() % 720;
+				posclock[i].x = rand() % 1000;
+				posclock[i].y = rand() % 4900;
 			}
 		}
-
 		if (checkslowtime == 1)
 		{
 			durationslow = clock.getElapsedTime();
-			//printf("%f\n", durationslow.asSeconds());
+			printf("%f\n", durationslow.asSeconds());
 			if (durationslow.asSeconds() > 2.36363)
 			{
 				slowtime = 1;
@@ -481,7 +486,7 @@ int main()
 		}
 
 		//itemboots
-		for (i = 0; i < 1; i++)
+		for (i = 0; i <= 1; i++)
 		{
 			if ((player.getPosition().x + player.getSize().x > posboots[i].x) && (player.getPosition().x < posboots[i].x + itemboots.getSize().x)        // player's horizontal range can touch the platform
 				&& (player.getPosition().y + player.getSize().y > posboots[i].y) && (player.getPosition().y < posboots[i].y + itemboots.getSize().y))// player's vertical   range can touch the platform
@@ -496,15 +501,20 @@ int main()
 					speed += 0.12;
 				}
 				posboots[i].x = rand() % 1000;
-				posboots[i].y = rand() % 700;
+				posboots[i].y = rand() % 4900;
 			}
 		}
-		printf("%f\n", slowtime);
+		//printf("%f\n", slowtime);
 		//itemcoins
-		if (player.getGlobalBounds().intersects(itemcoins.getGlobalBounds()))
+		for (i = 0; i <= 24; i++)
 		{
-			scorecoins += 1;
-			itemcoins.setPosition(rand() % 1050, rand() % 700);
+			if ((player.getPosition().x + player.getSize().x > poscoins[i].x) && (player.getPosition().x < poscoins[i].x + 30)
+				&& (player.getPosition().y + player.getSize().y > poscoins[i].y) && (player.getPosition().y < poscoins[i].y + 30))
+			{
+				scorecoins += 1;
+				poscoins[i].x = -100;
+				poscoins[i].y = -100;
+			}
 		}
 
 		//boat****************************************************
@@ -616,19 +626,22 @@ int main()
 		window.draw(boat3);
 		window.draw(boat4);
 
-		for (i = 0; i <= 4; i++)
+		for (i = 0; i <= 2; i++)
 		{
 			itemclock.setPosition(posclock[i].x, posclock[i].y);
 			window.draw(itemclock);
 		}
 
-		for (i = 0; i < 1; i++)
+		for (i = 0; i <= 1; i++)
 		{
 			itemboots.setPosition(posboots[i].x, posboots[i].y);
 			window.draw(itemboots);
 		}
-
-		window.draw(itemcoins);
+		for (i = 0; i <= 24; i++)
+		{
+			itemcoins.setPosition(poscoins[i].x, poscoins[i].y);
+			window.draw(itemcoins);
+		}
 		window.draw(player);
 		window.display();
 		window.clear();
