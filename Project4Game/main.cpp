@@ -5,10 +5,16 @@
 //MAP  WEIGHT =1080   HEIGHT=5000;
 int j = 0;
 int i = 1;
-float speed = 2;
-int frame = 1;
-int checkcollin = 0;
 
+float speed = 1;
+float slowtime = 1;
+bool checkslowtime = 0;
+
+int stackshoes = 0;
+
+int scorecoins = 0;
+int frame = 0;
+int checkcollin = 0;
 
 static const float screenheight = 720.0f;
 
@@ -80,16 +86,46 @@ int main()
 	float xboat4 = 0;
 	float yboat4 = rand() % 548;
 
+	sf::RectangleShape itemclock(sf::Vector2f(40.f, 40.f));
 	sf::Texture textureclock;
 	textureclock.loadFromFile("clock.png");
+	itemclock.setTexture(&textureclock);
 	textureclock.setSmooth(true);
+	itemclock.setPosition(rand() % 1050, rand() % 700);
+	itemclock.setScale(sf::Vector2f(1.0f, 1.0f));
 
-	sf::Sprite itemclock(textureclock,sf::IntRect(0,0,400,400));
-	itemclock.setTexture(textureclock);
-	itemclock.setPosition(20.0f,20.0f);
-	itemclock.setScale(sf::Vector2f(0.1f,0.1f));
+	sf::Vector2f posclock[5];
+	for (i = 0; i <= 4; i++)
+	{
+		posclock[i].x = rand() % 1000;
+		posclock[i].y = rand() % 700;
+	}
 
+	sf::RectangleShape itemboots(sf::Vector2f(40.f, 40.f));
+	sf::Texture textureboots;
+	textureboots.loadFromFile("boots.png");
+	itemboots.setTexture(&textureboots);
+	textureboots.setSmooth(true);
+	sf::Sprite itemclocksprite;
 
+	sf::Vector2f posboots[2];
+	//itemboots.setPosition(50, rand() % 700);
+	for (i = 0; i <= 1; i++)
+	{
+		posboots[i].x = rand() % 1000;
+		posboots[i].y = rand() % 700;
+	}
+
+	itemboots.setScale(sf::Vector2f(1.1f, 1.1f));
+
+	sf::Sprite itemcoins;
+	sf::Texture texturecoins;
+	texturecoins.loadFromFile("coinscut.png");
+	texturecoins.setSmooth(true);
+	itemcoins.setTexture(texturecoins);
+	itemcoins.setTextureRect(sf::IntRect(0, 0, 128.f, 129));
+	itemcoins.setPosition(50, rand() % 700);
+	itemcoins.setScale(sf::Vector2f(0.275f, 0.295f));
 
 	sf::View view;
 	view.reset(sf::FloatRect(0, 0, screen.x, screen.y));
@@ -118,9 +154,13 @@ int main()
 	float yci4 = rand() % 4801;
 	yellow.setPosition(xci4, yci4);
 
+	sf::Clock clock;
+	sf::Time durationslow;
+	sf::Clock animationcoin;
 
 	while (window.isOpen())
 	{
+		window.clear();
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -135,6 +175,20 @@ int main()
 			}
 		}
 
+		//animation coins
+		if (animationcoin.getElapsedTime().asSeconds() > 0.2f)
+		{
+			if (frame <= 5)
+			{
+				itemcoins.setTextureRect(sf::IntRect(frame * 128.f, 0, 128.f, 129));
+				frame++;
+				if (frame == 6)
+				{
+					frame = 0;
+				}
+			}
+			animationcoin.restart();
+		}
 
 		positionview.y = player.getPosition().y + 10 - (screen.y / 2);
 		positionview.x = 0;
@@ -151,20 +205,19 @@ int main()
 		purple.setPosition(0, positionview.y);
 		purple2.setPosition(0, positionview.y + 710);
 
-
 		sf::Vector2f movement(0.f, 0.f);
 		//white
 		if (checksidexci == 0)
 		{
 			xci = -50;
-			white.move(10.0f, 0.0f);
+			white.move(10.0f * slowtime, 0.0f);
 			if (white.getPosition().x >= 1150 && checkcollin != 1)
 			{
 				checksidexci = rand() % 2;
 				yci = rand() % 4801;
 				for (j = 0; j != i; )
 				{
-					if ((yci >= positionview.y) && (yci <= (positionview.y + 710)) && !(yci>=310 && yci<=610) && yci>30 )
+					if ((yci >= positionview.y) && (yci <= (positionview.y + 710)) && !(yci >= 310 && yci <= 610) && yci > 30)
 					{
 						white.setPosition(xci, yci);
 						break;
@@ -178,7 +231,7 @@ int main()
 		}
 		else if (checksidexci == 1) {
 			xci = 1150;
-			white.move(-10.0f, 0.0f);
+			white.move(-10.0f * slowtime, 0.0f);
 			if (white.getPosition().x < -50)
 			{
 				checksidexci = rand() % 2;
@@ -201,7 +254,7 @@ int main()
 		if (checksidexci2 == 0)
 		{
 			xci2 = -50;
-			green.move(18.0f, 0.0f);
+			green.move(18.0f * slowtime, 0.0f);
 			if (green.getPosition().x >= 1150)
 			{
 				checksidexci2 = rand() % 2;
@@ -222,7 +275,7 @@ int main()
 		}
 		else if (checksidexci2 == 1) {
 			xci2 = 1150;
-			green.move(-18.0f, 0.0f);
+			green.move(-18.0f * slowtime, 0.0f);
 			if (green.getPosition().x < -50)
 			{
 				checksidexci2 = rand() % 2;
@@ -244,9 +297,9 @@ int main()
 		//red
 		if (checksidexci3 == 0)
 		{
-			xci3 = -150;
-			red.move(15.0f, 0.0f);
-			if (red.getPosition().x >= 1150)
+			xci3 = -200;
+			red.move(15.0f * slowtime, 0.0f);
+			if (red.getPosition().x >= 1300)
 			{
 				checksidexci3 = rand() % 2;
 				yci3 = rand() % 4801;
@@ -266,8 +319,8 @@ int main()
 		}
 		else if (checksidexci3 == 1) {
 			xci3 = 1140;
-			red.move(-15.0f, 0.0f);
-			if (red.getPosition().x < -50)
+			red.move(-15.0f * slowtime, 0.0f);
+			if (red.getPosition().x < -200)
 			{
 				checksidexci3 = rand() % 2;
 				yci3 = rand() % 4801;
@@ -289,7 +342,7 @@ int main()
 		if (checksidexci4 == 0)
 		{
 			xci4 = -150;
-			yellow.move(13.0f, 0.0f);
+			yellow.move(13.0f * slowtime, 0.0f);
 			if (yellow.getPosition().x >= 1150)
 			{
 				checksidexci4 = rand() % 2;
@@ -310,7 +363,7 @@ int main()
 		}
 		else if (checksidexci4 == 1) {
 			xci4 = 1140;
-			yellow.move(-13.0f, 0.0f);
+			yellow.move(-13.0f * slowtime, 0.0f);
 			if (yellow.getPosition().x < -50)
 			{
 				checksidexci4 = rand() % 2;
@@ -333,7 +386,7 @@ int main()
 		//player move  //+ Collinsions *************************************************************
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 		{
-			player.move(0.f * speed, -3.0f * speed);
+			player.move(0.f * speed, -5.0f * speed);
 			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(0.f * speed, +5.0f * speed);
@@ -341,7 +394,7 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
-			player.move(0.f * speed, 3.0f * speed);
+			player.move(0.f * speed, 5.0f * speed);
 			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(0.f * speed, -5.0f * speed);
@@ -349,7 +402,7 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
-			player.move(-3.0f * speed, 0.0f * speed);
+			player.move(-5.0f * speed, 0.0f * speed);
 			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(+5.0f * speed, 0.0f * speed);
@@ -357,11 +410,17 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
-			player.move(3.0f * speed, 0.f * speed);
+			player.move(5.0f * speed, 0.f * speed);
 			/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 			{
 				player.move(-5.0f * speed, 0.0f * speed);
 			}*/
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+		{
+			speed = 1;
+			slowtime = 1;
+			stackshoes = 0;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
@@ -373,13 +432,13 @@ int main()
 		}
 
 		//Collinsions
-		if (white.getGlobalBounds().intersects(player.getGlobalBounds())) {
+		/*if (white.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
-			speed -= 0.1;
+			speed -= 0.005;
 		}
 		if (green.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
-			speed -= 0.1;
+			speed -= 0.005;
 		}
 		if (red.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			player.setPosition(spawnPoint);
@@ -387,13 +446,65 @@ int main()
 		}
 		if (yellow.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			//shape.setPosition(spawnPoint);
-			speed -= 0.1;
+			speed -= 0.005;
 		}
-
-		//Colin player no boat
-		if (player.getGlobalBounds().intersects(box.getGlobalBounds()) && !(player.getGlobalBounds().intersects(boat1.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat2.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat3.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat4.getGlobalBounds())))
+		*/
+		//Water DAMMMM
+		/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()) && !(player.getGlobalBounds().intersects(boat1.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat2.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat3.getGlobalBounds())) && !(player.getGlobalBounds().intersects(boat4.getGlobalBounds())))
 		{
 			player.setPosition(spawnPoint);
+		}*/
+
+		//itemclock
+		for (i = 0; i <= 4; i++)
+		{
+			if ((player.getPosition().x + player.getSize().x > posclock[i].x) && (player.getPosition().x < posclock[i].x + itemclock.getSize().x)        // player's horizontal range can touch the platform
+				&& (player.getPosition().y + player.getSize().y > posclock[i].y) && (player.getPosition().y < posclock[i].y + itemclock.getSize().y))// player's vertical   range can touch the platform
+			{
+				slowtime = 0.1;
+				checkslowtime = 1;
+				clock.restart();
+				posclock[i].x = rand() % 1050;
+				posclock[i].y = rand() % 720;
+			}
+		}
+
+		if (checkslowtime == 1)
+		{
+			durationslow = clock.getElapsedTime();
+			//printf("%f\n", durationslow.asSeconds());
+			if (durationslow.asSeconds() > 2.36363)
+			{
+				slowtime = 1;
+				checkslowtime = 0;
+			}
+		}
+
+		//itemboots
+		for (i = 0; i < 1; i++)
+		{
+			if ((player.getPosition().x + player.getSize().x > posboots[i].x) && (player.getPosition().x < posboots[i].x + itemboots.getSize().x)        // player's horizontal range can touch the platform
+				&& (player.getPosition().y + player.getSize().y > posboots[i].y) && (player.getPosition().y < posboots[i].y + itemboots.getSize().y))// player's vertical   range can touch the platform
+			{
+				if (stackshoes >= 6)
+				{
+					speed += 0;
+				}
+				else
+				{
+					stackshoes += 1;
+					speed += 0.12;
+				}
+				posboots[i].x = rand() % 1000;
+				posboots[i].y = rand() % 700;
+			}
+		}
+		printf("%f\n", slowtime);
+		//itemcoins
+		if (player.getGlobalBounds().intersects(itemcoins.getGlobalBounds()))
+		{
+			scorecoins += 1;
+			itemcoins.setPosition(rand() % 1050, rand() % 700);
 		}
 
 		//boat****************************************************
@@ -491,13 +602,11 @@ int main()
 
 		window.clear();
 
-
 		window.setView(view);
 
-
 		window.draw(white);
-		/*window.draw(purple);
-		window.draw(purple2);*/
+		window.draw(purple);
+		window.draw(purple2);
 		window.draw(green);
 		window.draw(red);
 		window.draw(yellow);
@@ -506,11 +615,23 @@ int main()
 		window.draw(boat2);
 		window.draw(boat3);
 		window.draw(boat4);
-		//window.draw(itemclock);
+
+		for (i = 0; i <= 4; i++)
+		{
+			itemclock.setPosition(posclock[i].x, posclock[i].y);
+			window.draw(itemclock);
+		}
+
+		for (i = 0; i < 1; i++)
+		{
+			itemboots.setPosition(posboots[i].x, posboots[i].y);
+			window.draw(itemboots);
+		}
+
+		window.draw(itemcoins);
 		window.draw(player);
 		window.display();
-
+		window.clear();
 	}
 	return 0;
 }
-
