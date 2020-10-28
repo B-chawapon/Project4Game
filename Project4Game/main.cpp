@@ -17,15 +17,13 @@ int scorecoins = 0;
 int frame = 0;
 int framewater = 0;
 int checkcollin = 0;
-
+float realposcary;
 static const float screenheight = 720.0f;
+static const float sizecary = 50.0f;
 
-void ResizeView(const sf::RenderWindow& window, sf::View& view)
-{
-	float aspectRatio = float(window.getSize().x / float(window.getSize().y));
-	view.setSize(screenheight * aspectRatio, screenheight);
-}
-
+void ResizeView(const sf::RenderWindow& window, sf::View& view);
+float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float viewfunc);
+sf::Vector2f positionview;
 int main()
 {
 	srand(time(NULL));
@@ -33,25 +31,31 @@ int main()
 	sf::Vector2i screen(1080, 720);
 	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "GAME!", sf::Style::Close | sf::Style::Resize);
 
+	sf::View view;
+	view.reset(sf::FloatRect(0, 0, screen.x, screen.y));
+	view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
+
+	sf::Vector2f positionview(0, 0);
+
 	sf::RectangleShape player(sf::Vector2f(20.f, 20.f));
 	player.setFillColor(sf::Color::Green);
 
 	sf::Vector2f spawnPoint = { 1080 / 2,0.f };
 	player.setPosition(spawnPoint);
 
-	sf::RectangleShape white(sf::Vector2f(50.f, 30.f));
+	sf::RectangleShape white(sf::Vector2f(50.f, sizecary));
 	white.setFillColor(sf::Color::White);
 
-	sf::RectangleShape green(sf::Vector2f(50.f, 30.f));
+	sf::RectangleShape green(sf::Vector2f(50.f, sizecary));
 	green.setFillColor(sf::Color::Green);
 
-	sf::RectangleShape red(sf::Vector2f(150.f, 30.f));
+	sf::RectangleShape red(sf::Vector2f(150.f, sizecary));
 	red.setFillColor(sf::Color::Red);
 
-	sf::RectangleShape yellow(sf::Vector2f(70.f, 50.f));
+	sf::RectangleShape yellow(sf::Vector2f(70.f, sizecary));
 	yellow.setFillColor(sf::Color::Yellow);
 
-	sf::RectangleShape blue(sf::Vector2f(50.f, 30.f));
+	sf::RectangleShape blue(sf::Vector2f(50.f, sizecary));
 	blue.setFillColor(sf::Color::Blue);
 
 	sf::RectangleShape purple(sf::Vector2f(10.f, 10.f));
@@ -60,51 +64,54 @@ int main()
 	sf::RectangleShape purple2(sf::Vector2f(10.f, 10.f));
 	purple2.setFillColor(sf::Color::Magenta);
 
-	sf::RectangleShape box(sf::Vector2f(1080.f, 250.f));
+	sf::RectangleShape box(sf::Vector2f(1080.f, 250.f));//250
 	box.setFillColor(sf::Color::Cyan);
-	box.setPosition(0, 720 / 2);
+	sf::Vector2f spawnbox;
+	spawnbox.x = 0;
+	spawnbox.y = 1000;
+	box.setPosition(spawnbox.x, spawnbox.y);
 	sf::Sprite water;
 	sf::Texture texturewater;
 	texturewater.loadFromFile("water.png");
 	texturewater.setSmooth(true);
 	water.setTexture(texturewater);
 	water.setTextureRect(sf::IntRect(0, 0, 1080.0f, 250.f));
-	water.setPosition(0, 720 / 2);
+	water.setPosition(spawnbox.x, spawnbox.y);
 
-	sf::RectangleShape boat1(sf::Vector2f(200.f, 62.5f));
+	sf::RectangleShape boat1(sf::Vector2f(200.0f, 62.5f));//200
 	boat1.setFillColor(sf::Color::Red);
 	sf::Vector2f posboat[3];
 	for (i = 0; i <= 2; i++)
 	{
-		posboat[i].y = 360;
+		posboat[i].y = 1000;//360
 	}
 	posboat[0].x = -200; posboat[1].x = -600; posboat[2].x = -1000;
 
-	sf::RectangleShape boat2(sf::Vector2f(120.f, 62.5f));
+	sf::RectangleShape boat2(sf::Vector2f(120.0f, 62.5f));//120
 	boat2.setFillColor(sf::Color::Blue);
 	sf::Vector2f posboat2[3];
 	for (i = 0; i <= 2; i++)
 	{
-		posboat2[i].y = 422.5f;//
+		posboat2[i].y = 1062.5f;//422.5
 	}
 	posboat2[0].x = 1080; posboat2[1].x = 1500; posboat2[2].x = 1820;
 
-	sf::RectangleShape boat3(sf::Vector2f(300.f, 62.5f));
+	sf::RectangleShape boat3(sf::Vector2f(300.0f, 62.5f));//300
 	boat3.setFillColor(sf::Color::Black);
 	boat3.setPosition(1150, 485.0f);//485.0
 	sf::Vector2f posboat3[2];
 	for (i = 0; i <= 1; i++)
 	{
-		posboat3[i].y = 485.0f;//
+		posboat3[i].y = 1125.0f;//485.0f
 	}
 	posboat3[0].x = -300; posboat3[1].x = -900;
 
-	sf::RectangleShape boat4(sf::Vector2f(225.f, 62.5f));
+	sf::RectangleShape boat4(sf::Vector2f(225.0f, 62.5f));//225.f
 	boat4.setFillColor(sf::Color::White);
 	sf::Vector2f posboat4[2];
 	for (i = 0; i <= 1; i++)
 	{
-		posboat4[i].y = 547.5f;//
+		posboat4[i].y = 1187.5f;//547.5
 	}
 	posboat4[0].x = 1200; posboat3[1].x = 2200;
 
@@ -151,11 +158,6 @@ int main()
 		poscoins[i].y = rand() % 4900;
 	}
 
-	sf::View view;
-	view.reset(sf::FloatRect(0, 0, screen.x, screen.y));
-	view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
-	sf::Vector2f positionview(0, 0);
-
 	window.setFramerateLimit(60);
 
 	bool checksidexci = rand() % 2;
@@ -186,6 +188,8 @@ int main()
 	while (window.isOpen())
 	{
 		window.clear();
+		//printf("%f\n", purple.getPosition().y);
+		printf("%f\n", player.getPosition().y);
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -250,22 +254,12 @@ int main()
 		{
 			xci = -50;
 			white.move(10.0f * slowtime, 0.0f);
-			if (white.getPosition().x >= 1150 && checkcollin != 1)
+			if (white.getPosition().x >= 1150)
 			{
 				checksidexci = rand() % 2;
 				yci = rand() % 4801;
-				for (j = 0; j != i; )
-				{
-					if ((yci >= positionview.y) && (yci <= (positionview.y + 710)) && !(yci >= 310 && yci <= 610) && yci > 30)
-					{
-						white.setPosition(xci, yci);
-						break;
-					}
-					else
-					{
-						yci = rand() % 4801;
-					}
-				}
+				findPosCarY(white, yci, xci, positionview.y);
+				white.setPosition(xci, realposcary);
 			}
 		}
 		else if (checksidexci == 1) {
@@ -275,18 +269,8 @@ int main()
 			{
 				checksidexci = rand() % 2;
 				yci = rand() % 4801;
-				for (j = 0; j != i; )
-				{
-					if ((yci >= positionview.y) && (yci <= (positionview.y + 710)) && !(yci >= 310 && yci <= 610) && yci > 30)
-					{
-						white.setPosition(xci, yci);
-						break;
-					}
-					else
-					{
-						yci = rand() % 4801;
-					}
-				}
+				findPosCarY(white, yci, xci, positionview.y);
+				white.setPosition(xci, realposcary);
 			}
 		}
 		//green
@@ -298,18 +282,8 @@ int main()
 			{
 				checksidexci2 = rand() % 2;
 				yci2 = rand() % 4801;
-				for (j = 0; j != i; )
-				{
-					if ((yci2 >= positionview.y) && (yci2 <= (positionview.y + 710)) && !(yci2 >= 310 && yci2 <= 610) && yci2 > 30)
-					{
-						green.setPosition(xci2, yci2);
-						break;
-					}
-					else
-					{
-						yci2 = rand() % 4801;
-					}
-				}
+				findPosCarY(green, yci2, xci2, positionview.y);
+				green.setPosition(xci, realposcary);
 			}
 		}
 		else if (checksidexci2 == 1) {
@@ -319,18 +293,8 @@ int main()
 			{
 				checksidexci2 = rand() % 2;
 				yci2 = rand() % 4801;
-				for (j = 0; j != i; )
-				{
-					if ((yci2 >= positionview.y) && (yci2 <= (positionview.y + 710)) && !(yci2 >= 310 && yci2 <= 610) && yci2 > 30)
-					{
-						green.setPosition(xci2, yci2);
-						break;
-					}
-					else
-					{
-						yci2 = rand() % 4801;
-					}
-				}
+				findPosCarY(green, yci2, xci2, positionview.y);
+				green.setPosition(xci2, realposcary);
 			}
 		}
 		//red
@@ -342,18 +306,8 @@ int main()
 			{
 				checksidexci3 = rand() % 2;
 				yci3 = rand() % 4801;
-				for (j = 0; j != i; )
-				{
-					if ((yci3 >= positionview.y) && (yci3 <= (positionview.y + 710)) && !(yci3 >= 310 && yci3 <= 610) && yci3 > 30)
-					{
-						red.setPosition(xci3, yci3);
-						break;
-					}
-					else
-					{
-						yci3 = rand() % 4801;
-					}
-				}
+				findPosCarY(red, yci3, xci3, positionview.y);
+				red.setPosition(xci3, realposcary);
 			}
 		}
 		else if (checksidexci3 == 1) {
@@ -363,18 +317,8 @@ int main()
 			{
 				checksidexci3 = rand() % 2;
 				yci3 = rand() % 4801;
-				for (j = 0; j != i; )
-				{
-					if ((yci3 >= positionview.y) && (yci3 <= (positionview.y + 710)) && !(yci3 >= 310 && yci3 <= 610) && yci3 > 30)
-					{
-						red.setPosition(xci3, yci3);
-						break;
-					}
-					else
-					{
-						yci3 = rand() % 4801;
-					}
-				}
+				findPosCarY(red, yci3, xci3, positionview.y);
+				red.setPosition(xci3, realposcary);
 			}
 		}
 		//yellow
@@ -386,18 +330,8 @@ int main()
 			{
 				checksidexci4 = rand() % 2;
 				yci4 = rand() % 4801;
-				for (j = 0; j != i; )
-				{
-					if ((yci4 >= positionview.y) && (yci4 <= (positionview.y + 710)) && !(yci4 >= 310 && yci4 <= 610) && yci4 > 30)
-					{
-						yellow.setPosition(xci4, yci4);
-						break;
-					}
-					else
-					{
-						yci4 = rand() % 4801;
-					}
-				}
+				findPosCarY(yellow, yci4, xci4, positionview.y);
+				yellow.setPosition(xci4, realposcary);
 			}
 		}
 		else if (checksidexci4 == 1) {
@@ -407,18 +341,8 @@ int main()
 			{
 				checksidexci4 = rand() % 2;
 				yci4 = rand() % 4801;
-				for (j = 0; j != i; )
-				{
-					if ((yci4 >= positionview.y) && (yci4 <= (positionview.y + 710)) && !(yci4 >= 310 && yci4 <= 610) && yci4 > 30)
-					{
-						yellow.setPosition(xci4, yci4);
-						break;
-					}
-					else
-					{
-						yci4 = rand() % 4801;
-					}
-				}
+				findPosCarY(yellow, yci4, xci4, positionview.y);
+				yellow.setPosition(xci4, realposcary);
 			}
 		}
 
@@ -488,17 +412,18 @@ int main()
 			speed -= 0.005;
 		}*/
 
-		//Water DAMMMM
+		//Water DAMMMM******************
 		bool checkCol = 0;
 		/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
 		{
+			player.move(0.0f, 0.0f);
 			for (i = 0; i <= 2; i++)
 			{
 				if (((player.getPosition().x + player.getSize().x > posboat[i].x) && (player.getPosition().x < posboat[i].x + boat1.getSize().x)        // player's horizontal range can touch the platform
 					&& (player.getPosition().y + player.getSize().y > posboat[i].y) && (player.getPosition().y < posboat[i].y + boat1.getSize().y)))// player's vertical   range can touch the platform
 				{
 					checkCol = 1;
-					player.move(2.2f, 0.0f);
+					player.move(2.200f, 0.0f);
 					break;
 				}
 				if (((player.getPosition().x + player.getSize().x > posboat2[i].x) && (player.getPosition().x < posboat2[i].x + boat2.getSize().x)        // player's horizontal range can touch the platform
@@ -527,7 +452,6 @@ int main()
 				player.setPosition(spawnPoint);
 			}
 		}*/
-
 		//itemclock
 		for (i = 0; i <= 2; i++)
 		{
@@ -565,13 +489,13 @@ int main()
 				else
 				{
 					stackshoes += 1;
-					speed += 0.12;
+					speed += 0.075;
 				}
 				posboots[i].x = rand() % 1000;
 				posboots[i].y = rand() % 4900;
 			}
 		}
-		//printf("%f\n", slowtime);
+
 		//itemcoins
 		for (i = 0; i <= 24; i++)
 		{
@@ -653,8 +577,7 @@ int main()
 		window.setView(view);
 
 		window.draw(white);
-		window.draw(purple);
-		window.draw(purple2);
+
 		window.draw(green);
 		window.draw(red);
 		window.draw(yellow);
@@ -681,13 +604,11 @@ int main()
 			boat4.setPosition(posboat4[i].x, posboat4[i].y);
 			window.draw(boat4);
 		}
-
 		for (i = 0; i <= 2; i++)
 		{
 			itemclock.setPosition(posclock[i].x, posclock[i].y);
 			window.draw(itemclock);
 		}
-
 		for (i = 0; i <= 1; i++)
 		{
 			itemboots.setPosition(posboots[i].x, posboots[i].y);
@@ -699,8 +620,39 @@ int main()
 			window.draw(itemcoins);
 		}
 		window.draw(player);
+		window.draw(purple);
+		window.draw(purple2);
 		window.display();
 		window.clear();
 	}
 	return 0;
+}
+void ResizeView(const sf::RenderWindow& window, sf::View& view)
+{
+	float aspectRatio = float(window.getSize().x / float(window.getSize().y));
+	view.setSize(screenheight * aspectRatio, screenheight);
+}
+float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float viewfunc)
+{
+	poscary = rand() % 4801;
+	for (j = 0; j != i; )
+	{
+		if (poscary >= viewfunc && poscary <= (viewfunc + 650))
+		{
+			if (((poscary + colorcar.getSize().y) >= 950) && (poscary <= 1300))
+			{
+				poscary = rand() % 4801;
+			}
+			else
+			{
+				realposcary = poscary;
+				return realposcary;
+				break;
+			}
+		}
+		else
+		{
+			poscary = rand() % 4801;
+		}
+	}
 }
