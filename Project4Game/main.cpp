@@ -16,13 +16,14 @@ int stackshoes = 0;
 int scorecoins = 0;
 int frame = 0;
 int framewater = 0;
-int checkcollin = 0;
+bool collinreturn;
 float realposcary;
 static const float screenheight = 720.0f;
 static const float sizecary = 50.0f;
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
 float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float viewfunc);
+bool Collision(sf::Vector2f posobject, sf::RectangleShape sizeobject, sf::RectangleShape posplayerfunc, sf::RectangleShape playersizefunc);
 sf::Vector2f positionview;
 int main()
 {
@@ -66,35 +67,82 @@ int main()
 
 	sf::RectangleShape river(sf::Vector2f(1080.f, 250.f));//250
 	river.setFillColor(sf::Color::Cyan);
-	sf::Vector2f posriver;
-	posriver.x = 0;
-	posriver.y = 1000;
-	river.setPosition(posriver.x, posriver.y);
+	sf::Vector2f posriver[3];
+	float firstPosRiver = 1000;
+	for (i = 0; i <= 2; i++)
+	{
+		posriver[i].x = 0;
+		posriver[i].y = firstPosRiver; //1000 2500 4000
+		firstPosRiver += 1500;
+	}
 	sf::Sprite water;
 	sf::Texture texturewater;
 	texturewater.loadFromFile("water.png");
 	texturewater.setSmooth(true);
 	water.setTexture(texturewater);
 	water.setTextureRect(sf::IntRect(0, 0, 1080.0f, 250.f));
-	water.setPosition(posriver.x, posriver.y);
 
 	sf::RectangleShape boat1(sf::Vector2f(200.0f, 62.5f));//200
 	boat1.setFillColor(sf::Color::Red);
-	sf::Vector2f posboat[3];
+	sf::Vector2f posboat[3][3];
 	for (i = 0; i <= 2; i++)
 	{
-		posboat[i].y = 1000;//360
+		if (i == 0)
+		{
+			for (j = 0; j <= 2; j++)
+			{
+				posboat[i][j].y = 1000;//360
+				posboat[i][0].x = -200; posboat[i][1].x = -600; posboat[i][2].x = -1000;
+			}
+		}
+		if (i == 1)
+		{
+			for (j = 0; j <= 2; j++)
+			{
+				posboat[i][j].y = 2500;//360
+				posboat[i][0].x = -200; posboat[i][1].x = -600; posboat[i][2].x = -1000;
+			}
+		}
+		if (i == 2)
+		{
+			for (j = 0; j <= 2; j++)
+			{
+				posboat[i][j].y = 4000;//360
+				posboat[i][0].x = -200; posboat[i][1].x = -600; posboat[i][2].x = -1000;
+			}
+		}
 	}
-	posboat[0].x = -200; posboat[1].x = -600; posboat[2].x = -1000;
 
 	sf::RectangleShape boat2(sf::Vector2f(120.0f, 62.5f));//120
 	boat2.setFillColor(sf::Color::Blue);
-	sf::Vector2f posboat2[3];
+	sf::Vector2f posboat2[3][3];
 	for (i = 0; i <= 2; i++)
 	{
-		posboat2[i].y = 1062.5f;//422.5
+		if (i == 0)
+		{
+			for (j = 0; j <= 2; j++)
+			{
+				posboat2[i][j].y = 1062.5f;//422.5
+				posboat2[i][0].x = 1080; posboat2[i][1].x = 1500; posboat2[i][2].x = 1820;
+			}
+		}
+		if (i == 1)
+		{
+			for (j = 0; j <= 2; j++)
+			{
+				posboat2[i][j].y = 2562.5f;//422.5
+				posboat2[i][0].x = 1080; posboat2[i][1].x = 1500; posboat2[i][2].x = 1820;
+			}
+		}
+		if (i == 2)
+		{
+			for (j = 0; j <= 2; j++)
+			{
+				posboat2[i][j].y = 4062.5f;//422.5
+				posboat2[i][0].x = 1080; posboat2[i][1].x = 1500; posboat2[i][2].x = 1820;
+			}
+		}
 	}
-	posboat2[0].x = 1080; posboat2[1].x = 1500; posboat2[2].x = 1820;
 
 	sf::RectangleShape boat3(sf::Vector2f(300.0f, 62.5f));//300
 	boat3.setFillColor(sf::Color::Black);
@@ -414,44 +462,46 @@ int main()
 
 		//Water DAMMMM******************
 		bool checkCol = 0;
-		/*if (player.getGlobalBounds().intersects(box.getGlobalBounds()))
+		for (i = 0; i <= 2; i++)
 		{
-			player.move(0.0f, 0.0f);
-			for (i = 0; i <= 2; i++)
+			if (Collision(posriver[i], river, player, player))
 			{
-				if (((player.getPosition().x + player.getSize().x > posboat[i].x) && (player.getPosition().x < posboat[i].x + boat1.getSize().x)        // player's horizontal range can touch the platform
-					&& (player.getPosition().y + player.getSize().y > posboat[i].y) && (player.getPosition().y < posboat[i].y + boat1.getSize().y)))// player's vertical   range can touch the platform
+				player.move(0.0f, 0.0f);
+				for (i = 0; i <= 2; i++)
 				{
-					checkCol = 1;
-					player.move(2.200f, 0.0f);
-					break;
-				}
-				if (((player.getPosition().x + player.getSize().x > posboat2[i].x) && (player.getPosition().x < posboat2[i].x + boat2.getSize().x)        // player's horizontal range can touch the platform
-					&& (player.getPosition().y + player.getSize().y > posboat2[i].y) && (player.getPosition().y < posboat2[i].y + boat2.getSize().y)))// player's vertical   range can touch the platform
-				{
-					checkCol = 1;
-					player.move(-4.5f, 0.0f);
-					break;
-				}
-				if (((player.getPosition().x + player.getSize().x > posboat3[i].x) && (player.getPosition().x < posboat3[i].x + boat3.getSize().x)        // player's horizontal range can touch the platform
-					&& (player.getPosition().y + player.getSize().y > posboat3[i].y) && (player.getPosition().y < posboat3[i].y + boat3.getSize().y)))// player's vertical   range can touch the platform
-				{
-					checkCol = 1;
-					player.move(3.5f, 0.0f);
-					break;
-				}
-				if (((player.getPosition().x + player.getSize().x > posboat4[i].x) && (player.getPosition().x < posboat4[i].x + boat4.getSize().x)        // player's horizontal range can touch the platform
-					&& (player.getPosition().y + player.getSize().y > posboat4[i].y) && (player.getPosition().y < posboat4[i].y + boat4.getSize().y)))// player's vertical   range can touch the platform
-				{
-					checkCol = 1;
-					player.move(-4.5f, 0.0f);
-					break;
+					for (j = 0; j <= 2; j++)
+					{
+						if (Collision(posboat[i][j], boat1, player, player))
+						{
+							checkCol = 1;
+							player.move(2.200f, 0.0f);
+							break;
+						}
+						if (Collision(posboat2[i][j], boat2, player, player))
+						{
+							checkCol = 1;
+							player.move(-4.5f, 0.0f);
+							break;
+						}
+						if (Collision(posboat3[i], boat3, player, player))
+						{
+							checkCol = 1;
+							player.move(3.5f, 0.0f);
+							break;
+						}
+						if (Collision(posboat4[i], boat4, player, player))
+						{
+							checkCol = 1;
+							player.move(-4.5f, 0.0f);
+							break;
+						}
+					}
+					if (checkCol != 1) {
+						player.setPosition(spawnPoint);
+					}
 				}
 			}
-			if (checkCol != 1) {
-				player.setPosition(spawnPoint);
-			}
-		}*/
+		}
 		//itemclock
 		for (i = 0; i <= 2; i++)
 		{
@@ -511,23 +561,29 @@ int main()
 		//boat1
 		for (i = 0; i <= 2; i++)
 		{
-			if (posboat[i].x >= 1080)
+			for (j = 0; j <= 2; j++)
 			{
-				posboat[i].x = -200;
-			}
-			else {
-				posboat[i].x += 2.2f;
+				if (posboat[i][j].x >= 1080)
+				{
+					posboat[i][j].x = -200;
+				}
+				else {
+					posboat[i][j].x += 2.2f;
+				}
 			}
 		}
 		//boat2
 		for (i = 0; i <= 2; i++)
 		{
-			if (posboat2[i].x <= -220)
+			for (j = 0; j <= 2; j++)
 			{
-				posboat2[i].x = 1080;
-			}
-			else {
-				posboat2[i].x -= 4.5f;
+				if (posboat2[i][j].x <= -220)
+				{
+					posboat2[i][j].x = 1080;
+				}
+				else {
+					posboat2[i][j].x -= 4.5f;
+				}
 			}
 		}
 		//boat3
@@ -581,18 +637,28 @@ int main()
 		window.draw(green);
 		window.draw(red);
 		window.draw(yellow);
-		window.draw(river);
-		window.draw(water);
-
 		for (i = 0; i <= 2; i++)
 		{
-			boat1.setPosition(posboat[i].x, posboat[i].y);
-			window.draw(boat1);
+			river.setPosition(posriver[i].x, posriver[i].y);
+			water.setPosition(posriver[i].x, posriver[i].y);
+			window.draw(river);
+			window.draw(water);
 		}
 		for (i = 0; i <= 2; i++)
 		{
-			boat2.setPosition(posboat2[i].x, posboat2[i].y);
-			window.draw(boat2);
+			for (j = 0; j <= 2; j++)
+			{
+				boat1.setPosition(posboat[i][j].x, posboat[i][j].y);
+				window.draw(boat1);
+			}
+		}
+		for (i = 0; i <= 2; i++)
+		{
+			for (j = 0; j <= 2; j++)
+			{
+				boat2.setPosition(posboat2[i][j].x, posboat2[i][j].y);
+				window.draw(boat2);
+			}
 		}
 		for (i = 0; i <= 1; i++)
 		{
@@ -654,5 +720,19 @@ float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float v
 		{
 			poscary = rand() % 4801;
 		}
+	}
+}
+bool Collision(sf::Vector2f posobject, sf::RectangleShape sizeobject, sf::RectangleShape posplayerfunc, sf::RectangleShape playersizefunc)
+{
+	if (((posplayerfunc.getPosition().x + playersizefunc.getSize().x > posobject.x) && (posplayerfunc.getPosition().x < posobject.x + sizeobject.getSize().x)        // player's horizontal range can touch the platform
+		&& (posplayerfunc.getPosition().y + playersizefunc.getSize().y > posobject.y) && (posplayerfunc.getPosition().y < posobject.y + sizeobject.getSize().y)))
+	{
+		collinreturn = 1;
+		return collinreturn;
+	}
+	else
+	{
+		collinreturn = 0;
+		return collinreturn;
 	}
 }
