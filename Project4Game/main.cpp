@@ -64,19 +64,19 @@ int main()
 	sf::RectangleShape purple2(sf::Vector2f(10.f, 10.f));
 	purple2.setFillColor(sf::Color::Magenta);
 
-	sf::RectangleShape box(sf::Vector2f(1080.f, 250.f));//250
-	box.setFillColor(sf::Color::Cyan);
-	sf::Vector2f spawnbox;
-	spawnbox.x = 0;
-	spawnbox.y = 1000;
-	box.setPosition(spawnbox.x, spawnbox.y);
+	sf::RectangleShape river(sf::Vector2f(1080.f, 250.f));//250
+	river.setFillColor(sf::Color::Cyan);
+	sf::Vector2f posriver;
+	posriver.x = 0;
+	posriver.y = 1000;
+	river.setPosition(posriver.x, posriver.y);
 	sf::Sprite water;
 	sf::Texture texturewater;
 	texturewater.loadFromFile("water.png");
 	texturewater.setSmooth(true);
 	water.setTexture(texturewater);
 	water.setTextureRect(sf::IntRect(0, 0, 1080.0f, 250.f));
-	water.setPosition(spawnbox.x, spawnbox.y);
+	water.setPosition(posriver.x, posriver.y);
 
 	sf::RectangleShape boat1(sf::Vector2f(200.0f, 62.5f));//200
 	boat1.setFillColor(sf::Color::Red);
@@ -581,7 +581,7 @@ int main()
 		window.draw(green);
 		window.draw(red);
 		window.draw(yellow);
-		window.draw(box);
+		window.draw(river);
 		window.draw(water);
 
 		for (i = 0; i <= 2; i++)
