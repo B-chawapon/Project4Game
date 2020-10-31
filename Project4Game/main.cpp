@@ -75,6 +75,7 @@ int main()
 		posriver[i].y = firstPosRiver; //1000 2500 4000
 		firstPosRiver += 1500;
 	}
+
 	sf::Sprite water;
 	sf::Texture texturewater;
 	texturewater.loadFromFile("water.png");
@@ -83,85 +84,139 @@ int main()
 	water.setTextureRect(sf::IntRect(0, 0, 1080.0f, 250.f));
 
 	sf::RectangleShape boat1(sf::Vector2f(200.0f, 62.5f));//200
-	boat1.setFillColor(sf::Color::Red);
-	sf::Vector2f posboat[3][3];
-	for (i = 0; i <= 2; i++)
+	boat1.setFillColor(sf::Color::Red);//Red
+	sf::Vector2f posboat[9];
+	for (i = 0; i <= 8; i++)
 	{
-		if (i == 0)
+		if (i >= 0 && i <= 2)
 		{
-			for (j = 0; j <= 2; j++)
-			{
-				posboat[i][j].y = 1000;//360
-				posboat[i][0].x = -200; posboat[i][1].x = -600; posboat[i][2].x = -1000;
-			}
+			posboat[i].y = 1000;//360
 		}
-		if (i == 1)
+		if (i >= 3 && i <= 5)
 		{
-			for (j = 0; j <= 2; j++)
-			{
-				posboat[i][j].y = 2500;//360
-				posboat[i][0].x = -200; posboat[i][1].x = -600; posboat[i][2].x = -1000;
-			}
+			posboat[i].y = 2625.0f;//360
 		}
-		if (i == 2)
+		if (i >= 6 && i <= 8)
 		{
-			for (j = 0; j <= 2; j++)
-			{
-				posboat[i][j].y = 4000;//360
-				posboat[i][0].x = -200; posboat[i][1].x = -600; posboat[i][2].x = -1000;
-			}
+			posboat[i].y = 4062.5f;//360
 		}
 	}
-
+	posboat[0].x = -200; posboat[1].x = -600; posboat[2].x = -1000;
+	posboat[3].x = -200; posboat[4].x = -600; posboat[5].x = -1000;
+	posboat[6].x = -200; posboat[7].x = -600; posboat[8].x = -1000;
 	sf::RectangleShape boat2(sf::Vector2f(120.0f, 62.5f));//120
-	boat2.setFillColor(sf::Color::Blue);
-	sf::Vector2f posboat2[3][3];
-	for (i = 0; i <= 2; i++)
+	boat2.setFillColor(sf::Color::Blue);//Blue
+	sf::Vector2f posboat2[9];
+	for (i = 0; i <= 8; i++)
 	{
-		if (i == 0)
+		if (i >= 0 && i <= 2)
 		{
-			for (j = 0; j <= 2; j++)
-			{
-				posboat2[i][j].y = 1062.5f;//422.5
-				posboat2[i][0].x = 1080; posboat2[i][1].x = 1500; posboat2[i][2].x = 1820;
-			}
+			posboat2[i].y = 1062.5f;//360
 		}
-		if (i == 1)
+		if (i >= 3 && i <= 5)
 		{
-			for (j = 0; j <= 2; j++)
-			{
-				posboat2[i][j].y = 2562.5f;//422.5
-				posboat2[i][0].x = 1080; posboat2[i][1].x = 1500; posboat2[i][2].x = 1820;
-			}
+			posboat2[i].y = 2562.5f;//360
 		}
-		if (i == 2)
+		if (i >= 6 && i <= 8)
 		{
-			for (j = 0; j <= 2; j++)
-			{
-				posboat2[i][j].y = 4062.5f;//422.5
-				posboat2[i][0].x = 1080; posboat2[i][1].x = 1500; posboat2[i][2].x = 1820;
-			}
+			posboat2[i].y = 4187.5f;//360
 		}
 	}
+	posboat2[0].x = 1080; posboat2[1].x = 1500; posboat2[2].x = 1820;
+	posboat2[3].x = 1080; posboat2[4].x = 1500; posboat2[5].x = 1820;
+	posboat2[6].x = 1080; posboat2[7].x = 1500; posboat2[8].x = 1820;
 
 	sf::RectangleShape boat3(sf::Vector2f(300.0f, 62.5f));//300
-	boat3.setFillColor(sf::Color::Black);
+	boat3.setFillColor(sf::Color::Black);//Black
 	boat3.setPosition(1150, 485.0f);//485.0
-	sf::Vector2f posboat3[2];
-	for (i = 0; i <= 1; i++)
+	sf::Vector2f posboat3[6];
+	for (i = 0; i <= 5; i++)
 	{
-		posboat3[i].y = 1125.0f;//485.0f
+		if (i >= 0 && i <= 1)
+		{
+			posboat3[i].y = 1125.0f;//485.0f
+		}
+		if (i >= 2 && i <= 3)
+		{
+			posboat3[i].y = 2500.0f;//485.0f
+		}
+		if (i >= 4 && i <= 5)
+		{
+			posboat3[i].y = 4125.0f;//485.0f
+		}
 	}
 	posboat3[0].x = -300; posboat3[1].x = -900;
-
-	sf::RectangleShape boat4(sf::Vector2f(225.0f, 62.5f));//225.f
-	boat4.setFillColor(sf::Color::White);
-	sf::Vector2f posboat4[2];
-	for (i = 0; i <= 1; i++)
+	posboat3[2].x = -300; posboat3[3].x = -900;
+	posboat3[4].x = -300; posboat3[5].x = -900;
+	sf::RectangleShape boat4(sf::Vector2f(240.0f, 62.5f));//225.f
+	boat4.setFillColor(sf::Color::White);//White
+	sf::Vector2f posboat4[6];
+	for (i = 0; i <= 5; i++)
 	{
-		posboat4[i].y = 1187.5f;//547.5
+		if (i >= 0 && i <= 1)
+		{
+			posboat4[i].y = 1187.5f;//547.5
+		}
+		if (i >= 2 && i <= 3)
+		{
+			posboat4[i].y = 2687.5f;//547.5
+		}
+		if (i >= 4 && i <= 5)
+		{
+			posboat4[i].y = 4000;//547.5
+		}
 	}
-	posboat4[0].x = 1200; posboat3[1].x = 2200;
+	posboat4[0].x = 1200; posboat4[1].x = 2200;
+	posboat4[2].x = 1200; posboat4[3].x = 2200;
+	posboat4[4].x = 1200; posboat4[5].x = 2200;
+
+	sf::Sprite sushiyelloworangered;
+	sf::Texture texturesushiyelloworangered;
+	texturesushiyelloworangered.loadFromFile("sushiyelloworangered.png");
+	texturesushiyelloworangered.setSmooth(true);
+	sushiyelloworangered.setTexture(texturesushiyelloworangered);
+	sushiyelloworangered.setTextureRect(sf::IntRect(0.0f, 0.0f, 200.f, 63.f));
+	sushiyelloworangered.setScale(sf::Vector2f(1.0f, 1.0f));
+
+	sf::Sprite duosushi;
+	sf::Texture textureduosushi;
+	textureduosushi.loadFromFile("duosushi.png");
+	textureduosushi.setSmooth(true);
+	duosushi.setTexture(textureduosushi);
+	duosushi.setTextureRect(sf::IntRect(0.0f, 0.0f, 120.f, 63.f));
+	duosushi.setScale(sf::Vector2f(1.0f, 1.0f));
+
+	sf::Sprite mixsuhi;
+	sf::Texture texturemixsushi;
+	texturemixsushi.loadFromFile("mixsushi.png");
+	texturemixsushi.setSmooth(true);
+	mixsuhi.setTexture(texturemixsushi);
+	mixsuhi.setTextureRect(sf::IntRect(0.0f, 0.0f, 300.f, 63.f));
+	mixsuhi.setScale(sf::Vector2f(1.0f, 1.0f));
+
+	sf::Sprite uniship;
+	sf::Texture textureuni;
+	textureuni.loadFromFile("uni.png");
+	textureuni.setSmooth(true);
+	uniship.setTexture(textureuni);
+	uniship.setTextureRect(sf::IntRect(0.0f, 0.0f, 242.f, 63.f));
+	uniship.setScale(sf::Vector2f(1.0f, 1.0f));
+
+	sf::Sprite sushiboat;
+	sf::Texture textureusushiboat;
+	textureusushiboat.loadFromFile("sushiboat.png");
+	textureusushiboat.setSmooth(true);
+	sushiboat.setTexture(textureusushiboat);
+	sushiboat.setTextureRect(sf::IntRect(0.0f, 0.0f, 120.f, 63.f));
+	sushiboat.setScale(sf::Vector2f(1.1f, 1.2f));
+
+	sf::Sprite woodpae;
+	sf::Texture textureuwoodpae;
+	textureuwoodpae.loadFromFile("boat.png");
+	textureuwoodpae.setSmooth(true);
+	woodpae.setTexture(textureuwoodpae);
+	woodpae.setTextureRect(sf::IntRect(0.0f, 0.0f, 212.f, 63.f));
+	woodpae.setScale(sf::Vector2f(1.415094339622642f, 1.0f));
 
 	sf::RectangleShape itemclock(sf::Vector2f(40.f, 40.f));
 	sf::Texture textureclock;
@@ -197,7 +252,6 @@ int main()
 	texturecoins.setSmooth(true);
 	itemcoins.setTexture(texturecoins);
 	itemcoins.setTextureRect(sf::IntRect(0, 0, 128.f, 129));
-	itemcoins.setPosition(50, rand() % 700);
 	itemcoins.setScale(sf::Vector2f(0.275f, 0.295f));
 	sf::Vector2f poscoins[25];
 	for (i = 0; i <= 24; i++)
@@ -237,7 +291,6 @@ int main()
 	{
 		window.clear();
 		//printf("%f\n", purple.getPosition().y);
-		printf("%f\n", player.getPosition().y);
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -296,7 +349,6 @@ int main()
 		purple.setPosition(0, positionview.y);
 		purple2.setPosition(0, positionview.y + 710);
 
-		sf::Vector2f movement(0.f, 0.f);
 		//white
 		if (checksidexci == 0)
 		{
@@ -435,6 +487,7 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
+			slowtime = 0.1;
 			speed = 2;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
@@ -462,47 +515,278 @@ int main()
 
 		//Water DAMMMM******************
 		bool checkCol = 0;
-		for (i = 0; i <= 2; i++)
+		if (Collision(posriver[0], river, player, player))
 		{
-			if (Collision(posriver[i], river, player, player))
+			player.move(0.0f, 0.0f);
+			for (i = 0; i <= 2; i++)
 			{
-				player.move(0.0f, 0.0f);
-				for (i = 0; i <= 2; i++)
+				if (Collision(posboat[i], boat1, player, player))
 				{
-					for (j = 0; j <= 2; j++)
-					{
-						if (Collision(posboat[i][j], boat1, player, player))
-						{
-							checkCol = 1;
-							player.move(2.200f, 0.0f);
-							break;
-						}
-						if (Collision(posboat2[i][j], boat2, player, player))
-						{
-							checkCol = 1;
-							player.move(-4.5f, 0.0f);
-							break;
-						}
-						if (Collision(posboat3[i], boat3, player, player))
-						{
-							checkCol = 1;
-							player.move(3.5f, 0.0f);
-							break;
-						}
-						if (Collision(posboat4[i], boat4, player, player))
-						{
-							checkCol = 1;
-							player.move(-4.5f, 0.0f);
-							break;
-						}
-					}
-					if (checkCol != 1) {
-						player.setPosition(spawnPoint);
-					}
+					checkCol = 1;
+					player.move(2.200f * slowtime, 0.0f);
+					break;
+				}
+				if (Collision(posboat2[i], boat2, player, player))
+				{
+					checkCol = 1;
+					player.move(-4.5f * slowtime, 0.0f);
+					break;
+				}
+			}
+			for (i = 0; i <= 1; i++)
+			{
+				if (Collision(posboat3[i], boat3, player, player))
+				{
+					checkCol = 1;
+					player.move(3.5f * slowtime, 0.0f);
+					break;
+				}
+				if (Collision(posboat4[i], boat4, player, player))
+				{
+					checkCol = 1;
+					player.move(-4.5f * slowtime, 0.0f);
+					break;
+				}
+			}
+			if (checkCol != 1)
+			{
+				player.setPosition(spawnPoint);
+			}
+		}
+		if (Collision(posriver[1], river, player, player))
+		{
+			player.move(0.0f, 0.0f);
+			for (i = 3; i <= 5; i++)
+			{
+				if (Collision(posboat[i], boat1, player, player))
+				{
+					checkCol = 1;
+					player.move(4.200f * slowtime, 0.0f);
+					break;
+				}
+				if (Collision(posboat2[i], boat2, player, player))
+				{
+					checkCol = 1;
+					player.move(-5.0f * slowtime, 0.0f);
+					break;
+				}
+			}
+			for (i = 2; i <= 3; i++)
+			{
+				if (Collision(posboat3[i], boat3, player, player))
+				{
+					checkCol = 1;
+					player.move(4.5f * slowtime, 0.0f);
+					break;
+				}
+				if (Collision(posboat4[i], boat4, player, player))
+				{
+					checkCol = 1;
+					player.move(-6.5f * slowtime, 0.0f);
+					break;
+				}
+			}
+			if (checkCol != 1)
+			{
+				player.setPosition(spawnPoint);
+			}
+		}
+		if (Collision(posriver[2], river, player, player))
+		{
+			player.move(0.0f, 0.0f);
+			for (i = 6; i <= 8; i++)
+			{
+				if (Collision(posboat[i], boat1, player, player))
+				{
+					checkCol = 1;
+					player.move(7.200f * slowtime, 0.0f);
+					break;
+				}
+				if (Collision(posboat2[i], boat2, player, player))
+				{
+					checkCol = 1;
+					player.move(-7.0f * slowtime, 0.0f);
+					break;
+				}
+			}
+			for (i = 4; i <= 5; i++)
+			{
+				if (Collision(posboat3[i], boat3, player, player))
+				{
+					checkCol = 1;
+					player.move(3.5f * slowtime, 0.0f);
+					break;
+				}
+				if (Collision(posboat4[i], boat4, player, player))
+				{
+					checkCol = 1;
+					player.move(-8.5f * slowtime, 0.0f);
+					break;
+				}
+			}
+			if (checkCol != 1)
+			{
+				player.setPosition(spawnPoint);
+			}
+		}
+
+		//boat1
+		for (i = 0; i <= 8; i++)
+		{
+			if (i >= 0 && i <= 2)
+			{
+				if (posboat[i].x >= 1080)
+				{
+					posboat[i].x = -200;
+				}
+				else {
+					posboat[i].x += 2.2f * slowtime;
+				}
+			}
+			if (i >= 3 && i <= 5)
+			{
+				if (posboat[i].x >= 1080)
+				{
+					posboat[i].x = -200;
+				}
+				else {
+					posboat[i].x += 4.2f * slowtime;
+				}
+			}
+			if (i >= 6 && i <= 8)
+			{
+				if (posboat[i].x >= 1080)
+				{
+					posboat[i].x = -200;
+				}
+				else {
+					posboat[i].x += 7.2f * slowtime;
 				}
 			}
 		}
-		//itemclock
+		//boat2
+		for (i = 0; i <= 8; i++)
+		{
+			if (i >= 0 && i <= 2)
+			{
+				if (posboat2[i].x <= -220)
+				{
+					posboat2[i].x = 1080;
+				}
+				else {
+					posboat2[i].x -= 4.5f * slowtime;
+				}
+			}
+			if (i >= 3 && i <= 5)
+			{
+				if (posboat2[i].x <= -220)
+				{
+					posboat2[i].x = 1080;
+				}
+				else {
+					posboat2[i].x -= 5.0f * slowtime;
+				}
+			}
+			if (i >= 6 && i <= 8)
+			{
+				if (posboat2[i].x <= -220)
+				{
+					posboat2[i].x = 1080;
+				}
+				else {
+					posboat2[i].x -= 7.0f * slowtime;
+				}
+			}
+		}
+		//boat3
+		for (i = 0; i <= 5; i++)
+		{
+			if (i >= 0 && i <= 1)
+			{
+				if (posboat3[i].x >= 1080)
+				{
+					posboat3[i].x = -300;
+				}
+				else {
+					posboat3[i].x += 3.5f * slowtime;
+				}
+			}
+			if (i >= 2 && i <= 3)
+			{
+				if (posboat3[i].x >= 1080)
+				{
+					posboat3[i].x = -300;
+				}
+				else {
+					posboat3[i].x += 4.5f * slowtime;
+				}
+			}
+			if (i >= 4 && i <= 5)
+			{
+				if (posboat3[i].x >= 1080)
+				{
+					posboat3[i].x = -300;
+				}
+				else {
+					posboat3[i].x += 3.5f * slowtime;
+				}
+			}
+		}
+		//boat4
+		for (i = 0; i <= 5; i++)
+		{
+			if (i >= 0 && i <= 1)
+			{
+				if (posboat4[i].x <= -230)
+				{
+					posboat4[i].x = 1700;
+				}
+				else {
+					posboat4[i].x -= 4.5f * slowtime;
+				}
+			}
+			if (i >= 2 && i <= 3)
+			{
+				if (posboat4[i].x <= -230)
+				{
+					posboat4[i].x = 1700;
+				}
+				else {
+					posboat4[i].x -= 6.5f * slowtime;
+				}
+			}
+			if (i >= 4 && i <= 5)
+			{
+				if (posboat4[i].x <= -230)
+				{
+					posboat4[i].x = 1700;
+				}
+				else {
+					posboat4[i].x -= 8.5f * slowtime;
+				}
+			}
+		}
+
+		//check in window
+		/*if (player.getPosition().x < 0) {
+			player.setPosition(0, player.getPosition().y);
+		}
+		if (player.getPosition().x > 1060) {
+			player.setPosition(1060, player.getPosition().y);
+		}
+		if (player.getPosition().y < 0) {
+			player.setPosition(player.getPosition().x, 0);
+		}
+		if (player.getPosition().y < 0) {
+			player.setPosition(player.getPosition().x, 0);
+		}
+		if (player.getPosition().y > 5000) {
+			player.setPosition(player.getPosition().x, 5000);
+		}*/
+
+		//printf("%f\n", speed);
+
+			//itemclock
 		for (i = 0; i <= 2; i++)
 		{
 			if ((player.getPosition().x + player.getSize().x > posclock[i].x) && (player.getPosition().x < posclock[i].x + itemclock.getSize().x)        // player's horizontal range can touch the platform
@@ -558,76 +842,6 @@ int main()
 			}
 		}
 
-		//boat1
-		for (i = 0; i <= 2; i++)
-		{
-			for (j = 0; j <= 2; j++)
-			{
-				if (posboat[i][j].x >= 1080)
-				{
-					posboat[i][j].x = -200;
-				}
-				else {
-					posboat[i][j].x += 2.2f;
-				}
-			}
-		}
-		//boat2
-		for (i = 0; i <= 2; i++)
-		{
-			for (j = 0; j <= 2; j++)
-			{
-				if (posboat2[i][j].x <= -220)
-				{
-					posboat2[i][j].x = 1080;
-				}
-				else {
-					posboat2[i][j].x -= 4.5f;
-				}
-			}
-		}
-		//boat3
-		for (i = 0; i <= 1; i++)
-		{
-			if (posboat3[i].x >= 1080)
-			{
-				posboat3[i].x = -300;
-			}
-			else {
-				posboat3[i].x += 3.5f;
-			}
-		}
-		//boat4
-		for (i = 0; i <= 1; i++)
-		{
-			if (posboat4[i].x <= -230)
-			{
-				posboat4[i].x = 1700;
-			}
-			else {
-				posboat4[i].x -= 4.5f;
-			}
-		}
-
-		//check in window
-		if (player.getPosition().x < 0) {
-			player.setPosition(0, player.getPosition().y);
-		}
-		if (player.getPosition().x > 1060) {
-			player.setPosition(1060, player.getPosition().y);
-		}
-		if (player.getPosition().y < 0) {
-			player.setPosition(player.getPosition().x, 0);
-		}
-		if (player.getPosition().y < 0) {
-			player.setPosition(player.getPosition().x, 0);
-		}
-		if (player.getPosition().y > 5000) {
-			player.setPosition(player.getPosition().x, 5000);
-		}
-
-		//printf("%f\n", speed);
-
 		window.clear();
 
 		window.setView(view);
@@ -644,31 +858,74 @@ int main()
 			window.draw(river);
 			window.draw(water);
 		}
-		for (i = 0; i <= 2; i++)
+
+		for (i = 0; i <= 8; i++)
 		{
-			for (j = 0; j <= 2; j++)
+			if (i >= 0 && i <= 2)
 			{
-				boat1.setPosition(posboat[i][j].x, posboat[i][j].y);
-				window.draw(boat1);
+				sushiyelloworangered.setPosition(posboat[i].x - 0.0f, posboat[i].y - 0.0f);
 			}
-		}
-		for (i = 0; i <= 2; i++)
-		{
-			for (j = 0; j <= 2; j++)
+			if (i >= 3 && i <= 5)
 			{
-				boat2.setPosition(posboat2[i][j].x, posboat2[i][j].y);
-				window.draw(boat2);
 			}
+			if (i >= 6 && i <= 8)
+			{
+			}
+			boat1.setPosition(posboat[i].x, posboat[i].y);
+			window.draw(boat1);
+			window.draw(sushiyelloworangered);
 		}
-		for (i = 0; i <= 1; i++)
+		for (i = 0; i <= 8; i++)
 		{
+			if (i >= 0 && i <= 2)
+			{
+				duosushi.setPosition(posboat2[i].x - 0.0f, posboat2[i].y - 0.0f);
+			}
+			if (i >= 3 && i <= 5)
+			{
+				sushiboat.setPosition(posboat2[i].x - 10.0f, posboat2[i].y - 15.0f);// -10 -15
+			}
+			if (i >= 6 && i <= 8)
+			{
+			}
+			boat2.setPosition(posboat2[i].x, posboat2[i].y);
+			window.draw(boat2);
+			window.draw(duosushi);
+			window.draw(sushiboat);
+		}
+		for (i = 0; i <= 5; i++)
+		{
+			if (i >= 0 && i <= 1)
+			{
+				mixsuhi.setPosition(posboat3[i].x, posboat3[i].y);
+			}
+			if (i >= 2 && i <= 3)
+			{
+				woodpae.setPosition(posboat3[i].x, posboat3[i].y);
+			}
+			if (i >= 4 && i <= 5)
+			{
+			}
 			boat3.setPosition(posboat3[i].x, posboat3[i].y);
 			window.draw(boat3);
+			window.draw(mixsuhi);
+			window.draw(woodpae);
 		}
-		for (i = 0; i <= 1; i++)
+		for (i = 0; i <= 5; i++)
 		{
+			if (i >= 0 && i <= 1)
+			{
+				uniship.setPosition(posboat4[i].x, posboat4[i].y);
+			}
+			if (i >= 2 && i <= 3)
+			{
+			}
+			if (i >= 4 && i <= 5)
+			{
+			}
 			boat4.setPosition(posboat4[i].x, posboat4[i].y);
 			window.draw(boat4);
+			window.draw(uniship);
 		}
 		for (i = 0; i <= 2; i++)
 		{
@@ -703,7 +960,7 @@ float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float v
 	poscary = rand() % 4801;
 	for (j = 0; j != i; )
 	{
-		if (poscary >= viewfunc && poscary <= (viewfunc + 650))
+		if (poscary >= viewfunc && poscary <= (viewfunc + 670))
 		{
 			if (((poscary + colorcar.getSize().y) >= 950) && (poscary <= 1300))
 			{
@@ -715,6 +972,9 @@ float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float v
 				return realposcary;
 				break;
 			}
+			realposcary = poscary;
+			return realposcary;
+			break;
 		}
 		else
 		{
