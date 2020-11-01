@@ -41,7 +41,7 @@ int main()
 	sf::RectangleShape player(sf::Vector2f(20.f, 20.f));
 	player.setFillColor(sf::Color::Green);
 
-	sf::Vector2f spawnPoint = { 1080 / 2,0.f };
+	sf::Vector2f spawnPoint = { 1080 / 2,3800.f };
 	player.setPosition(spawnPoint);
 
 	sf::RectangleShape white(sf::Vector2f(50.f, sizecary));
@@ -149,7 +149,7 @@ int main()
 	posboat3[2].x = -300; posboat3[3].x = -900;
 	posboat3[4].x = -300; posboat3[5].x = -900;
 	sf::RectangleShape boat4(sf::Vector2f(240.0f, 62.5f));//225.f
-	boat4.setFillColor(sf::Color::White);//White
+	boat4.setFillColor(sf::Color::White);//White Transparent
 	sf::Vector2f posboat4[6];
 	for (i = 0; i <= 5; i++)
 	{
@@ -217,6 +217,38 @@ int main()
 	woodpae.setTexture(textureuwoodpae);
 	woodpae.setTextureRect(sf::IntRect(0.0f, 0.0f, 212.f, 63.f));
 	woodpae.setScale(sf::Vector2f(1.415094339622642f, 1.0f));
+
+	sf::Sprite zeldaboat;
+	sf::Texture texturezeldaboat;
+	texturezeldaboat.loadFromFile("zeldaboat.png");
+	texturezeldaboat.setSmooth(true);
+	zeldaboat.setTexture(texturezeldaboat);
+	zeldaboat.setTextureRect(sf::IntRect(0.0f, 0.0f, 200.f, 63.f));
+	zeldaboat.setScale(sf::Vector2f(1.0f, 1.0f));
+
+	sf::Sprite fishboat;
+	sf::Texture texturefishboat;
+	texturefishboat.loadFromFile("fishboat.png");
+	texturefishboat.setSmooth(true);
+	fishboat.setTexture(texturefishboat);
+	fishboat.setTextureRect(sf::IntRect(0.0f, 0.0f, 240.f, 63.f));
+	fishboat.setScale(sf::Vector2f(1.13f, 1.1f));
+
+	sf::Sprite crocodileboat;
+	sf::Texture texturecrocodile;
+	texturecrocodile.loadFromFile("crocodile.png");
+	texturecrocodile.setSmooth(true);
+	crocodileboat.setTexture(texturecrocodile);
+	crocodileboat.setTextureRect(sf::IntRect(0.0f, 0.0f, 300.f, 63.f));
+	crocodileboat.setScale(sf::Vector2f(1.0f, 1.0f));
+
+	sf::Sprite woodlogboat;
+	sf::Texture texturewoodlogboat;
+	texturewoodlogboat.loadFromFile("woodlog2.png");
+	texturewoodlogboat.setSmooth(true);
+	woodlogboat.setTexture(texturewoodlogboat);
+	woodlogboat.setTextureRect(sf::IntRect(0.0f, 0.0f, 240.f, 63.f));
+	woodlogboat.setScale(sf::Vector2f(1.00f, 1.0f));
 
 	sf::RectangleShape itemclock(sf::Vector2f(40.f, 40.f));
 	sf::Texture textureclock;
@@ -484,11 +516,19 @@ int main()
 			speed = 1;
 			slowtime = 1;
 			stackshoes = 0;
+			boat1.setFillColor(sf::Color::Red);//White Transparent
+			boat2.setFillColor(sf::Color::Blue);//White Transparent
+			boat3.setFillColor(sf::Color::Black);//White Transparent
+			boat4.setFillColor(sf::Color::White);//White Transparent
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
 			slowtime = 0.1;
 			speed = 2;
+			boat1.setFillColor(sf::Color::Transparent);//White Transparent
+			boat2.setFillColor(sf::Color::Transparent);//White Transparent
+			boat3.setFillColor(sf::Color::Transparent);//White Transparent
+			boat4.setFillColor(sf::Color::Transparent);//White Transparent
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 		{
@@ -858,7 +898,6 @@ int main()
 			window.draw(river);
 			window.draw(water);
 		}
-
 		for (i = 0; i <= 8; i++)
 		{
 			if (i >= 0 && i <= 2)
@@ -867,6 +906,7 @@ int main()
 			}
 			if (i >= 3 && i <= 5)
 			{
+				zeldaboat.setPosition(posboat[i].x - 0.0f, posboat[i].y - 1.5f);
 			}
 			if (i >= 6 && i <= 8)
 			{
@@ -874,6 +914,7 @@ int main()
 			boat1.setPosition(posboat[i].x, posboat[i].y);
 			window.draw(boat1);
 			window.draw(sushiyelloworangered);
+			window.draw(zeldaboat);
 		}
 		for (i = 0; i <= 8; i++)
 		{
@@ -905,11 +946,13 @@ int main()
 			}
 			if (i >= 4 && i <= 5)
 			{
+				crocodileboat.setPosition(posboat3[i].x + .0f, posboat3[i].y);
 			}
 			boat3.setPosition(posboat3[i].x, posboat3[i].y);
 			window.draw(boat3);
 			window.draw(mixsuhi);
 			window.draw(woodpae);
+			window.draw(crocodileboat);
 		}
 		for (i = 0; i <= 5; i++)
 		{
@@ -919,13 +962,17 @@ int main()
 			}
 			if (i >= 2 && i <= 3)
 			{
+				fishboat.setPosition(posboat4[i].x - 30.0f, posboat4[i].y);
 			}
 			if (i >= 4 && i <= 5)
 			{
+				woodlogboat.setPosition(posboat4[i].x - 0.0f, posboat4[i].y);
 			}
 			boat4.setPosition(posboat4[i].x, posboat4[i].y);
 			window.draw(boat4);
 			window.draw(uniship);
+			window.draw(fishboat);
+			window.draw(woodlogboat);
 		}
 		for (i = 0; i <= 2; i++)
 		{
