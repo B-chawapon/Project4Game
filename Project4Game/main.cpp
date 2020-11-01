@@ -38,10 +38,10 @@ int main()
 
 	sf::Vector2f positionview(0, 0);
 
-	sf::RectangleShape player(sf::Vector2f(20.f, 20.f));
+	sf::RectangleShape player(sf::Vector2f(35.f, 50.f));//35
 	player.setFillColor(sf::Color::Green);
 
-	sf::Vector2f spawnPoint = { 1080 / 2,3800.f };
+	sf::Vector2f spawnPoint = { 1080 / 2,85.f };
 	player.setPosition(spawnPoint);
 
 	sf::RectangleShape white(sf::Vector2f(50.f, sizecary));
@@ -68,12 +68,22 @@ int main()
 	sf::RectangleShape river(sf::Vector2f(1080.f, 250.f));//250
 	river.setFillColor(sf::Color::Cyan);
 	sf::Vector2f posriver[3];
-	float firstPosRiver = 1000;
 	for (i = 0; i <= 2; i++)
 	{
 		posriver[i].x = 0;
-		posriver[i].y = firstPosRiver; //1000 2500 4000
-		firstPosRiver += 1500;
+		if (i == 0)
+		{
+			posriver[i].y = 1010;//1000+10
+		}
+		if (i == 1)
+		{
+			posriver[i].y = 2500;
+		}
+		if (i == 2)
+		{
+			posriver[i].y = 4030;//4000+30
+		}
+		//1000 2500 4000
 	}
 
 	sf::Sprite water;
@@ -84,13 +94,13 @@ int main()
 	water.setTextureRect(sf::IntRect(0, 0, 1080.0f, 250.f));
 
 	sf::RectangleShape boat1(sf::Vector2f(200.0f, 62.5f));//200
-	boat1.setFillColor(sf::Color::Red);//Red
+	boat1.setFillColor(sf::Color::Transparent);//Red
 	sf::Vector2f posboat[9];
 	for (i = 0; i <= 8; i++)
 	{
 		if (i >= 0 && i <= 2)
 		{
-			posboat[i].y = 1000;//360
+			posboat[i].y = 1010;//360
 		}
 		if (i >= 3 && i <= 5)
 		{
@@ -98,20 +108,20 @@ int main()
 		}
 		if (i >= 6 && i <= 8)
 		{
-			posboat[i].y = 4062.5f;//360
+			posboat[i].y = 4092.5f;//360
 		}
 	}
 	posboat[0].x = -200; posboat[1].x = -600; posboat[2].x = -1000;
 	posboat[3].x = -200; posboat[4].x = -600; posboat[5].x = -1000;
 	posboat[6].x = -200; posboat[7].x = -600; posboat[8].x = -1000;
 	sf::RectangleShape boat2(sf::Vector2f(120.0f, 62.5f));//120
-	boat2.setFillColor(sf::Color::Blue);//Blue
+	boat2.setFillColor(sf::Color::Transparent);//Blue
 	sf::Vector2f posboat2[9];
 	for (i = 0; i <= 8; i++)
 	{
 		if (i >= 0 && i <= 2)
 		{
-			posboat2[i].y = 1062.5f;//360
+			posboat2[i].y = 1072.5f;//360
 		}
 		if (i >= 3 && i <= 5)
 		{
@@ -119,7 +129,7 @@ int main()
 		}
 		if (i >= 6 && i <= 8)
 		{
-			posboat2[i].y = 4187.5f;//360
+			posboat2[i].y = 4217.5f;//360
 		}
 	}
 	posboat2[0].x = 1080; posboat2[1].x = 1500; posboat2[2].x = 1820;
@@ -127,14 +137,14 @@ int main()
 	posboat2[6].x = 1080; posboat2[7].x = 1500; posboat2[8].x = 1820;
 
 	sf::RectangleShape boat3(sf::Vector2f(300.0f, 62.5f));//300
-	boat3.setFillColor(sf::Color::Black);//Black
+	boat3.setFillColor(sf::Color::Transparent);//Black
 	boat3.setPosition(1150, 485.0f);//485.0
 	sf::Vector2f posboat3[6];
 	for (i = 0; i <= 5; i++)
 	{
 		if (i >= 0 && i <= 1)
 		{
-			posboat3[i].y = 1125.0f;//485.0f
+			posboat3[i].y = 1135.0f;//485.0f
 		}
 		if (i >= 2 && i <= 3)
 		{
@@ -142,20 +152,20 @@ int main()
 		}
 		if (i >= 4 && i <= 5)
 		{
-			posboat3[i].y = 4125.0f;//485.0f
+			posboat3[i].y = 4155.0f;//485.0f
 		}
 	}
 	posboat3[0].x = -300; posboat3[1].x = -900;
 	posboat3[2].x = -300; posboat3[3].x = -900;
 	posboat3[4].x = -300; posboat3[5].x = -900;
 	sf::RectangleShape boat4(sf::Vector2f(240.0f, 62.5f));//225.f
-	boat4.setFillColor(sf::Color::White);//White Transparent
+	boat4.setFillColor(sf::Color::Transparent);//White Transparent
 	sf::Vector2f posboat4[6];
 	for (i = 0; i <= 5; i++)
 	{
 		if (i >= 0 && i <= 1)
 		{
-			posboat4[i].y = 1187.5f;//547.5
+			posboat4[i].y = 1197.5f;//547.5
 		}
 		if (i >= 2 && i <= 3)
 		{
@@ -163,7 +173,7 @@ int main()
 		}
 		if (i >= 4 && i <= 5)
 		{
-			posboat4[i].y = 4000;//547.5
+			posboat4[i].y = 4030;//547.5
 		}
 	}
 	posboat4[0].x = 1200; posboat4[1].x = 2200;
@@ -228,27 +238,43 @@ int main()
 
 	sf::Sprite fishboat;
 	sf::Texture texturefishboat;
-	texturefishboat.loadFromFile("fishboat.png");
+	texturefishboat.loadFromFile("dog3jellygreen.png");
 	texturefishboat.setSmooth(true);
 	fishboat.setTexture(texturefishboat);
 	fishboat.setTextureRect(sf::IntRect(0.0f, 0.0f, 240.f, 63.f));
-	fishboat.setScale(sf::Vector2f(1.13f, 1.1f));
+	fishboat.setScale(sf::Vector2f(1.0f, 1.0f));
 
 	sf::Sprite crocodileboat;
 	sf::Texture texturecrocodile;
-	texturecrocodile.loadFromFile("crocodile.png");
+	texturecrocodile.loadFromFile("dogbubble.png");
 	texturecrocodile.setSmooth(true);
 	crocodileboat.setTexture(texturecrocodile);
 	crocodileboat.setTextureRect(sf::IntRect(0.0f, 0.0f, 300.f, 63.f));
 	crocodileboat.setScale(sf::Vector2f(1.0f, 1.0f));
 
-	sf::Sprite woodlogboat;
-	sf::Texture texturewoodlogboat;
-	texturewoodlogboat.loadFromFile("woodlog2.png");
-	texturewoodlogboat.setSmooth(true);
-	woodlogboat.setTexture(texturewoodlogboat);
-	woodlogboat.setTextureRect(sf::IntRect(0.0f, 0.0f, 240.f, 63.f));
-	woodlogboat.setScale(sf::Vector2f(1.00f, 1.0f));
+	sf::Sprite woodlogboat2;
+	sf::Texture texturewoodlogboat2;
+	texturewoodlogboat2.loadFromFile("woodlog2.png");
+	texturewoodlogboat2.setSmooth(true);
+	woodlogboat2.setTexture(texturewoodlogboat2);
+	woodlogboat2.setTextureRect(sf::IntRect(0.0f, 0.0f, 240.f, 63.f));
+	woodlogboat2.setScale(sf::Vector2f(1.00f, 1.0f));
+
+	sf::Sprite dogpizza;
+	sf::Texture texturedogpizza;
+	texturedogpizza.loadFromFile("dogpizza.png");
+	texturedogpizza.setSmooth(true);
+	dogpizza.setTexture(texturedogpizza);
+	dogpizza.setTextureRect(sf::IntRect(0.0f, 0.0f, 240.f, 63.f));
+	dogpizza.setScale(sf::Vector2f(0.8333333333333333f, 1.0f));
+
+	sf::Sprite dogham;
+	sf::Texture texturedogham;
+	texturedogham.loadFromFile("submarine.png");
+	texturedogham.setSmooth(true);
+	dogham.setTexture(texturedogham);
+	dogham.setTextureRect(sf::IntRect(0.0f, 0.0f, 120.f, 63.f));
+	dogham.setScale(sf::Vector2f(1.12f, 1.0f));
 
 	sf::RectangleShape itemclock(sf::Vector2f(40.f, 40.f));
 	sf::Texture textureclock;
@@ -292,6 +318,25 @@ int main()
 		poscoins[i].y = rand() % 4900;
 	}
 
+	sf::RectangleShape platmid(sf::Vector2f(1080.0f, 50.0f));//200
+	platmid.setFillColor(sf::Color::Cyan);
+	sf::Vector2f posplatmid[3];
+	for (i = 0; i <= 2; i++)
+	{
+		if (i == 0)
+		{
+			posplatmid[i].y = 355.0f;//360
+		}
+		if (i == 1)
+		{
+			posplatmid[i].y = 715.0f;//360
+		}
+		if (i == 2)
+		{
+			posplatmid[i].y = 1805.0f;//360
+		}
+	}
+
 	window.setFramerateLimit(60);
 
 	bool checksidexci = rand() % 2;
@@ -322,7 +367,7 @@ int main()
 	while (window.isOpen())
 	{
 		window.clear();
-		//printf("%f\n", purple.getPosition().y);
+		printf("%f\n", player.getPosition().y);
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -555,7 +600,7 @@ int main()
 
 		//Water DAMMMM******************
 		bool checkCol = 0;
-		if (Collision(posriver[0], river, player, player))
+		/*if (Collision(posriver[0], river, player, player))
 		{
 			player.move(0.0f, 0.0f);
 			for (i = 0; i <= 2; i++)
@@ -654,7 +699,7 @@ int main()
 				if (Collision(posboat3[i], boat3, player, player))
 				{
 					checkCol = 1;
-					player.move(3.5f * slowtime, 0.0f);
+					player.move(4.5f * slowtime, 0.0f);
 					break;
 				}
 				if (Collision(posboat4[i], boat4, player, player))
@@ -668,7 +713,7 @@ int main()
 			{
 				player.setPosition(spawnPoint);
 			}
-		}
+		}*/
 
 		//boat1
 		for (i = 0; i <= 8; i++)
@@ -768,7 +813,7 @@ int main()
 					posboat3[i].x = -300;
 				}
 				else {
-					posboat3[i].x += 3.5f * slowtime;
+					posboat3[i].x += 4.5f * slowtime;
 				}
 			}
 		}
@@ -891,6 +936,7 @@ int main()
 		window.draw(green);
 		window.draw(red);
 		window.draw(yellow);
+		//draw river
 		for (i = 0; i <= 2; i++)
 		{
 			river.setPosition(posriver[i].x, posriver[i].y);
@@ -898,6 +944,7 @@ int main()
 			window.draw(river);
 			window.draw(water);
 		}
+		//draw boat1
 		for (i = 0; i <= 8; i++)
 		{
 			if (i >= 0 && i <= 2)
@@ -910,12 +957,15 @@ int main()
 			}
 			if (i >= 6 && i <= 8)
 			{
+				dogpizza.setPosition(posboat[i].x - 0.0f, posboat[i].y - 0.0f);
 			}
 			boat1.setPosition(posboat[i].x, posboat[i].y);
 			window.draw(boat1);
 			window.draw(sushiyelloworangered);
 			window.draw(zeldaboat);
+			window.draw(dogpizza);
 		}
+		//draw boat2
 		for (i = 0; i <= 8; i++)
 		{
 			if (i >= 0 && i <= 2)
@@ -928,12 +978,15 @@ int main()
 			}
 			if (i >= 6 && i <= 8)
 			{
+				dogham.setPosition(posboat2[i].x - 10.0f, posboat2[i].y - 0.0f);
 			}
 			boat2.setPosition(posboat2[i].x, posboat2[i].y);
 			window.draw(boat2);
 			window.draw(duosushi);
 			window.draw(sushiboat);
+			window.draw(dogham);
 		}
+		//draw boat3
 		for (i = 0; i <= 5; i++)
 		{
 			if (i >= 0 && i <= 1)
@@ -954,6 +1007,7 @@ int main()
 			window.draw(woodpae);
 			window.draw(crocodileboat);
 		}
+		//draw boat4
 		for (i = 0; i <= 5; i++)
 		{
 			if (i >= 0 && i <= 1)
@@ -962,32 +1016,40 @@ int main()
 			}
 			if (i >= 2 && i <= 3)
 			{
-				fishboat.setPosition(posboat4[i].x - 30.0f, posboat4[i].y);
+				woodlogboat2.setPosition(posboat4[i].x - 0.0f, posboat4[i].y);
 			}
 			if (i >= 4 && i <= 5)
 			{
-				woodlogboat.setPosition(posboat4[i].x - 0.0f, posboat4[i].y);
+				fishboat.setPosition(posboat4[i].x - 0.0f, posboat4[i].y);
 			}
 			boat4.setPosition(posboat4[i].x, posboat4[i].y);
 			window.draw(boat4);
 			window.draw(uniship);
 			window.draw(fishboat);
-			window.draw(woodlogboat);
+			window.draw(woodlogboat2);
 		}
+		//draw clock
 		for (i = 0; i <= 2; i++)
 		{
 			itemclock.setPosition(posclock[i].x, posclock[i].y);
 			window.draw(itemclock);
 		}
+		//draw boots
 		for (i = 0; i <= 1; i++)
 		{
 			itemboots.setPosition(posboots[i].x, posboots[i].y);
 			window.draw(itemboots);
 		}
+		//draw coin
 		for (i = 0; i <= 24; i++)
 		{
 			itemcoins.setPosition(poscoins[i].x, poscoins[i].y);
 			window.draw(itemcoins);
+		}
+		for (i = 0; i <= 2; i++)
+		{
+			platmid.setPosition(posplatmid[i].x, posplatmid[i].y);
+			window.draw(platmid);
 		}
 		window.draw(player);
 		window.draw(purple);
@@ -1007,18 +1069,9 @@ float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float v
 	poscary = rand() % 4801;
 	for (j = 0; j != i; )
 	{
-		if (poscary >= viewfunc && poscary <= (viewfunc + 670))
+		if (poscary >= viewfunc && poscary <= (viewfunc + 670) && !(((poscary + colorcar.getSize().y) > 970) && (poscary < 1300))
+			&& !(((poscary + colorcar.getSize().y) > 2460) && (poscary < 2790)) && !(((poscary + colorcar.getSize().y) > 3990) && (poscary < 4320)) && poscary >= 200 && (poscary < 4870))
 		{
-			if (((poscary + colorcar.getSize().y) >= 950) && (poscary <= 1300))
-			{
-				poscary = rand() % 4801;
-			}
-			else
-			{
-				realposcary = poscary;
-				return realposcary;
-				break;
-			}
 			realposcary = poscary;
 			return realposcary;
 			break;

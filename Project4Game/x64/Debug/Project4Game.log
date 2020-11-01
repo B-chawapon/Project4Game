@@ -18,283 +18,323 @@ C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(36,39): warnin
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(84,50): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(94,50): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(84,41): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(94,41): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(178,69): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(188,69): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(178,62): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(188,62): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(178,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(188,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(178,50): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(188,50): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(186,57): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(196,57): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(186,50): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(196,50): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(186,44): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(196,44): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(186,38): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(196,38): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(194,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(204,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(194,49): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(204,49): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(194,43): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(204,43): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(194,37): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(204,37): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(202,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(212,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(202,49): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(212,49): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(202,43): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(212,43): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(202,37): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(212,37): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(210,58): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(220,58): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(210,51): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(220,51): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(210,45): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(220,45): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(210,39): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(220,39): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(218,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(228,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(218,49): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(228,49): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(218,43): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(228,43): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(218,37): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(228,37): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(226,58): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(236,58): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(226,51): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(236,51): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(226,45): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(236,45): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(226,39): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(236,39): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(234,57): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(244,57): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(234,50): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(244,50): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(234,44): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(244,44): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(234,38): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(244,38): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(242,62): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(252,62): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(242,55): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(252,55): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(242,49): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(252,49): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(242,43): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(252,43): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(250,60): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(260,61): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(250,53): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(260,54): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(250,47): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(260,48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(250,41): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(260,42): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(258,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(258,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(263,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(268,57): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(268,50): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(268,44): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(268,38): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(276,55): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(276,48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(276,42): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(276,36): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(284,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(284,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(289,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(264,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(290,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(276,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(302,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(277,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(303,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(286,45): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(312,45): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(291,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(317,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(292,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(318,26): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(299,12): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(304,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(309,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(314,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(345,60): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(344,12): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(349,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(354,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(359,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(390,60): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(345,48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(390,48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(359,66): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(404,66): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(359,58): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(404,58): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(359,44): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(404,44): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(379,76): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(424,76): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
           with
           [
               T=int
@@ -303,7 +343,7 @@ C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(379,76): warni
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(379,66): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(424,66): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
           with
           [
               T=int
@@ -312,54 +352,53 @@ C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(379,66): warni
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(392,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(393,29): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(393,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(403,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(404,29): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(404,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(416,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(417,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(417,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(427,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(428,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(428,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(440,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(441,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(441,22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(451,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(452,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(452,22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(464,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(465,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(465,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(475,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(476,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(476,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(526,18): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(835,19): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(838,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(437,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(438,29): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(438,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(448,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(449,29): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(449,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(461,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(462,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(462,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(472,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(473,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(473,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(485,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(486,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(486,22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(496,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(497,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(497,22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(509,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(510,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(510,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(520,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(521,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(521,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(571,18): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(880,19): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(883,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(839,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(884,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(866,20): warning C4305: '+=': truncation from 'double' to 'float'
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(868,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(911,20): warning C4305: '+=': truncation from 'double' to 'float'
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(913,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(869,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(914,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(1018,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(1022,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(1031): warning C4715: 'findPosCarY': not all control paths return a value
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(1075,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Chawapon\source\repos\Project4Game\Project4Game\main.cpp(1084): warning C4715: 'findPosCarY': not all control paths return a value
   Project4Game.vcxproj -> C:\Users\Chawapon\source\repos\Project4Game\x64\Debug\Project4Game.exe
