@@ -2,10 +2,15 @@
 #include<stdio.h>
 #include<iostream>
 #include<time.h>
+#include<iostream>
+#include <string>
+#include <sstream>
 //MAP  WEIGHT =1080   HEIGHT=5000;
+using namespace std;
 int j = 0;
 int i = 1;
 int m = 0;
+int s = 0;
 
 float speed = 1;
 float slowtime = 1;
@@ -20,6 +25,10 @@ bool collinreturn;
 float realposcary;
 static const float screenheight = 720.0f;
 static const float sizecary = 50.0f;
+
+int tempdistance;
+int hightDistance;
+bool allowDraw = 0;
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
 float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float viewfunc);
@@ -38,7 +47,7 @@ int main()
 
 	sf::Vector2f positionview(0, 0);
 
-	sf::RectangleShape player(sf::Vector2f(35.f, 50.f));//35
+	sf::RectangleShape player(sf::Vector2f(35.f, 35.f));//35
 	player.setFillColor(sf::Color::Green);
 
 	sf::Vector2f spawnPoint = { 1080 / 2,85.f };
@@ -295,8 +304,7 @@ int main()
 	textureboots.loadFromFile("boots.png");
 	itemboots.setTexture(&textureboots);
 	textureboots.setSmooth(true);
-	sf::Sprite itemclocksprite;
-	sf::Vector2f posboots[2];
+	sf::Vector2f posboots[3];
 	for (i = 0; i <= 1; i++)
 	{
 		posboots[i].x = rand() % 1000;
@@ -311,7 +319,7 @@ int main()
 	itemcoins.setTexture(texturecoins);
 	itemcoins.setTextureRect(sf::IntRect(0, 0, 128.f, 129));
 	itemcoins.setScale(sf::Vector2f(0.275f, 0.295f));
-	sf::Vector2f poscoins[25];
+	sf::Vector2f poscoins[26];
 	for (i = 0; i <= 24; i++)
 	{
 		poscoins[i].x = rand() % 1000;
@@ -336,6 +344,30 @@ int main()
 			posplatmid[i].y = 1805.0f;//360
 		}
 	}
+
+	sf::Font fontscore;
+	fontscore.loadFromFile("fonttext/GOTHICB.ttf");
+
+	sf::Text highscoretext;
+	highscoretext.setFont(fontscore);
+	highscoretext.setCharacterSize(20);
+	highscoretext.setString("Highscore 0");
+	sf::Text scoretext;
+	scoretext.setFont(fontscore);
+	scoretext.setCharacterSize(20);
+	scoretext.setString("Score 0");
+
+	sf::Text shoetext;
+	shoetext.setFont(fontscore);
+	shoetext.setCharacterSize(20);
+	shoetext.setString("Shoes 0");
+
+	sf::Text cointext;
+	cointext.setFont(fontscore);
+	cointext.setCharacterSize(20);
+	cointext.setString("Shoes 0");
+
+	int distance;
 
 	window.setFramerateLimit(60);
 
@@ -367,7 +399,7 @@ int main()
 	while (window.isOpen())
 	{
 		window.clear();
-		printf("%f\n", player.getPosition().y);
+		//printf("%f\n", player.getPosition().y);
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -434,9 +466,9 @@ int main()
 			if (white.getPosition().x >= 1150)
 			{
 				checksidexci = rand() % 2;
-				yci = rand() % 4801;
 				findPosCarY(white, yci, xci, positionview.y);
-				white.setPosition(xci, realposcary);
+				yci = realposcary;
+				white.setPosition(xci, yci);
 			}
 		}
 		else if (checksidexci == 1) {
@@ -445,8 +477,8 @@ int main()
 			if (white.getPosition().x < -50)
 			{
 				checksidexci = rand() % 2;
-				yci = rand() % 4801;
 				findPosCarY(white, yci, xci, positionview.y);
+				yci = realposcary;
 				white.setPosition(xci, realposcary);
 			}
 		}
@@ -458,9 +490,9 @@ int main()
 			if (green.getPosition().x >= 1150)
 			{
 				checksidexci2 = rand() % 2;
-				yci2 = rand() % 4801;
 				findPosCarY(green, yci2, xci2, positionview.y);
-				green.setPosition(xci, realposcary);
+				yci2 = realposcary;
+				green.setPosition(xci, yci2);
 			}
 		}
 		else if (checksidexci2 == 1) {
@@ -469,9 +501,9 @@ int main()
 			if (green.getPosition().x < -50)
 			{
 				checksidexci2 = rand() % 2;
-				yci2 = rand() % 4801;
 				findPosCarY(green, yci2, xci2, positionview.y);
-				green.setPosition(xci2, realposcary);
+				yci2 = realposcary;
+				green.setPosition(xci2, yci2);
 			}
 		}
 		//red
@@ -482,9 +514,9 @@ int main()
 			if (red.getPosition().x >= 1300)
 			{
 				checksidexci3 = rand() % 2;
-				yci3 = rand() % 4801;
 				findPosCarY(red, yci3, xci3, positionview.y);
-				red.setPosition(xci3, realposcary);
+				yci3 = realposcary;
+				red.setPosition(xci3, yci3);
 			}
 		}
 		else if (checksidexci3 == 1) {
@@ -493,9 +525,9 @@ int main()
 			if (red.getPosition().x < -200)
 			{
 				checksidexci3 = rand() % 2;
-				yci3 = rand() % 4801;
 				findPosCarY(red, yci3, xci3, positionview.y);
-				red.setPosition(xci3, realposcary);
+				yci3 = realposcary;
+				red.setPosition(xci3, yci3);
 			}
 		}
 		//yellow
@@ -506,9 +538,9 @@ int main()
 			if (yellow.getPosition().x >= 1150)
 			{
 				checksidexci4 = rand() % 2;
-				yci4 = rand() % 4801;
 				findPosCarY(yellow, yci4, xci4, positionview.y);
-				yellow.setPosition(xci4, realposcary);
+				yci4 = realposcary;
+				yellow.setPosition(xci4, yci4);
 			}
 		}
 		else if (checksidexci4 == 1) {
@@ -517,9 +549,9 @@ int main()
 			if (yellow.getPosition().x < -50)
 			{
 				checksidexci4 = rand() % 2;
-				yci4 = rand() % 4801;
 				findPosCarY(yellow, yci4, xci4, positionview.y);
-				yellow.setPosition(xci4, realposcary);
+				yci4 = realposcary;
+				yellow.setPosition(xci4, yci4);
 			}
 		}
 
@@ -570,10 +602,21 @@ int main()
 		{
 			slowtime = 0.1;
 			speed = 2;
-			boat1.setFillColor(sf::Color::Transparent);//White Transparent
+			/*boat1.setFillColor(sf::Color::Transparent);//White Transparent
 			boat2.setFillColor(sf::Color::Transparent);//White Transparent
 			boat3.setFillColor(sf::Color::Transparent);//White Transparent
-			boat4.setFillColor(sf::Color::Transparent);//White Transparent
+			boat4.setFillColor(sf::Color::Transparent);//White Transparent*/
+			allowDraw = 1;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::T))
+		{
+			slowtime = 1;
+			speed = 1;
+			/*boat1.setFillColor(sf::Color::Transparent);//White Transparent
+			boat2.setFillColor(sf::Color::Transparent);//White Transparent
+			boat3.setFillColor(sf::Color::Transparent);//White Transparent
+			boat4.setFillColor(sf::Color::Transparent);//White Transparent*/
+			allowDraw = 0;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 		{
@@ -600,7 +643,7 @@ int main()
 
 		//Water DAMMMM******************
 		bool checkCol = 0;
-		/*if (Collision(posriver[0], river, player, player))
+		if (Collision(posriver[0], river, player, player))
 		{
 			player.move(0.0f, 0.0f);
 			for (i = 0; i <= 2; i++)
@@ -635,6 +678,8 @@ int main()
 			}
 			if (checkCol != 1)
 			{
+				distance = 0;
+				tempdistance = 0;
 				player.setPosition(spawnPoint);
 			}
 		}
@@ -673,6 +718,8 @@ int main()
 			}
 			if (checkCol != 1)
 			{
+				distance = 0;
+				tempdistance = 0;
 				player.setPosition(spawnPoint);
 			}
 		}
@@ -711,9 +758,11 @@ int main()
 			}
 			if (checkCol != 1)
 			{
+				distance = 0;
+				tempdistance = 0;
 				player.setPosition(spawnPoint);
 			}
-		}*/
+		}
 
 		//boat1
 		for (i = 0; i <= 8; i++)
@@ -901,7 +950,7 @@ int main()
 			if ((player.getPosition().x + player.getSize().x > posboots[i].x) && (player.getPosition().x < posboots[i].x + itemboots.getSize().x)        // player's horizontal range can touch the platform
 				&& (player.getPosition().y + player.getSize().y > posboots[i].y) && (player.getPosition().y < posboots[i].y + itemboots.getSize().y))// player's vertical   range can touch the platform
 			{
-				if (stackshoes >= 6)
+				if (stackshoes >= 6)//6
 				{
 					speed += 0;
 				}
@@ -913,6 +962,8 @@ int main()
 				posboots[i].x = rand() % 1000;
 				posboots[i].y = rand() % 4900;
 			}
+			posboots[2].x = -99;
+			posboots[2].y = -99;
 		}
 
 		//itemcoins
@@ -925,12 +976,56 @@ int main()
 				poscoins[i].x = -100;
 				poscoins[i].y = -100;
 			}
+			poscoins[25].x = -99;
+			poscoins[25].y = -99;
 		}
+
+		stringstream hs, sc, shoec, coinc;
+		printf("%d", s);
+
+		distance = ((player.getPosition().y + player.getSize().y) - 120);
+
+		//sc << "Score " << distance[wtf];
+
+		if (distance - tempdistance > 0)
+		{
+			tempdistance = distance;
+			sc << "Score " << distance;
+			scoretext.setString(sc.str());
+		}
+		else if (distance - tempdistance < 0)
+		{
+			sc << "Score " << tempdistance;
+			scoretext.setString(sc.str());
+		}
+
+		if (tempdistance - hightDistance > 0)
+		{
+			hightDistance = tempdistance;
+			hs << "HighScore " << hightDistance;
+		}
+		else
+		{
+			hs << "HighScore " << hightDistance;
+		}
+		coinc << "x " << scorecoins;
+		shoec << "x " << stackshoes;
+		cointext.setPosition(positionview.x + 550, positionview.y);
+		cointext.setString(coinc.str());
+		shoetext.setPosition(positionview.x + 650, positionview.y);
+		shoetext.setString(shoec.str());
+		scoretext.setPosition(positionview.x + 950, positionview.y);
+		highscoretext.setString(hs.str());
+		highscoretext.setPosition(positionview.x + 750, positionview.y);
 
 		window.clear();
 
 		window.setView(view);
-
+		for (i = 0; i <= 1; i++)
+		{
+			platmid.setPosition(posplatmid[i].x, posplatmid[i].y);
+			window.draw(platmid);
+		}
 		window.draw(white);
 
 		window.draw(green);
@@ -1035,25 +1130,39 @@ int main()
 			window.draw(itemclock);
 		}
 		//draw boots
-		for (i = 0; i <= 1; i++)
+		for (i = 0; i <= 2; i++)
 		{
+			if (allowDraw == 1)
+			{
+				posboots[2].x = positionview.x + 600;
+				posboots[2].y = positionview.y;
+			}
 			itemboots.setPosition(posboots[i].x, posboots[i].y);
 			window.draw(itemboots);
 		}
 		//draw coin
-		for (i = 0; i <= 24; i++)
+		for (i = 0; i <= 25; i++)
 		{
+			if (allowDraw == 1)
+			{
+				poscoins[25].x = positionview.x + 510;
+				poscoins[25].y = positionview.y;
+			}
 			itemcoins.setPosition(poscoins[i].x, poscoins[i].y);
 			window.draw(itemcoins);
 		}
-		for (i = 0; i <= 2; i++)
-		{
-			platmid.setPosition(posplatmid[i].x, posplatmid[i].y);
-			window.draw(platmid);
-		}
+		//temp55 = player.getPosition().y;
+
 		window.draw(player);
 		window.draw(purple);
 		window.draw(purple2);
+		if (allowDraw == 1)
+		{
+			window.draw(cointext);
+			window.draw(shoetext);
+			window.draw(scoretext);
+			window.draw(highscoretext);
+		}
 		window.display();
 		window.clear();
 	}
@@ -1067,14 +1176,24 @@ void ResizeView(const sf::RenderWindow& window, sf::View& view)
 float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float viewfunc)
 {
 	poscary = rand() % 4801;
+
 	for (j = 0; j != i; )
 	{
-		if (poscary >= viewfunc && poscary <= (viewfunc + 670) && !(((poscary + colorcar.getSize().y) > 970) && (poscary < 1300))
-			&& !(((poscary + colorcar.getSize().y) > 2460) && (poscary < 2790)) && !(((poscary + colorcar.getSize().y) > 3990) && (poscary < 4320)) && poscary >= 200 && (poscary < 4870))
+		if (poscary % 50 == 0)
 		{
-			realposcary = poscary;
-			return realposcary;
-			break;
+			if (poscary >= viewfunc && poscary <= (viewfunc + 670) && !(((poscary + colorcar.getSize().y) > 970) && (poscary < 1300))
+				&& !(((poscary + colorcar.getSize().y) > 2460) && (poscary < 2790)) && !(((poscary + colorcar.getSize().y) > 4000) && (poscary < 4320))
+				&& !(((poscary + colorcar.getSize().y) > 355) && (poscary < 410)) && !(((poscary + colorcar.getSize().y) > 715) && (poscary < 770))
+				&& !(((poscary + colorcar.getSize().y) > 1800) && (poscary < 1860)) && poscary >= 200 && (poscary < 4870))
+			{
+				realposcary = poscary;
+				return realposcary;
+				break;
+			}
+			else
+			{
+				poscary = rand() % 4801;
+			}
 		}
 		else
 		{
@@ -1082,6 +1201,7 @@ float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float v
 		}
 	}
 }
+
 bool Collision(sf::Vector2f posobject, sf::RectangleShape sizeobject, sf::RectangleShape posplayerfunc, sf::RectangleShape playersizefunc)
 {
 	if (((posplayerfunc.getPosition().x + playersizefunc.getSize().x > posobject.x) && (posplayerfunc.getPosition().x < posobject.x + sizeobject.getSize().x)        // player's horizontal range can touch the platform
