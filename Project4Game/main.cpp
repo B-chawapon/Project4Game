@@ -12,6 +12,8 @@ int i = 1;
 int m = 0;
 int s = 0;
 
+int a = 0;//blue
+
 float speed = 1;
 float slowtime = 1;
 bool checkslowtime = 0;
@@ -26,9 +28,13 @@ float realposcary;
 static const float screenheight = 720.0f;
 static const float sizecary = 50.0f;
 
+int side = 1;
 int tempdistance;
 int hightDistance;
-bool allowDraw = 0;
+int allowDraw = 0;
+int countalloDraw = 0;
+
+int answer;
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
 float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float viewfunc);
@@ -367,6 +373,10 @@ int main()
 	cointext.setCharacterSize(20);
 	cointext.setString("Shoes 0");
 
+	sf::Text answertext;
+	answertext.setFont(fontscore);
+	answertext.setCharacterSize(20);
+
 	int distance;
 
 	window.setFramerateLimit(60);
@@ -390,6 +400,33 @@ int main()
 	float xci4 = 0;
 	float yci4 = rand() % 4801;
 	yellow.setPosition(xci4, yci4);
+
+	int checksidexci5 = rand() % 2;
+	sf::Vector2f posblue[2][3];
+	for (a = 0; a <= 1; a++)
+	{
+		for (i = 0; i <= 2; i++)
+		{
+			if (checksidexci5 == 1)
+			{
+				posblue[a][i].x = 1080 + (540 * i);
+				side = -1;
+			}
+			else if (checksidexci5 == 0)
+			{
+				posblue[a][i].x = -50 - (540 * i);
+				side = 1;
+			}
+			if (a == 0)
+			{
+				posblue[a][i].y = 200;
+			}
+			if (a == 1)
+			{
+				posblue[a][i].y = 650;
+			}
+		}
+	}
 
 	sf::Clock clock;
 	sf::Time durationslow;
@@ -555,6 +592,45 @@ int main()
 			}
 		}
 
+		//blue
+		//lane 1 200
+		for (a = 0; a <= 1; a++)
+		{
+			for (i = 0; i <= 2; i++)
+			{
+				if (checksidexci5 == 0)
+				{
+					if (posblue[a][i].x > 1620)
+					{
+						posblue[a][i].x = -50;
+					}
+					if (a == 0)
+					{
+						posblue[a][i].x += (3.0f * slowtime * side);//1
+					}
+					if (a == 1)
+					{
+						posblue[a][i].x += (5.0f * slowtime * side);//-1
+					}
+				}
+				else if (checksidexci5 == 1)
+				{
+					if (posblue[a][i].x < -590)
+					{
+						posblue[a][i].x = 1080;
+					}
+					if (a == 0)
+					{
+						posblue[a][i].x += (3.0f * slowtime * side);//-1
+					}
+					if (a == 1)
+					{
+						posblue[a][i].x += (5.0f * slowtime * side);//-1
+					}
+				}
+			}
+		}
+
 		//player move  //+ Collinsions *************************************************************
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 		{
@@ -593,19 +669,21 @@ int main()
 			speed = 1;
 			slowtime = 1;
 			stackshoes = 0;
-			boat1.setFillColor(sf::Color::Red);//White Transparent
+			/*boat1.setFillColor(sf::Color::Red);//White Transparent
 			boat2.setFillColor(sf::Color::Blue);//White Transparent
 			boat3.setFillColor(sf::Color::Black);//White Transparent
-			boat4.setFillColor(sf::Color::White);//White Transparent
+			boat4.setFillColor(sf::Color::White);//White Transparent*/
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
-			slowtime = 0.1;
-			speed = 2;
+			slowtime = 0.1;//0.1
+			speed = 2;//2
 			/*boat1.setFillColor(sf::Color::Transparent);//White Transparent
 			boat2.setFillColor(sf::Color::Transparent);//White Transparent
 			boat3.setFillColor(sf::Color::Transparent);//White Transparent
 			boat4.setFillColor(sf::Color::Transparent);//White Transparent*/
+			//allowDraw = 1;
+			countalloDraw += 1;
 			allowDraw = 1;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::T))
@@ -936,7 +1014,7 @@ int main()
 		if (checkslowtime == 1)
 		{
 			durationslow = clock.getElapsedTime();
-			printf("%f\n", durationslow.asSeconds());
+			//printf("%f\n", durationslow.asSeconds());
 			if (durationslow.asSeconds() > 2.36363)
 			{
 				slowtime = 1;
@@ -980,13 +1058,9 @@ int main()
 			poscoins[25].y = -99;
 		}
 
-		stringstream hs, sc, shoec, coinc;
-		printf("%d", s);
-
+		stringstream hs, sc, shoec, coinc, answerc;
+		//printf("%d", s);
 		distance = ((player.getPosition().y + player.getSize().y) - 120);
-
-		//sc << "Score " << distance[wtf];
-
 		if (distance - tempdistance > 0)
 		{
 			tempdistance = distance;
@@ -998,7 +1072,6 @@ int main()
 			sc << "Score " << tempdistance;
 			scoretext.setString(sc.str());
 		}
-
 		if (tempdistance - hightDistance > 0)
 		{
 			hightDistance = tempdistance;
@@ -1008,12 +1081,20 @@ int main()
 		{
 			hs << "HighScore " << hightDistance;
 		}
+
+		answerc << player.getPosition().y;
+		//cout << player.getPosition().y << '\n';
+		answertext.setString(answerc.str());
+		answertext.setPosition(positionview.x, positionview.y);
+
 		coinc << "x " << scorecoins;
-		shoec << "x " << stackshoes;
 		cointext.setPosition(positionview.x + 550, positionview.y);
 		cointext.setString(coinc.str());
+
+		shoec << "x " << stackshoes;
 		shoetext.setPosition(positionview.x + 650, positionview.y);
 		shoetext.setString(shoec.str());
+
 		scoretext.setPosition(positionview.x + 950, positionview.y);
 		highscoretext.setString(hs.str());
 		highscoretext.setPosition(positionview.x + 750, positionview.y);
@@ -1152,10 +1233,18 @@ int main()
 			window.draw(itemcoins);
 		}
 		//temp55 = player.getPosition().y;
-
+		for (a = 0; a <= 1; a++)
+		{
+			for (i = 0; i <= 2; i++)
+			{
+				blue.setPosition(posblue[a][i].x, posblue[a][i].y);
+				window.draw(blue);
+			}
+		}
 		window.draw(player);
 		window.draw(purple);
 		window.draw(purple2);
+		window.draw(answertext);
 		if (allowDraw == 1)
 		{
 			window.draw(cointext);
