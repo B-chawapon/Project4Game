@@ -33,14 +33,14 @@ int side = 1;
 int tempdistance;
 int hightDistance;
 int allowDraw = 0;
-int countalloDraw = 0;
+int countcollin = 0;
 
 int answer;
 
 struct checksidexi
 {
 	int checkside;
-}whitex[2] = { 0,0 }, redx[2] = { 0,0 }, yellowx, bluex[2] = { 0,0 }, greenx;
+}whitex[2], redx[2], yellowx[3], bluex[2], greenx[3];
 int checksidexci;
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
@@ -342,8 +342,8 @@ int main()
 
 	sf::RectangleShape platmid(sf::Vector2f(1080.0f, 50.0f));//200
 	platmid.setFillColor(sf::Color::Cyan);
-	sf::Vector2f posplatmid[3];
-	for (i = 0; i <= 2; i++)
+	sf::Vector2f posplatmid[4];
+	for (i = 0; i <= 3; i++)
 	{
 		if (i == 0)
 		{
@@ -356,6 +356,10 @@ int main()
 		if (i == 2)
 		{
 			posplatmid[i].y = 1805.0f;//360
+		}
+		if (i == 3)
+		{
+			posplatmid[i].y = 3400.0f;//360
 		}
 	}
 
@@ -405,7 +409,7 @@ int main()
 				}
 				if (a == 1)
 				{
-					poswhite[a][i].y = 470;
+					poswhite[a][i].y = 1370;
 				}
 			}
 		}
@@ -421,16 +425,60 @@ int main()
 				}
 				if (a == 1)
 				{
-					poswhite[a][i].y = 470;
+					poswhite[a][i].y = 1370;//470
 				}
 			}
 		}
 	}
 
-	bool checksidexci2 = rand() % 2;
-	float xci2 = 0;
-	float yci2 = rand() % 4801;
-	green.setPosition(xci2, yci2);
+	//green
+	sf::Vector2f posgreen[3][2];
+	for (a = 0; a <= 2; a++)
+	{
+		greenx[a].checkside = rand() % 2;
+		if (greenx[a].checkside == 0)
+		{
+			greenx[a].checkside = 1;
+			for (i = 0; i <= 1; i++)
+			{
+				posgreen[a][i].x = -190 - (800 * i);
+
+				if (a == 0)
+				{
+					posgreen[a][i].y = 1560;//1370
+				}
+				if (a == 1)
+				{
+					posgreen[a][i].y = 3000;//1465
+				}
+				if (a == 2)
+				{
+					posgreen[a][i].y = 3500;
+				}
+			}
+		}
+		else
+		{
+			greenx[a].checkside = -1;
+			for (i = 0; i <= 1; i++)
+			{
+				posgreen[a][i].x = 1180 + (540 * i);
+
+				if (a == 0)
+				{
+					posgreen[a][i].y = 1560;//1370
+				}
+				if (a == 1)
+				{
+					posgreen[a][i].y = 3000;//1465
+				}
+				if (a == 2)
+				{
+					posgreen[a][i].y = 3500;
+				}
+			}
+		}
+	}
 
 	//red
 	sf::Vector2f posred[2][3];
@@ -472,53 +520,55 @@ int main()
 	}
 
 	//yellow
-	yellowx.checkside = rand() % 2;
-	if (yellowx.checkside == 0)
-	{
-		yellowx.checkside = 1;
-	}
-	else
-	{
-		yellowx.checkside = -1;
-	}
 	sf::Vector2f posyellow[3][3];
 	for (a = 0; a <= 2; a++)
 	{
-		for (i = 0; i <= 2; i++)
+		yellowx[a].checkside = rand() % 2;
+		if (yellowx[a].checkside == 0)
 		{
-			if (yellowx.checkside == -1)
+			yellowx[a].checkside = 1;
+			for (i = 0; i <= 2; i++)
 			{
-				posyellow[a][i].x = 1180 + (100 * i);
+				posyellow[a][i].x = -190 - (800 * i);
+
+				if (a == 0)
+				{
+					posyellow[a][i].y = 470;//1370
+				}
+				if (a == 1)
+				{
+					posyellow[a][i].y = 1465;//1465
+				}
+				if (a == 2)
+				{
+					posyellow[a][i].y = 1655;
+				}
 			}
-			else if (yellowx.checkside == 1)
+		}
+		else
+		{
+			yellowx[a].checkside = -1;
+			for (i = 0; i <= 2; i++)
 			{
-				posyellow[a][i].x = -190 - (100 * i);
-			}
-			if (a == 0)
-			{
-				posyellow[a][i].y = 1370;
-			}
-			if (a == 1)
-			{
-				posyellow[a][i].y = 1465;
-			}
-			if (a == 2)
-			{
-				posyellow[a][i].y = 1560;
+				posyellow[a][i].x = 1180 + (540 * i);
+
+				if (a == 0)
+				{
+					posyellow[a][i].y = 470;//1370
+				}
+				if (a == 1)
+				{
+					posyellow[a][i].y = 1465;//1465
+				}
+				if (a == 2)
+				{
+					posyellow[a][i].y = 1655;
+				}
 			}
 		}
 	}
 
 	//blue
-	/*bluex.checkside = rand() % 2;
-	if (bluex.checkside == 0)
-	{
-		bluex.checkside = 1;
-	}
-	else
-	{
-		bluex.checkside = -1;
-	}*/
 	sf::Vector2f posblue[2][3];
 	for (a = 0; a <= 1; a++)
 	{
@@ -635,13 +685,13 @@ int main()
 					{
 						poswhite[a][i].x = -120;
 					}
-					if (a == 0)
+					if (a == 0)//295
 					{
 						poswhite[a][i].x += (2.0f * slowtime * whitex[a].checkside);//1
 					}
-					if (a == 1)
+					if (a == 1)//1370
 					{
-						poswhite[a][i].x += (3.0f * slowtime * whitex[a].checkside);//-1
+						poswhite[a][i].x += (5.5f * slowtime * whitex[a].checkside);//-1
 					}
 				}
 				else if (whitex[a].checkside == -1)
@@ -650,41 +700,62 @@ int main()
 					{
 						poswhite[a][i].x = 1080;
 					}
-					if (a == 0)
+					if (a == 0)//295
 					{
 						poswhite[a][i].x += (2.0f * slowtime * whitex[a].checkside);//-1
 					}
-					if (a == 1)
+					if (a == 1)//1370
 					{
-						poswhite[a][i].x += (3.0f * slowtime * whitex[a].checkside);//-1
+						poswhite[a][i].x += (5.5f * slowtime * whitex[a].checkside);//-1
 					}
 				}
 			}
 		}
 		//green
-		/*if (checksidexci2 == 0)
+		for (a = 0; a <= 2; a++)
 		{
-			xci2 = -50;
-			green.move(18.0f * slowtime, 0.0f);
-			if (green.getPosition().x >= 1150)
+			for (i = 0; i <= 1; i++)
 			{
-				checksidexci2 = rand() % 2;
-				findPosCarY(green, yci2, xci2, positionview.y);
-				yci2 = realposcary;
-				green.setPosition(xci, yci2);
+				if (greenx[a].checkside == 1)
+				{
+					if (posgreen[a][i].x > 1080)
+					{
+						posgreen[a][i].x = -120;
+					}
+					if (a == 0)
+					{
+						posgreen[a][i].x += (3.0f * slowtime * greenx[a].checkside);//1
+					}
+					if (a == 1)
+					{
+						posgreen[a][i].x += (3.5f * slowtime * greenx[a].checkside);//-1
+					}
+					if (a == 2)
+					{
+						posgreen[a][i].x += (5.0f * slowtime * greenx[a].checkside);//-1
+					}
+				}
+				else if (greenx[a].checkside == -1)
+				{
+					if (posgreen[a][i].x < -120)
+					{
+						posgreen[a][i].x = 1080;
+					}
+					if (a == 0)
+					{
+						posgreen[a][i].x += (3.0f * slowtime * greenx[a].checkside);//-1
+					}
+					if (a == 1)
+					{
+						posgreen[a][i].x += (3.5f * slowtime * greenx[a].checkside);//-1
+					}
+					if (a == 2)
+					{
+						posgreen[a][i].x += (7.0f * slowtime * greenx[a].checkside);//-1
+					}
+				}
 			}
 		}
-		else if (checksidexci2 == 1) {
-			xci2 = 1150;
-			green.move(-18.0f * slowtime, 0.0f);
-			if (green.getPosition().x < -50)
-			{
-				checksidexci2 = rand() % 2;
-				findPosCarY(green, yci2, xci2, positionview.y);
-				yci2 = realposcary;
-				green.setPosition(xci2, yci2);
-			}
-		}*/
 		//red
 		for (a = 0; a <= 1; a++)
 		{
@@ -727,42 +798,42 @@ int main()
 		{
 			for (i = 0; i <= 2; i++)
 			{
-				if (yellowx.checkside == 1)
+				if (yellowx[a].checkside == 1)
 				{
-					if (posyellow[a][i].x > 1620)
+					if (posyellow[a][i].x > 1080)
 					{
-						posyellow[a][i].x = -190;
+						posyellow[a][i].x = -120;
 					}
 					if (a == 0)
 					{
-						posyellow[a][i].x += (5.5f * slowtime * yellowx.checkside * speed);//1
+						posyellow[a][i].x += (3.0f * slowtime * yellowx[a].checkside);//1
 					}
 					if (a == 1)
 					{
-						posyellow[a][i].x += (5.5f * slowtime * yellowx.checkside * speed);//-1
+						posyellow[a][i].x += (3.5f * slowtime * yellowx[a].checkside);//-1
 					}
 					if (a == 2)
 					{
-						posyellow[a][i].x += (5.5f * slowtime * yellowx.checkside * speed);//-1
+						posyellow[a][i].x += (5.0f * slowtime * yellowx[a].checkside);//-1
 					}
 				}
-				else if (yellowx.checkside == -1)
+				else if (yellowx[a].checkside == -1)
 				{
-					if (posyellow[a][i].x < -590)
+					if (posyellow[a][i].x < -120)
 					{
-						posyellow[a][i].x = 1180;
+						posyellow[a][i].x = 1080;
 					}
 					if (a == 0)
 					{
-						posyellow[a][i].x += (5.5f * slowtime * yellowx.checkside * speed);//-1
+						posyellow[a][i].x += (3.0f * slowtime * yellowx[a].checkside);//-1
 					}
 					if (a == 1)
 					{
-						posyellow[a][i].x += (5.5f * slowtime * yellowx.checkside * speed);//-1
+						posyellow[a][i].x += (3.5f * slowtime * yellowx[a].checkside);//-1
 					}
 					if (a == 2)
 					{
-						posyellow[a][i].x += (5.5f * slowtime * yellowx.checkside * speed);//-1
+						posyellow[a][i].x += (7.0f * slowtime * yellowx[a].checkside);//-1
 					}
 				}
 			}
@@ -836,15 +907,15 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
-			slowtime = 0.1;//0.1
+			//slowtime = 0.1;//0.1
 			speed = 2;//2
 			/*boat1.setFillColor(sf::Color::Transparent);//White Transparent
 			boat2.setFillColor(sf::Color::Transparent);//White Transparent
 			boat3.setFillColor(sf::Color::Transparent);//White Transparent
 			boat4.setFillColor(sf::Color::Transparent);//White Transparent*/
 			//allowDraw = 1;
-			countalloDraw += 1;
 			allowDraw = 1;
+			countcollin = 0;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::T))
 		{
@@ -862,7 +933,7 @@ int main()
 		}
 
 		//Collinsion car
-		for (a = 0; a <= 1; a++)
+		for (a = 0; a <= 2; a++)
 		{
 			for (i = 0; i <= 2; i++)
 			{
@@ -870,16 +941,25 @@ int main()
 				{
 					//player.setPosition(spawnPoint);
 					//speed -= 0.005;
+					countcollin += 1;
 				}
 				if (Collision(poswhite[a][i], white, player, player))
 				{
 					//player.setPosition(spawnPoint);
 					//speed -= 0.005;
+					countcollin += 1;
 				}
 				if (Collision(posred[a][i], red, player, player))
 				{
 					//player.setPosition(spawnPoint);
 					//speed -= 0.005;
+					countcollin += 1;
+				}
+				if (Collision(posyellow[a][i], yellow, player, player))
+				{
+					//player.setPosition(spawnPoint);
+					//speed -= 0.005;
+					countcollin += 1;
 				}
 			}
 		}
@@ -1247,7 +1327,7 @@ int main()
 			hs << "HighScore " << hightDistance;
 		}
 
-		answerc << player.getPosition().y;
+		answerc << player.getPosition().y << '\n' << countcollin;
 		cout << speed << '\n';
 		answertext.setString(answerc.str());
 		answertext.setPosition(positionview.x, positionview.y);
@@ -1267,7 +1347,7 @@ int main()
 		window.clear();
 
 		window.setView(view);
-		for (i = 0; i <= 2; i++)
+		for (i = 0; i <= 3; i++)
 		{
 			platmid.setPosition(posplatmid[i].x, posplatmid[i].y);
 			window.draw(platmid);
@@ -1291,7 +1371,17 @@ int main()
 				window.draw(blue);
 			}
 		}
-		window.draw(green);
+		//draw green
+		for (a = 0; a <= 2; a++)
+		{
+			for (i = 0; i <= 1; i++)
+			{
+				green.setPosition(posgreen[a][i].x, posgreen[a][i].y);
+				window.draw(green);
+			}
+		}
+
+		//draw red
 		for (a = 0; a <= 1; a++)
 		{
 			for (i = 0; i <= 2; i++)
