@@ -40,7 +40,7 @@ int answer;
 struct checksidexi
 {
 	int checkside;
-}whitex, redx, yellowx, bluex, greenx;
+}whitex[2] = { 0,0 }, redx[2] = { 0,0 }, yellowx, bluex[2] = { 0,0 }, greenx;
 int checksidexci;
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
@@ -389,35 +389,40 @@ int main()
 
 	window.setFramerateLimit(60);
 	//white
-	whitex.checkside = rand() % 2;
-	if (whitex.checkside == 0)
-	{
-		whitex.checkside = 1;
-	}
-	else
-	{
-		whitex.checkside = -1;
-	}
 	sf::Vector2f poswhite[2][3];
 	for (a = 0; a <= 1; a++)
 	{
-		for (i = 0; i <= 2; i++)
+		whitex[a].checkside = rand() % 2;
+		if (whitex[a].checkside == 0)
 		{
-			if (whitex.checkside == -1)
-			{
-				poswhite[a][i].x = 1080 + (540 * i);
-			}
-			else if (whitex.checkside == 1)
+			whitex[a].checkside = 1;
+			for (i = 0; i <= 2; i++)
 			{
 				poswhite[a][i].x = -120 - (540 * i);
+				if (a == 0)
+				{
+					poswhite[a][i].y = 295;
+				}
+				if (a == 1)
+				{
+					poswhite[a][i].y = 470;
+				}
 			}
-			if (a == 0)
+		}
+		else
+		{
+			whitex[a].checkside = -1;
+			for (i = 0; i <= 2; i++)
 			{
-				poswhite[a][i].y = 295;
-			}
-			if (a == 1)
-			{
-				poswhite[a][i].y = 470;
+				poswhite[a][i].x = 1080 + (540 * i);
+				if (a == 0)
+				{
+					poswhite[a][i].y = 295;
+				}
+				if (a == 1)
+				{
+					poswhite[a][i].y = 470;
+				}
 			}
 		}
 	}
@@ -428,39 +433,45 @@ int main()
 	green.setPosition(xci2, yci2);
 
 	//red
-	redx.checkside = rand() % 2;
-	if (redx.checkside == 0)
-	{
-		redx.checkside = 1;
-	}
-	else
-	{
-		redx.checkside = -1;
-	}
 	sf::Vector2f posred[2][3];
 	for (a = 0; a <= 1; a++)
 	{
-		for (i = 0; i <= 2; i++)
+		redx[a].checkside = rand() % 2;
+		if (redx[a].checkside == 0)
 		{
-			if (redx.checkside == -1)
-			{
-				posred[a][i].x = 1080 + (540 * i);
-			}
-			else if (redx.checkside == 1)
+			redx[a].checkside = 1;
+			for (i = 0; i <= 2; i++)
 			{
 				posred[a][i].x = -200 - (540 * i);
+				if (a == 0)
+				{
+					posred[a][i].y = 660;
+				}
+				if (a == 1)
+				{
+					posred[a][i].y = 835;
+				}
 			}
-			if (a == 0)
+		}
+		else
+		{
+			redx[a].checkside = -1;
+			for (i = 0; i <= 2; i++)
 			{
-				posred[a][i].y = 660;
-			}
-			if (a == 1)
-			{
-				posred[a][i].y = 835;
+				posred[a][i].x = 1080 + (540 * i);
+				if (a == 0)
+				{
+					posred[a][i].y = 660;
+				}
+				if (a == 1)
+				{
+					posred[a][i].y = 835;
+				}
 			}
 		}
 	}
 
+	//yellow
 	yellowx.checkside = rand() % 2;
 	if (yellowx.checkside == 0)
 	{
@@ -499,7 +510,7 @@ int main()
 	}
 
 	//blue
-	bluex.checkside = rand() % 2;
+	/*bluex.checkside = rand() % 2;
 	if (bluex.checkside == 0)
 	{
 		bluex.checkside = 1;
@@ -507,27 +518,41 @@ int main()
 	else
 	{
 		bluex.checkside = -1;
-	}
+	}*/
 	sf::Vector2f posblue[2][3];
 	for (a = 0; a <= 1; a++)
 	{
-		for (i = 0; i <= 2; i++)
+		bluex[a].checkside = rand() % 2;
+		if (bluex[a].checkside == 0)
 		{
-			if (bluex.checkside == -1)
-			{
-				posblue[a][i].x = 1080 + (540 * i);
-			}
-			else if (bluex.checkside == 1)
+			bluex[a].checkside = 1;
+			for (i = 0; i <= 2; i++)
 			{
 				posblue[a][i].x = -120 - (540 * i);
+				if (a == 0)
+				{
+					posblue[a][i].y = 200;
+				}
+				if (a == 1)
+				{
+					posblue[a][i].y = 565;
+				}
 			}
-			if (a == 0)
+		}
+		else
+		{
+			bluex[a].checkside = -1;
+			for (i = 0; i <= 2; i++)
 			{
-				posblue[a][i].y = 200;
-			}
-			if (a == 1)
-			{
-				posblue[a][i].y = 565;
+				posblue[a][i].x = 1080 + (540 * i);
+				if (a == 0)
+				{
+					posblue[a][i].y = 200;
+				}
+				if (a == 1)
+				{
+					posblue[a][i].y = 565;
+				}
 			}
 		}
 	}
@@ -604,7 +629,7 @@ int main()
 		{
 			for (i = 0; i <= 2; i++)
 			{
-				if (whitex.checkside == 1)
+				if (whitex[a].checkside == 1)
 				{
 					if (poswhite[a][i].x > 1620)
 					{
@@ -612,14 +637,14 @@ int main()
 					}
 					if (a == 0)
 					{
-						poswhite[a][i].x += (2.0f * slowtime * whitex.checkside);//1
+						poswhite[a][i].x += (2.0f * slowtime * whitex[a].checkside);//1
 					}
 					if (a == 1)
 					{
-						poswhite[a][i].x += (3.0f * slowtime * whitex.checkside);//-1
+						poswhite[a][i].x += (3.0f * slowtime * whitex[a].checkside);//-1
 					}
 				}
-				else if (whitex.checkside == -1)
+				else if (whitex[a].checkside == -1)
 				{
 					if (poswhite[a][i].x < -590)
 					{
@@ -627,11 +652,11 @@ int main()
 					}
 					if (a == 0)
 					{
-						poswhite[a][i].x += (2.0f * slowtime * whitex.checkside);//-1
+						poswhite[a][i].x += (2.0f * slowtime * whitex[a].checkside);//-1
 					}
 					if (a == 1)
 					{
-						poswhite[a][i].x += (3.0f * slowtime * whitex.checkside);//-1
+						poswhite[a][i].x += (3.0f * slowtime * whitex[a].checkside);//-1
 					}
 				}
 			}
@@ -665,7 +690,7 @@ int main()
 		{
 			for (i = 0; i <= 2; i++)
 			{
-				if (redx.checkside == 1)
+				if (redx[a].checkside == 1)
 				{
 					if (posred[a][i].x > 1620)
 					{
@@ -673,14 +698,14 @@ int main()
 					}
 					if (a == 0)
 					{
-						posred[a][i].x += (2.0f * slowtime * redx.checkside);//1
+						posred[a][i].x += (2.0f * slowtime * redx[a].checkside);//1
 					}
 					if (a == 1)
 					{
-						posred[a][i].x += (7.0f * slowtime * redx.checkside);//-1
+						posred[a][i].x += (7.0f * slowtime * redx[a].checkside);//-1
 					}
 				}
-				else if (redx.checkside == -1)
+				else if (redx[a].checkside == -1)
 				{
 					if (posred[a][i].x < -590)
 					{
@@ -688,11 +713,11 @@ int main()
 					}
 					if (a == 0)
 					{
-						posred[a][i].x += (2.0f * slowtime * redx.checkside);//-1
+						posred[a][i].x += (2.0f * slowtime * redx[a].checkside);//-1
 					}
 					if (a == 1)
 					{
-						posred[a][i].x += (7.0f * slowtime * redx.checkside);//-1
+						posred[a][i].x += (7.0f * slowtime * redx[a].checkside);//-1
 					}
 				}
 			}
@@ -749,7 +774,7 @@ int main()
 		{
 			for (i = 0; i <= 2; i++)
 			{
-				if (bluex.checkside == 1)
+				if (bluex[a].checkside == 1)
 				{
 					if (posblue[a][i].x > 1620)
 					{
@@ -757,14 +782,14 @@ int main()
 					}
 					if (a == 0)
 					{
-						posblue[a][i].x += (3.0f * slowtime * bluex.checkside);//1
+						posblue[a][i].x += (3.0f * slowtime * bluex[a].checkside);//1
 					}
 					if (a == 1)
 					{
-						posblue[a][i].x += (5.0f * slowtime * bluex.checkside);//-1
+						posblue[a][i].x += (5.0f * slowtime * bluex[a].checkside);//-1
 					}
 				}
-				else if (bluex.checkside == -1)
+				else if (bluex[a].checkside == -1)
 				{
 					if (posblue[a][i].x < -590)
 					{
@@ -772,11 +797,11 @@ int main()
 					}
 					if (a == 0)
 					{
-						posblue[a][i].x += (3.0f * slowtime * bluex.checkside);//-1
+						posblue[a][i].x += (3.0f * slowtime * bluex[a].checkside);//-1
 					}
 					if (a == 1)
 					{
-						posblue[a][i].x += (5.0f * slowtime * bluex.checkside);//-1
+						posblue[a][i].x += (5.0f * slowtime * bluex[a].checkside);//-1
 					}
 				}
 			}
