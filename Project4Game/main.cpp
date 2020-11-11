@@ -40,7 +40,7 @@ int answer;
 struct checksidexi
 {
 	int checkside;
-}whitex[10], redx[10], yellowx[10], bluex[10], greenx[10];
+}whitex[6], redx[7], yellowx[6], bluex[6], greenx[4];
 int checksidexci;
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
@@ -393,8 +393,8 @@ int main()
 
 	window.setFramerateLimit(60);
 	//white
-	sf::Vector2f poswhite[5][4];
-	for (a = 0; a <= 4; a++)
+	sf::Vector2f poswhite[6][4];
+	for (a = 0; a <= 5; a++)
 	{
 		whitex[a].checkside = rand() % 2;
 		if (whitex[a].checkside == 0)
@@ -439,6 +439,15 @@ int main()
 						poswhite[a][i].y = -99;
 					}
 				}
+				if (a == 5)
+				{
+					poswhite[a][i].x = -120 - (540 * i);
+					poswhite[a][i].y = 4400;
+					if (i == 3)
+					{
+						poswhite[a][i].y = -99;
+					}
+				}
 			}
 		}
 		else
@@ -476,8 +485,17 @@ int main()
 				}
 				if (a == 4)
 				{
-					poswhite[a][i].x = -120 - (540 * i);
+					poswhite[a][i].x = 1080 + (540 * i);
 					poswhite[a][i].y = 3605;
+					if (i == 3)
+					{
+						poswhite[a][i].y = -99;
+					}
+				}
+				if (a == 5)
+				{
+					poswhite[a][i].x = 1080 + (540 * i);
+					poswhite[a][i].y = 4400;
 					if (i == 3)
 					{
 						poswhite[a][i].y = -99;
@@ -547,8 +565,8 @@ int main()
 	}
 
 	//red
-	sf::Vector2f posred[5][3];
-	for (a = 0; a <= 4; a++)
+	sf::Vector2f posred[7][3];
+	for (a = 0; a <= 6; a++)
 	{
 		redx[a].checkside = rand() % 2;
 		if (redx[a].checkside == 0)
@@ -577,6 +595,14 @@ int main()
 				{
 					posred[a][i].y = 3145;
 				}
+				if (a == 5)
+				{
+					posred[a][i].y = 3795;
+				}
+				if (a == 6)
+				{
+					posred[a][i].y = 4590;
+				}
 			}
 		}
 		else
@@ -604,6 +630,14 @@ int main()
 				if (a == 4)
 				{
 					posred[a][i].y = 3145;
+				}
+				if (a == 5)
+				{
+					posred[a][i].y = 3795;
+				}
+				if (a == 6)
+				{
+					posred[a][i].y = 4590;
 				}
 			}
 		}
@@ -731,8 +765,8 @@ int main()
 	}
 
 	//blue
-	sf::Vector2f posblue[5][3];
-	for (a = 0; a <= 4; a++)
+	sf::Vector2f posblue[6][3];
+	for (a = 0; a <= 5; a++)
 	{
 		bluex[a].checkside = rand() % 2;
 		if (bluex[a].checkside == 0)
@@ -761,6 +795,10 @@ int main()
 				{
 					posblue[a][i].y = 3510;
 				}
+				if (a == 5)
+				{
+					posblue[a][i].y = 4495;
+				}
 			}
 		}
 		else
@@ -788,6 +826,10 @@ int main()
 				if (a == 4)
 				{
 					posblue[a][i].y = 3510;
+				}
+				if (a == 5)
+				{
+					posblue[a][i].y = 4495;
 				}
 			}
 		}
@@ -851,9 +893,9 @@ int main()
 		{
 			positionview.y = 0;
 		}
-		else if (player.getPosition().y >= 4650)
+		else if (player.getPosition().y >= 4585)
 		{
-			positionview.y = 4300;
+			positionview.y = 4235;
 		}
 		view.reset(sf::FloatRect(positionview.x, positionview.y, screen.x, screen.y));
 
@@ -861,7 +903,7 @@ int main()
 		purple2.setPosition(0, positionview.y + 710);
 
 		//white
-		for (a = 0; a <= 4; a++)
+		for (a = 0; a <= 5; a++)
 		{
 			for (i = 0; i <= 3; i++)
 			{
@@ -891,6 +933,10 @@ int main()
 					{
 						poswhite[a][i].x += (6.0f * slowtime * whitex[a].checkside);//-1
 					}
+					if (a == 5)//4400
+					{
+						poswhite[a][i].x += (10.0f * slowtime * whitex[a].checkside);//-1
+					}
 				}
 				else if (whitex[a].checkside == -1)
 				{
@@ -917,6 +963,10 @@ int main()
 					if (a == 4)//3605
 					{
 						poswhite[a][i].x += (6.0f * slowtime * whitex[a].checkside);//-1
+					}
+					if (a == 5)//4400
+					{
+						poswhite[a][i].x += (10.0f * slowtime * whitex[a].checkside);//-1
 					}
 				}
 			}
@@ -975,7 +1025,7 @@ int main()
 			}
 		}
 		//red
-		for (a = 0; a <= 4; a++)
+		for (a = 0; a <= 6; a++)
 		{
 			for (i = 0; i <= 2; i++)
 			{
@@ -1005,6 +1055,14 @@ int main()
 					{
 						posred[a][i].x += (7.5f * slowtime * redx[a].checkside);//-1
 					}
+					if (a == 5)//3795
+					{
+						posred[a][i].x += (8.0f * slowtime * redx[a].checkside);//-1
+					}
+					if (a == 6)//3795
+					{
+						posred[a][i].x += (17.0f * slowtime * redx[a].checkside);//-1
+					}
 				}
 				else if (redx[a].checkside == -1)
 				{
@@ -1031,6 +1089,14 @@ int main()
 					if (a == 4)//3145
 					{
 						posred[a][i].x += (7.5f * slowtime * redx[a].checkside);//-1
+					}
+					if (a == 5)//3795
+					{
+						posred[a][i].x += (8.0f * slowtime * redx[a].checkside);//-1
+					}
+					if (a == 6)//3795
+					{
+						posred[a][i].x += (17.0f * slowtime * redx[a].checkside);//-1
 					}
 				}
 			}
@@ -1106,7 +1172,7 @@ int main()
 		}
 
 		//blue
-		for (a = 0; a <= 4; a++)
+		for (a = 0; a <= 5; a++)
 		{
 			for (i = 0; i <= 2; i++)
 			{
@@ -1136,6 +1202,10 @@ int main()
 					{
 						posblue[a][i].x += (10.5f * slowtime * bluex[a].checkside);//-1
 					}
+					if (a == 5)//3510
+					{
+						posblue[a][i].x += (12.5f * slowtime * bluex[a].checkside);//-1
+					}
 				}
 				else if (bluex[a].checkside == -1)
 				{
@@ -1162,6 +1232,10 @@ int main()
 					if (a == 4)//3510
 					{
 						posblue[a][i].x += (10.5f * slowtime * bluex[a].checkside);//-1
+					}
+					if (a == 5)//3510
+					{
+						posblue[a][i].x += (12.5f * slowtime * bluex[a].checkside);//-1
 					}
 				}
 			}
@@ -1222,7 +1296,7 @@ int main()
 		}
 
 		//Collinsion car
-		for (a = 0; a <= 5; a++)
+		for (a = 0; a <= 6; a++)
 		{
 			for (i = 0; i <= 5; i++)
 			{
@@ -1520,11 +1594,11 @@ int main()
 		}
 
 		//check in window
-		/*if (player.getPosition().x < 0) {
+		if (player.getPosition().x < 0) {
 			player.setPosition(0, player.getPosition().y);
 		}
-		if (player.getPosition().x > 1060) {
-			player.setPosition(1060, player.getPosition().y);
+		if (player.getPosition().x > 1045) {
+			player.setPosition(1045, player.getPosition().y);
 		}
 		if (player.getPosition().y < 0) {
 			player.setPosition(player.getPosition().x, 0);
@@ -1532,9 +1606,9 @@ int main()
 		if (player.getPosition().y < 0) {
 			player.setPosition(player.getPosition().x, 0);
 		}
-		if (player.getPosition().y > 5000) {
-			player.setPosition(player.getPosition().x, 5000);
-		}*/
+		if (player.getPosition().y > 4920) {
+			player.setPosition(player.getPosition().x, 4920);
+		}
 
 		//printf("%f\n", speed);
 
@@ -1544,7 +1618,7 @@ int main()
 			if ((player.getPosition().x + player.getSize().x > posclock[i].x) && (player.getPosition().x < posclock[i].x + itemclock.getSize().x)        // player's horizontal range can touch the platform
 				&& (player.getPosition().y + player.getSize().y > posclock[i].y) && (player.getPosition().y < posclock[i].y + itemclock.getSize().y))// player's vertical   range can touch the platform
 			{
-				slowtime = 0.1;
+				slowtime = 0.3;
 				checkslowtime = 1;
 				clock.restart();
 				posclock[i].x = rand() % 1000;
@@ -1555,7 +1629,7 @@ int main()
 		{
 			durationslow = clock.getElapsedTime();
 			//printf("%f\n", durationslow.asSeconds());
-			if (durationslow.asSeconds() > 1.8f)
+			if (durationslow.asSeconds() > 0.87f)
 			{
 				slowtime = 1;
 				checkslowtime = 0;
@@ -1649,7 +1723,7 @@ int main()
 		}
 
 		//draw white
-		for (a = 0; a <= 4; a++)
+		for (a = 0; a <= 5; a++)
 		{
 			for (i = 0; i <= 3; i++)
 			{
@@ -1658,7 +1732,7 @@ int main()
 			}
 		}
 		//draw blue
-		for (a = 0; a <= 4; a++)
+		for (a = 0; a <= 5; a++)
 		{
 			for (i = 0; i <= 2; i++)
 			{
@@ -1677,7 +1751,7 @@ int main()
 		}
 
 		//draw red
-		for (a = 0; a <= 4; a++)
+		for (a = 0; a <= 6; a++)
 		{
 			for (i = 0; i <= 2; i++)
 			{
