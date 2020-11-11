@@ -33,6 +33,8 @@ int side = 1;
 int tempdistance;
 int hightDistance;
 int allowDraw = 0;
+
+int checkcollintime = 0;
 int countcollin = 0;
 
 int answer;
@@ -115,6 +117,19 @@ int main()
 	texturewater.setSmooth(true);
 	water.setTexture(texturewater);
 	water.setTextureRect(sf::IntRect(0, 0, 1080.0f, 250.f));
+
+	sf::RectangleShape staminabar(sf::Vector2f(27.0f, 241.0f));
+	staminabar.setFillColor(sf::Color::Green);
+	staminabar.setScale(0.65f, 0.645f);
+	staminabar.setRotation(180.0f);
+
+	sf::Sprite staminaSprite;
+	sf::Texture texturestamina;
+	texturestamina.loadFromFile("staminabar.png");
+	texturestamina.setSmooth(true);
+	staminaSprite.setTexture(texturestamina);
+	staminaSprite.setTextureRect(sf::IntRect(0.0f, 0.0f, 50.f, 300.f));
+	staminaSprite.setScale(sf::Vector2f(0.65f, 0.65f));
 
 	sf::RectangleShape boat1(sf::Vector2f(200.0f, 62.5f));//200
 	boat1.setFillColor(sf::Color::Transparent);//Red
@@ -840,6 +855,8 @@ int main()
 	sf::Clock animationcoin;
 	sf::Clock animationwater;
 
+	sf::Time immue;
+
 	while (window.isOpen())
 	{
 		window.clear();
@@ -1242,21 +1259,21 @@ int main()
 		}
 
 		//player move  //+ Collinsions *************************************************************
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))//2.5
 		{
-			player.move(0.f * speed, -5.0f * speed);
+			player.move(0.f * speed, -5.5f * speed);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
-			player.move(0.f * speed, 5.0f * speed);
+			player.move(0.f * speed, 5.5f * speed);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
-			player.move(-5.0f * speed, 0.0f * speed);
+			player.move(-5.5f * speed, 0.0f * speed);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
-			player.move(5.0f * speed, 0.f * speed);
+			player.move(5.5f * speed, 0.f * speed);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 		{
@@ -1278,7 +1295,7 @@ int main()
 			boat4.setFillColor(sf::Color::Transparent);//White Transparent*/
 			//allowDraw = 1;
 			allowDraw = 1;
-			countcollin = 0;
+			checkcollintime = 0;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::T))
 		{
@@ -1296,40 +1313,68 @@ int main()
 		}
 
 		//Collinsion car
-		for (a = 0; a <= 6; a++)
+		if (checkcollintime == 0)
 		{
-			for (i = 0; i <= 5; i++)
+			for (a = 0; a <= 6; a++)
 			{
-				if (Collision(posblue[a][i], blue, player, player))
+				for (i = 0; i <= 5; i++)
 				{
-					//player.setPosition(spawnPoint);
-					//speed -= 0.005;
-					countcollin += 1;
+					if (Collision(posblue[a][i], blue, player, player))
+					{
+						//player.setPosition(spawnPoint);
+						//speed -= 0.005;
+						checkcollintime = 1;
+					}
+					if (Collision(poswhite[a][i], white, player, player))
+					{
+						//player.setPosition(spawnPoint);
+						//speed -= 0.005;
+						checkcollintime = 1;
+					}
+					if (Collision(posred[a][i], red, player, player))
+					{
+						//player.setPosition(spawnPoint);
+						//speed -= 0.005;
+						checkcollintime = 1;
+					}
+					if (Collision(posyellow[a][i], yellow, player, player))
+					{
+						//player.setPosition(spawnPoint);
+						//speed -= 0.005;
+						checkcollintime = 1;
+					}
+					if (Collision(posgreen[a][i], green, player, player))
+					{
+						//player.setPosition(spawnPoint);
+						//speed -= 0.005;
+						checkcollintime = 1;
+					}
 				}
-				if (Collision(poswhite[a][i], white, player, player))
+				if (checkcollintime == 1)
 				{
-					//player.setPosition(spawnPoint);
-					//speed -= 0.005;
 					countcollin += 1;
+					speed -= 0.05;
+					immue = clock.restart();
+					break;
 				}
-				if (Collision(posred[a][i], red, player, player))
-				{
-					//player.setPosition(spawnPoint);
-					//speed -= 0.005;
-					countcollin += 1;
-				}
-				if (Collision(posyellow[a][i], yellow, player, player))
-				{
-					//player.setPosition(spawnPoint);
-					//speed -= 0.005;
-					countcollin += 1;
-				}
-				if (Collision(posgreen[a][i], green, player, player))
-				{
-					//player.setPosition(spawnPoint);
-					//speed -= 0.005;
-					countcollin += 1;
-				}
+			}
+		}
+		if (checkcollintime == 1)
+		{
+			player.setFillColor(sf::Color::Red);
+			immue = clock.getElapsedTime();
+			if (countcollin < 15)
+			{
+				staminabar.setSize(sf::Vector2f(27.f, 241 - (countcollin * 16.067f)));
+			}
+			else {
+				staminabar.setSize(sf::Vector2f(27.f, 0));
+				player.setPosition(spawnPoint);
+			}
+			if (immue.asSeconds() > 1.0f)
+			{
+				player.setFillColor(sf::Color::Green);
+				checkcollintime = 0;
 			}
 		}
 
@@ -1696,8 +1741,7 @@ int main()
 			hs << "HighScore " << hightDistance;
 		}
 
-		answerc << player.getPosition().y << '\n' << countcollin;
-		cout << speed << '\n';
+		answerc << player.getPosition().y << '\n' << immue.asSeconds() << '\n' << countcollin << '\n' << speed;
 		answertext.setString(answerc.str());
 		answertext.setPosition(positionview.x, positionview.y);
 
@@ -1712,6 +1756,9 @@ int main()
 		scoretext.setPosition(positionview.x + 950, positionview.y);
 		highscoretext.setString(hs.str());
 		highscoretext.setPosition(positionview.x + 750, positionview.y);
+
+		staminabar.setPosition(33.3f, positionview.y + 710.5f);
+		staminaSprite.setPosition(8, positionview.y + 520);
 
 		window.clear();
 
@@ -1894,6 +1941,9 @@ int main()
 		window.draw(purple);
 		window.draw(purple2);
 		window.draw(answertext);
+
+		window.draw(staminaSprite);
+		window.draw(staminabar);
 		if (allowDraw == 1)
 		{
 			window.draw(cointext);
