@@ -35,8 +35,10 @@ int hightDistance;
 int allowDraw = 0;
 
 int checkcollintime = 0;
+int hpbar = 0;
 int countcollin = 0;
-
+int die = 0;
+int countchecksign = 0;
 int answer;
 
 struct checksidexi
@@ -46,7 +48,7 @@ struct checksidexi
 int checksidexci;
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
-float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float viewfunc);
+float findPosCarY(sf::RectangleShape colorcar, float poscary);
 bool Collision(sf::Vector2f posobject, sf::RectangleShape sizeobject, sf::RectangleShape posplayerfunc, sf::RectangleShape playersizefunc);
 sf::Vector2f positionview;
 int main()
@@ -84,11 +86,32 @@ int main()
 	sf::RectangleShape blue(sf::Vector2f(sizecarx, sizecary));
 	blue.setFillColor(sf::Color::Blue);
 
-	sf::RectangleShape purple(sf::Vector2f(10.f, 10.f));
+	sf::RectangleShape purple(sf::Vector2f(100.f, 50.f));
 	purple.setFillColor(sf::Color::Magenta);
-
-	sf::RectangleShape purple2(sf::Vector2f(10.f, 10.f));
-	purple2.setFillColor(sf::Color::Magenta);
+	sf::Vector2f pospurple[6];
+	for (i = 0; i <= 5; i++)
+	{
+		if (i == 0)
+		{
+			pospurple[0].x = 500.0f;
+			pospurple[i].y = 755.0f;
+			continue;
+		}
+		if (i >= 1 && i <= 2)
+		{
+			pospurple[1].x = 200.0f;
+			pospurple[2].x = 800.0f;
+			pospurple[i].y = 1845.0f;
+			continue;
+		}
+		if (i >= 3 && i <= 5)
+		{
+			pospurple[3].x = 180.0f;
+			pospurple[4].x = 490.0f;
+			pospurple[5].x = 800.0f;
+			pospurple[i].y = 3335.0f;
+		}
+	}
 
 	sf::RectangleShape river(sf::Vector2f(1080.f, 250.f));//250
 	river.setFillColor(sf::Color::Cyan);
@@ -377,6 +400,14 @@ int main()
 			posplatmid[i].y = 3335.0f;//360
 		}
 	}
+
+	sf::RectangleShape hitboxTrain(sf::Vector2f(4320, 350));
+	hitboxTrain.setFillColor(sf::Color::White);
+	hitboxTrain.setPosition(-4520, findPosCarY(hitboxTrain, hitboxTrain.getPosition().y));//-4320
+
+	sf::RectangleShape signTrain(sf::Vector2f(100.0f, 100.0f));
+	signTrain.setFillColor(sf::Color::Green);
+	sf::Vector2f possign[3];
 
 	sf::Font fontscore;
 	fontscore.loadFromFile("fonttext/GOTHICB.ttf");
@@ -852,10 +883,24 @@ int main()
 
 	sf::Clock clock;
 	sf::Time durationslow;
+
+	sf::Time coin;
 	sf::Clock animationcoin;
+
+	sf::Time waterTime;
 	sf::Clock animationwater;
 
 	sf::Time immue;
+	sf::Clock immueclock;
+
+	sf::Time signTime;
+	sf::Clock signclock;
+	int signNotification = 0;
+	int trainrunning = 0;
+	bool realspawn = 0;
+
+	sf::Time spawnTrain;
+	sf::Clock trainclock;
 
 	while (window.isOpen())
 	{
@@ -876,7 +921,8 @@ int main()
 		}
 
 		//animation coins
-		if (animationcoin.getElapsedTime().asSeconds() > 0.2f)
+		coin = animationcoin.getElapsedTime();
+		if (coin.asSeconds() > 0.15f)
 		{
 			if (frame <= 5)
 			{
@@ -890,7 +936,8 @@ int main()
 			animationcoin.restart();
 		}
 		//animation water
-		if (animationwater.getElapsedTime().asMicroseconds() > 0.0f)
+		waterTime = animationwater.getElapsedTime();
+		if (waterTime.asSeconds() > 0.0f)
 		{
 			if (framewater <= 6)
 			{
@@ -915,9 +962,6 @@ int main()
 			positionview.y = 4235;
 		}
 		view.reset(sf::FloatRect(positionview.x, positionview.y, screen.x, screen.y));
-
-		purple.setPosition(0, positionview.y);
-		purple2.setPosition(0, positionview.y + 710);
 
 		//white
 		for (a = 0; a <= 5; a++)
@@ -1258,22 +1302,74 @@ int main()
 			}
 		}
 
+		if (trainrunning == 1)
+		{
+			//Train
+			if (hitboxTrain.getPosition().x > 5400)
+			{
+				spawnTrain = trainclock.getElapsedTime();
+				if (spawnTrain.asSeconds() > 10.0f)
+				{
+					hitboxTrain.setPosition(-4520, findPosCarY(hitboxTrain, hitboxTrain.getPosition().y));//-4320
+					trainrunning = 0;
+					signNotification = 0;
+					//trainclock.restart();
+				}
+			}
+			hitboxTrain.move(50.0f, 0.0f);
+		}
+		//Collinsion Train
+		if (player.getGlobalBounds().intersects(hitboxTrain.getGlobalBounds()))
+		{
+			staminabar.setSize(sf::Vector2f(27.f, -1));
+		}
+
+		//signtrain
+		if (trainrunning == 0)
+		{
+			for (i = 0; i <= 2; i++)
+			{
+				possign[i].x = 10;
+				possign[i].y = hitboxTrain.getPosition().y + 10 + (116.67f * i);
+			}
+			signTime = signclock.getElapsedTime();
+			if (signTime.asSeconds() > 0.8f)
+			{
+				signTrain.setFillColor(sf::Color::Red);
+				if (signTime.asSeconds() > 1.6f)
+				{
+					signTrain.setFillColor(sf::Color::Green);
+					signNotification += 1;
+					if (signNotification == 6)
+					{
+						trainrunning = 1;
+						trainclock.restart();
+					}
+
+					signclock.restart();
+				}
+			}
+		}
+
+		//hitboxTrain.setPosition(-4210, 50);//-4320
+		//hitboxTrain.move(50.0f, 0.0f);
+
 		//player move  //+ Collinsions *************************************************************
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))//2.5
 		{
-			player.move(0.f * speed, -5.5f * speed);
+			player.move(0.f, -5.5f * speed);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
-			player.move(0.f * speed, 5.5f * speed);
+			player.move(0.f, 5.5f * speed);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
-			player.move(-5.5f * speed, 0.0f * speed);
+			player.move(-5.5f * speed, 0.0f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
-			player.move(5.5f * speed, 0.f * speed);
+			player.move(5.5f * speed, 0.f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 		{
@@ -1295,6 +1391,7 @@ int main()
 			boat4.setFillColor(sf::Color::Transparent);//White Transparent*/
 			//allowDraw = 1;
 			allowDraw = 1;
+			hpbar = 0;
 			checkcollintime = 0;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::T))
@@ -1352,32 +1449,80 @@ int main()
 				}
 				if (checkcollintime == 1)
 				{
+					hpbar += 1;
 					countcollin += 1;
 					speed -= 0.05;
-					immue = clock.restart();
+					immue = immueclock.restart();
 					break;
 				}
 			}
 		}
+		//count collinsion + delay immue
 		if (checkcollintime == 1)
 		{
 			player.setFillColor(sf::Color::Red);
-			immue = clock.getElapsedTime();
-			if (countcollin < 15)
-			{
-				staminabar.setSize(sf::Vector2f(27.f, 241 - (countcollin * 16.067f)));
-			}
-			else {
-				staminabar.setSize(sf::Vector2f(27.f, 0));
-				player.setPosition(spawnPoint);
-			}
-			if (immue.asSeconds() > 1.0f)
+			immue = immueclock.getElapsedTime();
+			if (immue.asSeconds() > 0.5f)
 			{
 				player.setFillColor(sf::Color::Green);
 				checkcollintime = 0;
 			}
 		}
 
+		//stamina bar+ HP+ DEATH
+		if (staminabar.getSize().y > 0)
+		{
+			if (die == 0)
+			{
+				staminabar.setSize(sf::Vector2f(27.f, 241.0f - (hpbar * 16.067f)));
+			}
+			if (die == 1)
+			{
+				staminabar.setSize(sf::Vector2f(27.f, 160.6666666666667f - (hpbar * 16.067f)));
+			}
+			if (die == 2)
+			{
+				staminabar.setSize(sf::Vector2f(27.f, 80.33333333333333f - (hpbar * 16.067f)));
+			}
+		}
+		else {
+			hpbar = 0;
+			die += 1;
+			if (die == 1)
+			{
+				staminabar.setSize(sf::Vector2f(27.f, 160.6666666666667f));
+				player.setPosition(spawnPoint);
+			}
+			if (die == 2)
+			{
+				staminabar.setSize(sf::Vector2f(27.f, 80.33333333333333f));
+				player.setPosition(spawnPoint);
+			}
+		}
+
+		//COllinsion block purple
+		for (i = 0; i <= 5; i++)
+		{
+			if (Collision(pospurple[i], purple, player, player))
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))//2.5
+				{
+					player.move(0.f, -5.5f * speed * -1);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+				{
+					player.move(0.f, 5.5f * speed * -1);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+				{
+					player.move(-5.5f * speed * -1, 0.0f);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+				{
+					player.move(5.5f * speed * -1, 0.f);
+				}
+			}
+		}
 		//Water DAMMMM******************
 		bool checkCol = 0;
 		/*if (Collision(posriver[0], river, player, player))
@@ -1655,9 +1800,7 @@ int main()
 			player.setPosition(player.getPosition().x, 4920);
 		}
 
-		//printf("%f\n", speed);
-
-			//itemclock
+		//itemclock
 		for (i = 0; i <= 2; i++)
 		{
 			if ((player.getPosition().x + player.getSize().x > posclock[i].x) && (player.getPosition().x < posclock[i].x + itemclock.getSize().x)        // player's horizontal range can touch the platform
@@ -1674,7 +1817,7 @@ int main()
 		{
 			durationslow = clock.getElapsedTime();
 			//printf("%f\n", durationslow.asSeconds());
-			if (durationslow.asSeconds() > 0.87f)
+			if (durationslow.asSeconds() > 0.85f)
 			{
 				slowtime = 1;
 				checkslowtime = 0;
@@ -1741,7 +1884,7 @@ int main()
 			hs << "HighScore " << hightDistance;
 		}
 
-		answerc << player.getPosition().y << '\n' << immue.asSeconds() << '\n' << countcollin << '\n' << speed;
+		answerc << player.getPosition().y << '\n' << "sign " << signTime.asSeconds() << '\n' << "notification " << signNotification << '\n' << hitboxTrain.getPosition().y << '\n' << spawnTrain.asSeconds();
 		answertext.setString(answerc.str());
 		answertext.setPosition(positionview.x, positionview.y);
 
@@ -1796,7 +1939,6 @@ int main()
 				window.draw(green);
 			}
 		}
-
 		//draw red
 		for (a = 0; a <= 6; a++)
 		{
@@ -1907,6 +2049,14 @@ int main()
 			window.draw(fishboat);
 			window.draw(woodlogboat2);
 		}
+		//box purple
+		for (i = 0; i <= 5; i++)
+		{
+			purple.setPosition(pospurple[i].x, pospurple[i].y);
+			window.draw(purple);
+		}
+		window.draw(player);
+
 		//draw clock
 		for (i = 0; i <= 2; i++)
 		{
@@ -1935,11 +2085,19 @@ int main()
 			itemcoins.setPosition(poscoins[i].x, poscoins[i].y);
 			window.draw(itemcoins);
 		}
-		//temp55 = player.getPosition().y;
 
-		window.draw(player);
-		window.draw(purple);
-		window.draw(purple2);
+		window.draw(hitboxTrain);
+		//sign
+
+		for (i = 0; i <= 2; i++)
+		{
+			signTrain.setPosition(possign[i].x, possign[i].y);
+			if (trainrunning == 0)
+			{
+				window.draw(signTrain);
+			}
+		}
+
 		window.draw(answertext);
 
 		window.draw(staminaSprite);
@@ -1961,38 +2119,28 @@ void ResizeView(const sf::RenderWindow& window, sf::View& view)
 	float aspectRatio = float(window.getSize().x / float(window.getSize().y));
 	view.setSize(screenheight * aspectRatio, screenheight);
 }
-float findPosCarY(sf::RectangleShape colorcar, int poscary, int poscarx, float viewfunc)
+float findPosCarY(sf::RectangleShape colorcar, float poscary)
 {
-	poscary = rand() % 4801;
+	poscary = rand() % 4536;
 
 	for (j = 0; j != i; )
 	{
-		if (poscary % 60 == 0)
+		if ((poscary > 1900.0f && poscary < 4535.0f) && !(poscary + colorcar.getSize().y > 2500 && poscary < 2750) && !(poscary + colorcar.getSize().y > 4030 && poscary < 4280))
 		{
-			if (poscary >= viewfunc && poscary <= (viewfunc + 670) && !(((poscary + colorcar.getSize().y) > 970) && (poscary < 1300))
-				&& !(((poscary + colorcar.getSize().y) > 2460) && (poscary < 2790)) && !(((poscary + colorcar.getSize().y) > 4000) && (poscary < 4320))
-				&& !(((poscary + colorcar.getSize().y) > 355) && (poscary < 410)) && !(((poscary + colorcar.getSize().y) > 715) && (poscary < 770))
-				&& !(((poscary + colorcar.getSize().y) > 1800) && (poscary < 1860)) && poscary >= 200 && (poscary < 4870))
-			{
-				realposcary = poscary;
-				return realposcary;
-				break;
-			}
-			else
-			{
-				poscary = rand() % 4801;
-			}
+			realposcary = poscary;
+			return realposcary;
+			break;
 		}
 		else
 		{
-			poscary = rand() % 4801;
+			poscary = rand() % 4536;
 		}
 	}
 }
 
 bool Collision(sf::Vector2f posobject, sf::RectangleShape sizeobject, sf::RectangleShape posplayerfunc, sf::RectangleShape playersizefunc)
 {
-	if (((posplayerfunc.getPosition().x + playersizefunc.getSize().x > posobject.x) && (posplayerfunc.getPosition().x < posobject.x + sizeobject.getSize().x)        // player's horizontal range can touch the platform
+	if (((posplayerfunc.getPosition().x + playersizefunc.getSize().x > posobject.x) && (posplayerfunc.getPosition().x < posobject.x + sizeobject.getSize().x)
 		&& (posplayerfunc.getPosition().y + playersizefunc.getSize().y > posobject.y) && (posplayerfunc.getPosition().y < posobject.y + sizeobject.getSize().y)))
 	{
 		collinreturn = 1;
