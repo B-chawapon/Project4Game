@@ -1,10 +1,12 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include<stdio.h>
 #include<iostream>
 #include<time.h>
 #include<iostream>
 #include <string>
 #include <sstream>
+#include <math.h>
 //MAP  WEIGHT =1080   HEIGHT=5000;
 using namespace std;
 int j = 0;
@@ -41,6 +43,7 @@ int die = 0;
 int countchecksign = 0;
 int answer;
 
+int checkSoundAlert = 0;
 struct checksidexi
 {
 	int checkside;
@@ -50,6 +53,7 @@ int checksidexci;
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
 float findPosCarY(sf::RectangleShape colorcar, float poscary);
 bool Collision(sf::Vector2f posobject, sf::RectangleShape sizeobject, sf::RectangleShape posplayerfunc, sf::RectangleShape playersizefunc);
+bool changeVolume(float playery, float trainy, float limitupper, float limitlower, float trainsizey);
 sf::Vector2f positionview;
 int main()
 {
@@ -880,27 +884,59 @@ int main()
 			}
 		}
 	}
-
 	sf::Clock clock;
 	sf::Time durationslow;
-
 	sf::Time coin;
 	sf::Clock animationcoin;
-
 	sf::Time waterTime;
 	sf::Clock animationwater;
-
 	sf::Time immue;
 	sf::Clock immueclock;
-
 	sf::Time signTime;
 	sf::Clock signclock;
 	int signNotification = 0;
 	int trainrunning = 0;
 	bool realspawn = 0;
-
 	sf::Time spawnTrain;
 	sf::Clock trainclock;
+
+	sf::SoundBuffer effectcarcrash;
+	effectcarcrash.loadFromFile("carcrash1.wav");
+	sf::Sound carcrash1;
+	carcrash1.setBuffer(effectcarcrash);
+	carcrash1.setVolume(50);
+
+	sf::SoundBuffer effectcarcrash2;
+	effectcarcrash2.loadFromFile("carcrash2.wav");
+	sf::Sound carcrash2;
+	carcrash2.setBuffer(effectcarcrash2);
+	carcrash2.setVolume(50);
+
+	sf::SoundBuffer effectcarcrash3;
+	effectcarcrash3.loadFromFile("carcrash3.wav");
+	sf::Sound carcrash3;
+	carcrash3.setBuffer(effectcarcrash3);
+	carcrash3.setVolume(50);
+
+	sf::SoundBuffer effectcarcrash4;
+	effectcarcrash4.loadFromFile("carcrash4.wav");
+	sf::Sound carcrash4;
+	carcrash4.setBuffer(effectcarcrash4);
+	carcrash4.setVolume(50);
+
+	sf::SoundBuffer effectcarcrash5;
+	effectcarcrash5.loadFromFile("carcrash5.wav");
+	sf::Sound carcrash5;
+	carcrash5.setBuffer(effectcarcrash5);
+	carcrash5.setVolume(50);
+
+	sf::SoundBuffer effectalert;
+	effectalert.loadFromFile("alertmeow.wav");
+	sf::Sound alert;
+	alert.setBuffer(effectalert);
+	alert.setVolume(50);
+	//alert.setLoop(true);
+	int effectSoundCrash = 9;
 
 	while (window.isOpen())
 	{
@@ -917,7 +953,63 @@ int main()
 			case sf::Event::Resized:
 				ResizeView(window, view);
 				break;
+			case ::sf::Event::KeyPressed:
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
+				{
+					//slowtime = 0.1;//0.1
+					if (allowDraw == 0)
+					{
+						allowDraw = 1;
+						speed = 10;//2
+					}
+					else
+					{
+						allowDraw = 0;
+						slowtime = 0.1;
+						speed = 10;
+						/*boat1.setFillColor(sf::Color::Transparent);//White Transparent
+						boat2.setFillColor(sf::Color::Transparent);//White Transparent
+						boat3.setFillColor(sf::Color::Transparent);//White Transparent
+						boat4.setFillColor(sf::Color::Transparent);//White Transparent*/
+					}
+
+					hpbar = -30;
+					checkcollintime = 0;
+				}
+				break;
 			}
+		}
+
+		//player move  //+ Collinsions *************************************************************
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))//2.5
+		{
+			player.move(0.f, -2.5f * speed);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+		{
+			player.move(0.f, 2.5f * speed);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+		{
+			player.move(-2.5f * speed, 0.0f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+		{
+			player.move(2.5f * speed, 0.f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+		{
+			speed = 1;
+			slowtime = 1;
+			stackshoes = 0;
+			/*boat1.setFillColor(sf::Color::Red);//White Transparent
+			boat2.setFillColor(sf::Color::Blue);//White Transparent
+			boat3.setFillColor(sf::Color::Black);//White Transparent
+			boat4.setFillColor(sf::Color::White);//White Transparent*/
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+		{
+			window.close();
 		}
 
 		//animation coins
@@ -1310,7 +1402,7 @@ int main()
 				spawnTrain = trainclock.getElapsedTime();
 				if (spawnTrain.asSeconds() > 10.0f)
 				{
-					hitboxTrain.setPosition(-4520, findPosCarY(hitboxTrain, hitboxTrain.getPosition().y));//-4320
+					hitboxTrain.setPosition(-4520, findPosCarY(hitboxTrain, hitboxTrain.getPosition().y)/*2534*/);//-4320
 					trainrunning = 0;
 					signNotification = 0;
 					//trainclock.restart();
@@ -1332,6 +1424,29 @@ int main()
 				possign[i].x = 10;
 				possign[i].y = hitboxTrain.getPosition().y + 10 + (116.67f * i);
 			}
+			for (i = 1; i <= 5; i++)
+			{
+				if (abs(player.getPosition().y - hitboxTrain.getPosition().y) < 100 || (abs(player.getPosition().y - (hitboxTrain.getPosition().y + hitboxTrain.getSize().y)) < 100))
+				{
+					alert.pause();
+					alert.setVolume(50);
+					if (alert.getStatus() != 2)
+					{
+						alert.play();
+					}
+					break;
+				}
+				if (changeVolume(player.getPosition().y, hitboxTrain.getPosition().y, 100 + (i * 50), 50 + (i * 50), hitboxTrain.getSize().y))
+				{
+					alert.pause();
+					alert.setVolume(50 - (10 * i));
+					if (alert.getStatus() != 2)
+					{
+						alert.play();
+					}
+					break;
+				}
+			}
 			signTime = signclock.getElapsedTime();
 			if (signTime.asSeconds() > 0.8f)
 			{
@@ -1340,9 +1455,10 @@ int main()
 				{
 					signTrain.setFillColor(sf::Color::Green);
 					signNotification += 1;
-					if (signNotification == 6)
+					if (signNotification == 5)
 					{
-						trainrunning = 1;
+						trainrunning = 1;//1
+						alert.stop();
 						trainclock.restart();
 					}
 
@@ -1353,61 +1469,6 @@ int main()
 
 		//hitboxTrain.setPosition(-4210, 50);//-4320
 		//hitboxTrain.move(50.0f, 0.0f);
-
-		//player move  //+ Collinsions *************************************************************
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))//2.5
-		{
-			player.move(0.f, -5.5f * speed);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-		{
-			player.move(0.f, 5.5f * speed);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-		{
-			player.move(-5.5f * speed, 0.0f);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-		{
-			player.move(5.5f * speed, 0.f);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-		{
-			speed = 1;
-			slowtime = 1;
-			stackshoes = 0;
-			/*boat1.setFillColor(sf::Color::Red);//White Transparent
-			boat2.setFillColor(sf::Color::Blue);//White Transparent
-			boat3.setFillColor(sf::Color::Black);//White Transparent
-			boat4.setFillColor(sf::Color::White);//White Transparent*/
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
-		{
-			//slowtime = 0.1;//0.1
-			speed = 2;//2
-			/*boat1.setFillColor(sf::Color::Transparent);//White Transparent
-			boat2.setFillColor(sf::Color::Transparent);//White Transparent
-			boat3.setFillColor(sf::Color::Transparent);//White Transparent
-			boat4.setFillColor(sf::Color::Transparent);//White Transparent*/
-			//allowDraw = 1;
-			allowDraw = 1;
-			hpbar = 0;
-			checkcollintime = 0;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::T))
-		{
-			slowtime = 1;
-			speed = 1;
-			/*boat1.setFillColor(sf::Color::Transparent);//White Transparent
-			boat2.setFillColor(sf::Color::Transparent);//White Transparent
-			boat3.setFillColor(sf::Color::Transparent);//White Transparent
-			boat4.setFillColor(sf::Color::Transparent);//White Transparent*/
-			allowDraw = 0;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-		{
-			window.close();
-		}
 
 		//Collinsion car
 		if (checkcollintime == 0)
@@ -1421,30 +1482,40 @@ int main()
 						//player.setPosition(spawnPoint);
 						//speed -= 0.005;
 						checkcollintime = 1;
+						effectSoundCrash = 1;
+						break;
 					}
 					if (Collision(poswhite[a][i], white, player, player))
 					{
 						//player.setPosition(spawnPoint);
 						//speed -= 0.005;
 						checkcollintime = 1;
+						effectSoundCrash = 2;
+						break;
 					}
 					if (Collision(posred[a][i], red, player, player))
 					{
 						//player.setPosition(spawnPoint);
 						//speed -= 0.005;
 						checkcollintime = 1;
+						effectSoundCrash = 3;
+						break;
 					}
 					if (Collision(posyellow[a][i], yellow, player, player))
 					{
 						//player.setPosition(spawnPoint);
 						//speed -= 0.005;
 						checkcollintime = 1;
+						effectSoundCrash = 4;
+						break;
 					}
 					if (Collision(posgreen[a][i], green, player, player))
 					{
 						//player.setPosition(spawnPoint);
 						//speed -= 0.005;
 						checkcollintime = 1;
+						effectSoundCrash = 5;
+						break;
 					}
 				}
 				if (checkcollintime == 1)
@@ -1453,6 +1524,26 @@ int main()
 					countcollin += 1;
 					speed -= 0.05;
 					immue = immueclock.restart();
+					/*if (effectSoundCrash == 1 && carcrash1.getStatus() != 2)
+					{
+						carcrash1.play();
+					}
+					if (effectSoundCrash == 2 && carcrash2.getStatus() != 2)
+					{
+						carcrash2.play();
+					}
+					if (effectSoundCrash == 3 && carcrash3.getStatus() != 2)
+					{
+						carcrash3.play();
+					}
+					if (effectSoundCrash == 4 && carcrash4.getStatus() != 2)
+					{
+						carcrash4.play();
+					}
+					if (effectSoundCrash == 5 && carcrash5.getStatus() != 2)
+					{
+						carcrash5.play();
+					}*/
 					break;
 				}
 			}
@@ -1462,7 +1553,7 @@ int main()
 		{
 			player.setFillColor(sf::Color::Red);
 			immue = immueclock.getElapsedTime();
-			if (immue.asSeconds() > 0.5f)
+			if (immue.asSeconds() > 1.0f)
 			{
 				player.setFillColor(sf::Color::Green);
 				checkcollintime = 0;
@@ -1501,7 +1592,7 @@ int main()
 		}
 
 		//COllinsion block purple
-		for (i = 0; i <= 5; i++)
+		/*for (i = 0; i <= 5; i++)
 		{
 			if (Collision(pospurple[i], purple, player, player))
 			{
@@ -1522,7 +1613,7 @@ int main()
 					player.move(5.5f * speed * -1, 0.f);
 				}
 			}
-		}
+		}*/
 		//Water DAMMMM******************
 		bool checkCol = 0;
 		/*if (Collision(posriver[0], river, player, player))
@@ -1884,7 +1975,7 @@ int main()
 			hs << "HighScore " << hightDistance;
 		}
 
-		answerc << player.getPosition().y << '\n' << "sign " << signTime.asSeconds() << '\n' << "notification " << signNotification << '\n' << hitboxTrain.getPosition().y << '\n' << spawnTrain.asSeconds();
+		answerc << player.getPosition().y << '\n' << hitboxTrain.getPosition().y << '\n' << alert.getStatus() << '\n' << alert.getVolume();
 		answertext.setString(answerc.str());
 		answertext.setPosition(positionview.x, positionview.y);
 
@@ -2150,5 +2241,17 @@ bool Collision(sf::Vector2f posobject, sf::RectangleShape sizeobject, sf::Rectan
 	{
 		collinreturn = 0;
 		return collinreturn;
+	}
+}
+
+bool changeVolume(float playery, float trainy, float limitupper, float limitlower, float trainsizey)
+{
+	if ((abs(playery - trainy) < limitupper && abs(playery - trainy) >= limitlower) || (abs(playery - (trainy + trainsizey)) < limitupper && abs(playery - (trainy + trainsizey)) >= limitlower))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
