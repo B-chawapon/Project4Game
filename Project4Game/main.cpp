@@ -53,7 +53,8 @@ int checksidexci;
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
 float findPosCarY(sf::RectangleShape colorcar, float poscary);
 bool Collision(sf::Vector2f posobject, sf::RectangleShape sizeobject, sf::RectangleShape posplayerfunc, sf::RectangleShape playersizefunc);
-bool changeVolume(float playery, float trainy, float limitupper, float limitlower, float trainsizey);
+bool changeVolumeSign(float playery, float trainy, float limitupper, float limitlower, float trainsizey);
+bool changeVolumeTrain(float playery, float trainy, float limitupper, float limitlower, float trainsizey);
 sf::Vector2f positionview;
 int main()
 {
@@ -72,7 +73,7 @@ int main()
 	sf::RectangleShape player(sf::Vector2f(35.f, 35.f));//35
 	player.setFillColor(sf::Color::Green);
 
-	sf::Vector2f spawnPoint = { 1080 / 2,85.f };
+	sf::Vector2f spawnPoint = { 1080 / 2,145.f };
 	player.setPosition(spawnPoint);
 
 	sf::RectangleShape white(sf::Vector2f(sizecarx, sizecary));
@@ -364,7 +365,14 @@ int main()
 	for (i = 0; i <= 1; i++)
 	{
 		posboots[i].x = rand() % 1000;
-		posboots[i].y = rand() % 4900;
+		while (true)
+		{
+			posboots[i].y = rand() % 4900;
+			if (posboots[i].y > 100.0f)
+			{
+				break;
+			}
+		}
 	}
 	itemboots.setScale(sf::Vector2f(1.1f, 1.1f));
 
@@ -379,7 +387,14 @@ int main()
 	for (i = 0; i <= 24; i++)
 	{
 		poscoins[i].x = rand() % 1000;
-		poscoins[i].y = rand() % 4900;
+		while (true)
+		{
+			poscoins[i].y = rand() % 4900;
+			if (poscoins[i].y > 100.0f)
+			{
+				break;
+			}
+		}
 	}
 
 	sf::RectangleShape platmid(sf::Vector2f(1080.0f, 50.0f));//200
@@ -931,16 +946,60 @@ int main()
 	carcrash5.setVolume(50);
 
 	sf::SoundBuffer effectalert;
-	effectalert.loadFromFile("alertmeow.wav");
+	effectalert.loadFromFile("alertcross.wav");
 	sf::Sound alert;
 	alert.setBuffer(effectalert);
 	alert.setVolume(50);
-	//alert.setLoop(true);
+
+	sf::SoundBuffer effectrain;
+	effectrain.loadFromFile("traineff.wav");
+	sf::Sound trainSound;
+	trainSound.setBuffer(effectrain);
+	trainSound.setVolume(100);
+
+	sf::SoundBuffer effecoin;
+	effecoin.loadFromFile("coinpick.wav");
+	sf::Sound coinSound;
+	coinSound.setBuffer(effecoin);
+	coinSound.setVolume(100);
+
+	sf::SoundBuffer effeboots;
+	effeboots.loadFromFile("bootspick.wav");
+	sf::Sound bootsSound;
+	bootsSound.setBuffer(effeboots);
+	bootsSound.setVolume(100);
+
+	sf::SoundBuffer effeclock;
+	effeclock.loadFromFile("clockpick.wav");
+	sf::Sound clockSound;
+	clockSound.setBuffer(effeclock);
+	clockSound.setVolume(100);
+
 	int effectSoundCrash = 9;
 
+	sf::Music music;
+	if (!music.openFromFile("soundsonicbg.wav"))
+		return -1; // error
+	music.setVolume(60);
+	music.setLoop(true);
+	music.play();
+
+	sf::SoundBuffer effecfootstep;
+	effecfootstep.loadFromFile("footsteps11.wav");
+	sf::Sound footSound;
+	footSound.setBuffer(effecfootstep);
+	footSound.setVolume(15);
+	footSound.setLoop(true);
+
+	sf::RectangleShape mapbox(sf::Vector2f(1080.f, 4955.f));
+	sf::Texture texturemap;
+	texturemap.loadFromFile("map.png");
+	mapbox.setTexture(&texturemap);
+	//texturemap.setSmooth(true);
 	while (window.isOpen())
 	{
 		window.clear();
+
 		//printf("%f\n", player.getPosition().y);
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -954,7 +1013,36 @@ int main()
 				ResizeView(window, view);
 				break;
 			case ::sf::Event::KeyPressed:
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
+				if (event.key.code == sf::Keyboard::W)
+				{
+					if (footSound.getStatus() != 2)
+					{
+						footSound.play();
+					}
+				}
+				if (event.key.code == sf::Keyboard::S)
+				{
+					if (footSound.getStatus() != 2)
+					{
+						footSound.play();
+					}
+				}
+				if (event.key.code == sf::Keyboard::A)
+				{
+					if (footSound.getStatus() != 2)
+					{
+						footSound.play();
+					}
+				}
+				if (event.key.code == sf::Keyboard::D)
+				{
+					if (footSound.getStatus() != 2)
+					{
+						footSound.play();
+					}
+				}
+
+				if (event.key.code == sf::Keyboard::R)
 				{
 					//slowtime = 0.1;//0.1
 					if (allowDraw == 0)
@@ -975,6 +1063,24 @@ int main()
 
 					hpbar = -30;
 					checkcollintime = 0;
+				}
+				break;
+			case ::sf::Event::KeyReleased:
+				if (event.key.code == sf::Keyboard::W)
+				{
+					footSound.pause();
+				}
+				if (event.key.code == sf::Keyboard::S)
+				{
+					footSound.pause();
+				}
+				if (event.key.code == sf::Keyboard::A)
+				{
+					footSound.pause();
+				}
+				if (event.key.code == sf::Keyboard::D)
+				{
+					footSound.pause();
 				}
 				break;
 			}
@@ -1394,18 +1500,45 @@ int main()
 			}
 		}
 
+		//Train+effect
 		if (trainrunning == 1)
 		{
 			//Train
-			if (hitboxTrain.getPosition().x > 5400)
+
+			for (i = 1; i <= 5; i++)
 			{
+				if (abs(player.getPosition().y - hitboxTrain.getPosition().y) < 100 || (abs(player.getPosition().y - (hitboxTrain.getPosition().y + hitboxTrain.getSize().y)) < 100))
+				{
+					trainSound.pause();
+					trainSound.setVolume(100);
+					if (trainSound.getStatus() != 2)
+					{
+						trainSound.play();
+					}
+					break;
+				}
+				if (changeVolumeSign(player.getPosition().y, hitboxTrain.getPosition().y, 100 + (i * 50), 50 + (i * 50), hitboxTrain.getSize().y))
+				{
+					trainSound.pause();
+					trainSound.setVolume(100 - (10 * i));
+					if (trainSound.getStatus() != 2)
+					{
+						trainSound.play();
+					}
+					break;
+				}
+			}
+			if (hitboxTrain.getPosition().x > 1080)
+			{
+				trainSound.stop();
 				spawnTrain = trainclock.getElapsedTime();
-				if (spawnTrain.asSeconds() > 10.0f)
+				if (spawnTrain.asSeconds() > 10.0f)//10.00f
 				{
 					hitboxTrain.setPosition(-4520, findPosCarY(hitboxTrain, hitboxTrain.getPosition().y)/*2534*/);//-4320
 					trainrunning = 0;
 					signNotification = 0;
-					//trainclock.restart();
+					trainSound.stop();
+					trainclock.restart();
 				}
 			}
 			hitboxTrain.move(50.0f, 0.0f);
@@ -1413,6 +1546,7 @@ int main()
 		//Collinsion Train
 		if (player.getGlobalBounds().intersects(hitboxTrain.getGlobalBounds()))
 		{
+			trainSound.stop();
 			staminabar.setSize(sf::Vector2f(27.f, -1));
 		}
 
@@ -1436,7 +1570,7 @@ int main()
 					}
 					break;
 				}
-				if (changeVolume(player.getPosition().y, hitboxTrain.getPosition().y, 100 + (i * 50), 50 + (i * 50), hitboxTrain.getSize().y))
+				if (changeVolumeSign(player.getPosition().y, hitboxTrain.getPosition().y, 100 + (i * 50), 50 + (i * 50), hitboxTrain.getSize().y))
 				{
 					alert.pause();
 					alert.setVolume(50 - (10 * i));
@@ -1524,7 +1658,7 @@ int main()
 					countcollin += 1;
 					speed -= 0.05;
 					immue = immueclock.restart();
-					/*if (effectSoundCrash == 1 && carcrash1.getStatus() != 2)
+					if (effectSoundCrash == 1 && carcrash1.getStatus() != 2)
 					{
 						carcrash1.play();
 					}
@@ -1543,7 +1677,7 @@ int main()
 					if (effectSoundCrash == 5 && carcrash5.getStatus() != 2)
 					{
 						carcrash5.play();
-					}*/
+					}
 					break;
 				}
 			}
@@ -1881,11 +2015,8 @@ int main()
 		if (player.getPosition().x > 1045) {
 			player.setPosition(1045, player.getPosition().y);
 		}
-		if (player.getPosition().y < 0) {
-			player.setPosition(player.getPosition().x, 0);
-		}
-		if (player.getPosition().y < 0) {
-			player.setPosition(player.getPosition().x, 0);
+		if (player.getPosition().y < 100) {
+			player.setPosition(player.getPosition().x, 100);
 		}
 		if (player.getPosition().y > 4920) {
 			player.setPosition(player.getPosition().x, 4920);
@@ -1902,14 +2033,16 @@ int main()
 				clock.restart();
 				posclock[i].x = rand() % 1000;
 				posclock[i].y = rand() % 4900;
+				clockSound.play();
 			}
 		}
 		if (checkslowtime == 1)
 		{
 			durationslow = clock.getElapsedTime();
 			//printf("%f\n", durationslow.asSeconds());
-			if (durationslow.asSeconds() > 0.85f)
+			if (durationslow.asSeconds() > 0.9f)
 			{
+				clockSound.stop();
 				slowtime = 1;
 				checkslowtime = 0;
 			}
@@ -1921,6 +2054,7 @@ int main()
 			if ((player.getPosition().x + player.getSize().x > posboots[i].x) && (player.getPosition().x < posboots[i].x + itemboots.getSize().x)        // player's horizontal range can touch the platform
 				&& (player.getPosition().y + player.getSize().y > posboots[i].y) && (player.getPosition().y < posboots[i].y + itemboots.getSize().y))// player's vertical   range can touch the platform
 			{
+				bootsSound.play();
 				if (stackshoes >= 6)//6
 				{
 					speed += 0;
@@ -1943,6 +2077,7 @@ int main()
 			if ((player.getPosition().x + player.getSize().x > poscoins[i].x) && (player.getPosition().x < poscoins[i].x + 30)
 				&& (player.getPosition().y + player.getSize().y > poscoins[i].y) && (player.getPosition().y < poscoins[i].y + 30))
 			{
+				coinSound.play();
 				scorecoins += 1;
 				poscoins[i].x = -100;
 				poscoins[i].y = -100;
@@ -1975,7 +2110,7 @@ int main()
 			hs << "HighScore " << hightDistance;
 		}
 
-		answerc << player.getPosition().y << '\n' << hitboxTrain.getPosition().y << '\n' << alert.getStatus() << '\n' << alert.getVolume();
+		answerc << player.getPosition().x << '\n' << player.getPosition().y;
 		answertext.setString(answerc.str());
 		answertext.setPosition(positionview.x, positionview.y);
 
@@ -2003,6 +2138,7 @@ int main()
 			window.draw(platmid);
 		}
 
+		window.draw(mapbox);
 		//draw white
 		for (a = 0; a <= 5; a++)
 		{
@@ -2244,9 +2380,21 @@ bool Collision(sf::Vector2f posobject, sf::RectangleShape sizeobject, sf::Rectan
 	}
 }
 
-bool changeVolume(float playery, float trainy, float limitupper, float limitlower, float trainsizey)
+bool changeVolumeSign(float playery, float trainy, float limitupper, float limitlower, float trainsizey)
 {
 	if ((abs(playery - trainy) < limitupper && abs(playery - trainy) >= limitlower) || (abs(playery - (trainy + trainsizey)) < limitupper && abs(playery - (trainy + trainsizey)) >= limitlower))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool changeVolumeTrain(float playery, float trainy, float limitupper, float limitlower, float trainsizey)
+{
+	if ((abs(playery - (trainy + trainsizey)) < limitupper && abs(playery - (trainy + trainsizey)) >= limitlower))
 	{
 		return true;
 	}
